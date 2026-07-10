@@ -33,6 +33,7 @@ typedef struct {
       void *function;
     } native_frame;
   } as;
+  VALUE defined_class; // Needs marking if kept around
   bool is_ruby_frame : 1;
   bool same_frame : 1;
 } frame_info;
