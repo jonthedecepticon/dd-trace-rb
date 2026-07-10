@@ -5,6 +5,7 @@
 #include "crashtracker.h"
 #include "feature_flags.h"
 #include "library_config.h"
+#include "otel_thread_ctx.h"
 #include "process_discovery.h"
 
 void ddsketch_init(VALUE core_module);
@@ -23,5 +24,6 @@ void DDTRACE_EXPORT Init_libdatadog_api(void) {
   library_config_init(core_module);
   ddsketch_init(core_module);
   feature_flags_init(core_module);
+  otel_thread_ctx_init(core_module);
   di_init(datadog_module);
 }
