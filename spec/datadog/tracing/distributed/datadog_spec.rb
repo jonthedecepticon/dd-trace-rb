@@ -293,7 +293,7 @@ RSpec.shared_examples 'Datadog distributed format' do
     context 'with trace_id and span_id' do
       let(:data) do
         {prepare_key['x-datadog-trace-id'] => '10000',
-         prepare_key['x-datadog-parent-id'] => '20000'}
+         prepare_key['x-datadog-parent-id'] => '20000',}
       end
 
       it { expect(digest.span_id).to eq(20000) }
@@ -306,7 +306,7 @@ RSpec.shared_examples 'Datadog distributed format' do
         let(:data) do
           {prepare_key['x-datadog-trace-id'] => '10000',
            prepare_key['x-datadog-parent-id'] => '20000',
-           prepare_key['x-datadog-sampling-priority'] => '1'}
+           prepare_key['x-datadog-sampling-priority'] => '1',}
         end
 
         it { expect(digest.span_id).to eq(20000) }
@@ -319,7 +319,7 @@ RSpec.shared_examples 'Datadog distributed format' do
             {prepare_key['x-datadog-trace-id'] => '10000',
              prepare_key['x-datadog-parent-id'] => '20000',
              prepare_key['x-datadog-sampling-priority'] => '1',
-             prepare_key['x-datadog-origin'] => 'synthetics'}
+             prepare_key['x-datadog-origin'] => 'synthetics',}
           end
 
           it { expect(digest.span_id).to eq(20000) }
@@ -333,7 +333,7 @@ RSpec.shared_examples 'Datadog distributed format' do
         let(:data) do
           {prepare_key['x-datadog-trace-id'] => '10000',
            prepare_key['x-datadog-parent-id'] => '20000',
-           prepare_key['x-datadog-origin'] => 'synthetics'}
+           prepare_key['x-datadog-origin'] => 'synthetics',}
         end
 
         it { expect(digest.span_id).to eq(20000) }
@@ -469,7 +469,7 @@ RSpec.shared_examples 'Datadog distributed format' do
           context "when given invalid trace_id: #{invalid_trace_id}" do
             let(:data) do
               {prepare_key['x-datadog-trace-id'] => invalid_trace_id,
-               prepare_key['x-datadog-parent-id'] => '20000'}
+               prepare_key['x-datadog-parent-id'] => '20000',}
             end
 
             it { is_expected.to be nil }
@@ -486,7 +486,7 @@ RSpec.shared_examples 'Datadog distributed format' do
           context "when given invalid span_id: #{invalid_span_id}" do
             let(:data) do
               {prepare_key['x-datadog-trace-id'] => '10000',
-               prepare_key['x-datadog-parent-id'] => invalid_span_id}
+               prepare_key['x-datadog-parent-id'] => invalid_span_id,}
             end
 
             it { is_expected.to be nil }
@@ -521,7 +521,7 @@ RSpec.shared_examples 'Datadog distributed format' do
       context 'with synthetics origin' do
         let(:data) do
           {prepare_key['x-datadog-trace-id'] => '10000',
-           prepare_key['x-datadog-origin'] => 'synthetics'}
+           prepare_key['x-datadog-origin'] => 'synthetics',}
         end
 
         it { expect(digest.span_id).to be nil }
@@ -533,7 +533,7 @@ RSpec.shared_examples 'Datadog distributed format' do
       context 'with non-synthetics origin' do
         let(:data) do
           {prepare_key['x-datadog-trace-id'] => '10000',
-           prepare_key['x-datadog-origin'] => 'custom-origin'}
+           prepare_key['x-datadog-origin'] => 'custom-origin',}
         end
 
         it { expect(digest.span_id).to be nil }
@@ -548,7 +548,7 @@ RSpec.shared_examples 'Datadog distributed format' do
         {
           prepare_key['x-datadog-trace-id'] => 0xffffffffffffffff.to_s,
           prepare_key['x-datadog-parent-id'] => 0xbbbbbbbbbbbbbbbb.to_s,
-          prepare_key['x-datadog-tags'] => '_dd.p.tid=0aaaaaaaaaaaaaaa'
+          prepare_key['x-datadog-tags'] => '_dd.p.tid=0aaaaaaaaaaaaaaa',
         }
       end
 
@@ -568,7 +568,7 @@ RSpec.shared_examples 'Datadog distributed format' do
             {
               prepare_key['x-datadog-trace-id'] => 0xffffffffffffffff.to_s,
               prepare_key['x-datadog-parent-id'] => 0xbbbbbbbbbbbbbbbb.to_s,
-              prepare_key['x-datadog-tags'] => "_dd.p.tid= #{invalid_trace_id}"
+              prepare_key['x-datadog-tags'] => "_dd.p.tid= #{invalid_trace_id}",
             }
           end
 

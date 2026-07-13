@@ -105,7 +105,7 @@ RSpec.describe Datadog::Tracing::SpanEvent do
           'string_arr' => %w[ab cd],
           'bool_arr' => [true, false],
           'int_arr' => [1, 2],
-          'float_arr' => [1.0, 2.0]
+          'float_arr' => [1.0, 2.0],
         }
       end
 
@@ -117,12 +117,12 @@ RSpec.describe Datadog::Tracing::SpanEvent do
           'float' => {type: 3, double_value: 1.0},
           'string_arr' => {type: 4,
                            array_value: {values: [{type: 0, string_value: 'ab'},
-                             {type: 0, string_value: 'cd'},]}},
+                             {type: 0, string_value: 'cd'},]},},
           'bool_arr' => {type: 4,
-                         array_value: {values: [{type: 1, bool_value: true}, {type: 1, bool_value: false}]}},
+                         array_value: {values: [{type: 1, bool_value: true}, {type: 1, bool_value: false}]},},
           'int_arr' => {type: 4, array_value: {values: [{type: 2, int_value: 1}, {type: 2, int_value: 2}]}},
           'float_arr' => {type: 4,
-                          array_value: {values: [{type: 3, double_value: 1.0}, {type: 3, double_value: 2.0}]}},
+                          array_value: {values: [{type: 3, double_value: 1.0}, {type: 3, double_value: 2.0}]},},
         )
       end
     end

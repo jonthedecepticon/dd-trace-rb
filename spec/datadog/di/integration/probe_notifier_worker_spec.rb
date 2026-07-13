@@ -130,7 +130,7 @@ RSpec.describe Datadog::DI::ProbeNotifierWorker do
            probeVersion: 0,
            runtimeId: 'test runtime id',
            status: 'INSTALLED',
-         }
+         },
        },
        message: 'test message',
        service: 'rspec',

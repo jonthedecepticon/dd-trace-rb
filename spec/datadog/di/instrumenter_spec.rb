@@ -319,7 +319,7 @@ RSpec.describe Datadog::DI::Instrumenter do
     context 'when capturing snapshot and there are instance variables' do
       let(:probe_args) do
         {type_name: 'HookIvarTestClass', method_name: 'hook_test_method',
-         capture_snapshot: true}
+         capture_snapshot: true,}
       end
 
       let(:target_call) do
@@ -373,7 +373,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'with snapshot capture' do
         let(:probe_args) do
           {type_name: 'HookTestClass', method_name: 'hook_test_method_with_arg',
-           capture_snapshot: true}
+           capture_snapshot: true,}
         end
 
         let(:target_call) do
@@ -402,7 +402,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           context 'when there are instance variables' do
             let(:probe_args) do
               {type_name: 'HookIvarTestClass', method_name: 'hook_test_method_with_arg',
-               capture_snapshot: true}
+               capture_snapshot: true,}
             end
 
             let(:target_call) do
@@ -463,7 +463,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'with snapshot capture' do
         let(:probe_args) do
           {type_name: 'HookTestClass', method_name: 'hook_test_method_with_kwarg',
-           capture_snapshot: true}
+           capture_snapshot: true,}
         end
 
         let(:target_call) do
@@ -516,7 +516,7 @@ RSpec.describe Datadog::DI::Instrumenter do
         context 'when there are instance variables' do
           let(:probe_args) do
             {type_name: 'HookIvarTestClass', method_name: 'hook_test_method_with_kwarg',
-             capture_snapshot: true}
+             capture_snapshot: true,}
           end
 
           let(:target_call) do
@@ -553,7 +553,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'with snapshot capture' do
         let(:probe_args) do
           {type_name: 'HookTestClass', method_name: 'hook_test_method_with_pos_and_kwarg',
-           capture_snapshot: true}
+           capture_snapshot: true,}
         end
 
         let(:target_call) do
@@ -663,7 +663,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe_args) do
         {type_name: 'HookTestClass', method_name: 'squashed',
-         capture_snapshot: true}
+         capture_snapshot: true,}
       end
 
       context 'call with keyword arguments' do
@@ -719,7 +719,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         let(:probe_args) do
           {type_name: 'HookTestClass', method_name: 'positional_and_squashed',
-           capture_snapshot: true}
+           capture_snapshot: true,}
         end
 
         context 'call with positional and keyword arguments' do
@@ -1131,7 +1131,7 @@ RSpec.describe Datadog::DI::Instrumenter do
     context 'when there is a condition' do
       let(:probe_args) do
         {type_name: 'HookTestClass', method_name: 'hook_test_method_with_pos_and_kwarg',
-         condition: condition}
+         condition: condition,}
       end
 
       let(:target_call) do

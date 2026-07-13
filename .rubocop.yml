@@ -30,7 +30,8 @@ Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: false
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes

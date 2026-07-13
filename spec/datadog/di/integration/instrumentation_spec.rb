@@ -129,7 +129,7 @@ RSpec.describe 'Instrumentation integration' do
          probeVersion: 0,
          runtimeId: String,
          status: 'INSTALLED',
-       }
+       },
      },
      message: String,
      service: 'rspec',
@@ -145,7 +145,7 @@ RSpec.describe 'Instrumentation integration' do
          probeVersion: 0,
          runtimeId: String,
          status: 'EMITTING',
-       }
+       },
      },
      message: String,
      service: 'rspec',
@@ -245,7 +245,7 @@ RSpec.describe 'Instrumentation integration' do
               evaluationErrors: [],
               probe: {id: '1234', version: 0, location: {
                 method: 'test_method', type: 'InstrumentationDelayedTestClass',
-              }},
+              },},
               language: 'ruby',
               stack: Array,
               captures: {},
@@ -288,7 +288,7 @@ RSpec.describe 'Instrumentation integration' do
                 evaluationErrors: [],
                 probe: {id: '1234', version: 0, location: {
                   method: 'test_method', type: 'InstrumentationDelayedDerivedTestClass',
-                }},
+                },},
                 language: 'ruby',
                 stack: Array,
                 captures: {},
@@ -334,7 +334,7 @@ RSpec.describe 'Instrumentation integration' do
               evaluationErrors: [],
               probe: {id: '1234', version: 0, location: {
                 method: 'test_method', type: 'InstrumentationDelayedPartialTestClass',
-              }},
+              },},
               language: 'ruby',
               # TODO the stack trace here does not contain the target method
               # as the first frame - see the comment in Instrumenter.
@@ -377,7 +377,7 @@ RSpec.describe 'Instrumentation integration' do
               evaluationErrors: [],
               probe: {id: '1234', version: 0, location: {
                 method: 'test_method', type: 'InstrumentationVirtualTestClass',
-              }},
+              },},
               language: 'ruby',
               # TODO the stack trace here does not contain the target method
               # as the first frame - see the comment in Instrumenter.
@@ -413,7 +413,7 @@ RSpec.describe 'Instrumentation integration' do
                 },
               },
               '@return': {type: 'Integer', value: '42'},
-            }, throwable: nil},
+            }, throwable: nil,},
           }
         end
 
@@ -548,7 +548,7 @@ RSpec.describe 'Instrumentation integration' do
                   },
                 },
                 '@return': {type: 'String', value: 'altered value'},
-              }, throwable: nil},
+              }, throwable: nil,},
             }
           end
 
@@ -766,7 +766,7 @@ RSpec.describe 'Instrumentation integration' do
                   type: 'Error',
                   message: String,
                 },
-              }
+              },
             },
             message: /Probe circuit-breaker-test was disabled because it consumed .+ seconds of CPU time in DI processing/,
             service: 'rspec',
@@ -1062,7 +1062,7 @@ RSpec.describe 'Instrumentation integration' do
               redacted: {type: 'Hash', entries: [
                 [{type: 'Symbol', value: 'b'}, {type: 'Integer', value: '33'}],
                 [{type: 'Symbol', value: 'session'}, {type: 'String', notCapturedReason: 'redactedIdent'}],
-              ]},
+              ],},
             },
             arguments: {
               self: {
@@ -1325,7 +1325,7 @@ RSpec.describe 'Instrumentation integration' do
                   type: 'Error',
                   message: String,
                 },
-              }
+              },
             },
             message: /Probe circuit-breaker-line-test was disabled because it consumed .+ seconds of CPU time in DI processing/,
             service: 'rspec',

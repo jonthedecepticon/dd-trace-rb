@@ -674,7 +674,7 @@ RSpec.describe Datadog::OpenTelemetry do
       context 'with attributes containing exception stacktrace, type and message' do
         let(:attributes) do
           {'exception.stacktrace' => 'funny_stack', 'exception.type' => 'CustomError', 'exception.message' => 'NewError',
-           'candy' => true}
+           'candy' => true,}
         end
 
         it 'sets records an exception event and sets span error tags using the attributes hash' do
@@ -936,7 +936,7 @@ RSpec.describe Datadog::OpenTelemetry do
         context 'with TraceContext headers' do
           let(:carrier) do
             {
-              'traceparent' => '00-11111111111111111111111111111111-2222222222222222-01'
+              'traceparent' => '00-11111111111111111111111111111111-2222222222222222-01',
             }
           end
 

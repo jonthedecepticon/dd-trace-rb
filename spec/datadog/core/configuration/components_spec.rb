@@ -552,7 +552,7 @@ RSpec.describe Datadog::Core::Configuration::Components do
         let(:default_options) do
           {
             enabled: settings.runtime_metrics.enabled,
-            metrics: runtime_metrics
+            metrics: runtime_metrics,
           }
         end
         let(:options) { {} }

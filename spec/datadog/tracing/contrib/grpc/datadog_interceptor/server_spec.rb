@@ -62,7 +62,7 @@ RSpec.describe 'tracing on the server connection' do
     let(:keywords) do
       {request: instance_double(Object),
        call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-       method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+       method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
     end
 
     it_behaves_like 'span data contents' do
@@ -119,7 +119,7 @@ RSpec.describe 'tracing on the server connection' do
   describe '#client_streamer' do
     let(:keywords) do
       {call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-       method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+       method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
     end
 
     before do
@@ -133,7 +133,7 @@ RSpec.describe 'tracing on the server connection' do
     let(:keywords) do
       {request: instance_double(Object),
        call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-       method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+       method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
     end
 
     before do
@@ -147,7 +147,7 @@ RSpec.describe 'tracing on the server connection' do
     let(:keywords) do
       {requests: instance_double(Array),
        call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-       method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+       method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
     end
 
     before do

@@ -358,7 +358,7 @@ RSpec.shared_examples 'Trace Context distributed format' do
     subject(:extract) { propagation.extract(data) }
     let(:data) do
       {prepare_key['traceparent'] => traceparent,
-       prepare_key['tracestate'] => tracestate}
+       prepare_key['tracestate'] => tracestate,}
     end
     let(:traceparent) { "#{version}-#{trace_id}-#{parent_id}-#{trace_flags}" }
     let(:version) { '01' }
@@ -410,7 +410,7 @@ RSpec.shared_examples 'Trace Context distributed format' do
       let(:data) do
         {
           prepare_key['traceparent'] => '00-aaaaaaaaaaaaaaaaffffffffffffffff-bbbbbbbbbbbbbbbb-00',
-          prepare_key['tracestate'] => 'dd=t.tid:cccccccccccccccc'
+          prepare_key['tracestate'] => 'dd=t.tid:cccccccccccccccc',
         }
       end
 
@@ -435,7 +435,7 @@ RSpec.shared_examples 'Trace Context distributed format' do
       let(:data) do
         {
           prepare_key['traceparent'] => '00-aaaaaaaaaaaaaaaaffffffffffffffff-bbbbbbbbbbbbbbbb-00',
-          prepare_key['tracestate'] => ''
+          prepare_key['tracestate'] => '',
         }
       end
 

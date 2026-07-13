@@ -113,7 +113,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
                 isNull: true,
               },
             }, throwable: nil,
-          }}
+          },}
         end
 
         let(:context) do
@@ -135,9 +135,9 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
       context 'with template segments' do
         let(:probe_spec) do
           {id: '11', name: 'bar', type: 'LOG_PROBE', where: {
-                                                       typeName: 'Foo', methodName: 'bar'
+                                                       typeName: 'Foo', methodName: 'bar',
                                                      },
-           segments: segments}
+           segments: segments,}
         end
 
         let(:segments) do

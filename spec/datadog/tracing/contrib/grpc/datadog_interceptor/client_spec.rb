@@ -38,7 +38,7 @@ RSpec.describe 'tracing on the client connection' do
       {request: instance_double(Object),
        call: instance_double('GRPC::ActiveCall', peer: peer, deadline: deadline),
        method: '/ruby.test.Testing/Basic',
-       metadata: {some: 'datum'}}
+       metadata: {some: 'datum'},}
     end
 
     let(:default_client_interceptor) do
@@ -135,7 +135,7 @@ RSpec.describe 'tracing on the client connection' do
       {request: instance_double(Object),
        call: instance_double('GRPC::ActiveCall', peer: peer),
        method: '/ruby.test.Testing/Basic',
-       metadata: original_metadata.clone}
+       metadata: original_metadata.clone,}
     end
 
     let(:original_metadata) { {some: 'datum'} }
@@ -205,7 +205,7 @@ RSpec.describe 'tracing on the client connection' do
     let(:keywords) do
       {call: instance_double('GRPC::ActiveCall', peer: peer),
        method: '/ruby.test.Testing/Basic',
-       metadata: original_metadata.clone}
+       metadata: original_metadata.clone,}
     end
     let(:original_metadata) { {some: 'datum'} }
 
@@ -223,7 +223,7 @@ RSpec.describe 'tracing on the client connection' do
       {request: instance_double(Object),
        call: instance_double('GRPC::ActiveCall', peer: peer),
        method: '/ruby.test.Testing/Basic',
-       metadata: original_metadata.clone}
+       metadata: original_metadata.clone,}
     end
 
     let(:original_metadata) { {some: 'datum'} }
@@ -242,7 +242,7 @@ RSpec.describe 'tracing on the client connection' do
       {requests: instance_double(Array),
        call: instance_double('GRPC::ActiveCall', peer: peer),
        method: '/ruby.test.Testing/Basic',
-       metadata: original_metadata.clone}
+       metadata: original_metadata.clone,}
     end
 
     let(:original_metadata) { {some: 'datum'} }

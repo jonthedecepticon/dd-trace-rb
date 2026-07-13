@@ -116,7 +116,7 @@ RSpec.shared_examples 'B3 Multi distributed format' do
     context 'with trace_id and span_id' do
       let(:data) do
         {prepare_key['x-b3-traceid'] => 10000.to_s(16),
-         prepare_key['x-b3-spanid'] => 20000.to_s(16)}
+         prepare_key['x-b3-spanid'] => 20000.to_s(16),}
       end
 
       it { expect(digest.span_id).to eq(20000) }
@@ -129,7 +129,7 @@ RSpec.shared_examples 'B3 Multi distributed format' do
         let(:data) do
           {prepare_key['x-b3-traceid'] => 10000.to_s(16),
            prepare_key['x-b3-spanid'] => 20000.to_s(16),
-           prepare_key['x-b3-sampled'] => '1'}
+           prepare_key['x-b3-sampled'] => '1',}
         end
 
         it { expect(digest.span_id).to eq(20000) }
@@ -142,7 +142,7 @@ RSpec.shared_examples 'B3 Multi distributed format' do
         let(:data) do
           {prepare_key['x-b3-traceid'] => 10000.to_s(16),
            prepare_key['x-b3-spanid'] => 20000.to_s(16),
-           prepare_key['x-datadog-origin'] => 'synthetics'}
+           prepare_key['x-datadog-origin'] => 'synthetics',}
         end
 
         it { expect(digest.span_id).to eq(20000) }
@@ -162,7 +162,7 @@ RSpec.shared_examples 'B3 Multi distributed format' do
             let(:data) do
               {
                 prepare_key['x-b3-traceid'] => invalid_trace_id,
-                prepare_key['x-b3-spanid'] => 20000.to_s(16)
+                prepare_key['x-b3-spanid'] => 20000.to_s(16),
               }
             end
 

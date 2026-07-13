@@ -31,7 +31,7 @@ module TracerHelpers
     options = {
       transport: Datadog::Tracing::Transport::HTTP.default(agent_settings: test_agent_settings, logger: logger) do |t|
         t.adapter :test
-      end
+      end,
     }.merge(options)
 
     FauxWriter.new(options)
@@ -58,7 +58,7 @@ module TracerHelpers
   # Return some test services
   def get_test_services
     {'rest-api' => {'app' => 'rails', 'app_type' => 'web'},
-     'master' => {'app' => 'postgres', 'app_type' => 'db'}}
+     'master' => {'app' => 'postgres', 'app_type' => 'db'},}
   end
 
   def writer

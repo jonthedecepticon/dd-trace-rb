@@ -358,7 +358,7 @@ RSpec.describe 'DI integration from remote config' do
 
       let(:probe_configs) do
         {'datadog/2/LIVE_DEBUGGING/foo1/bar1' => unknown_probe_spec,
-         'datadog/2/LIVE_DEBUGGING/foo2/bar2' => probe_spec}
+         'datadog/2/LIVE_DEBUGGING/foo2/bar2' => probe_spec,}
       end
 
       it 'installs the second, known, probe' do
@@ -559,8 +559,8 @@ RSpec.describe 'DI integration from remote config' do
     context 'line probe with path containing extra prefix directories' do
       let(:probe_spec) do
         {id: '11', name: 'bar', type: 'LOG_PROBE', where: {
-          sourceFile: 'junk/prefix/instrumentation_integration_test_class.rb', lines: [42]
-        }}
+          sourceFile: 'junk/prefix/instrumentation_integration_test_class.rb', lines: [42],
+        },}
       end
 
       include_context 'targeting integration test class via load'
@@ -578,8 +578,8 @@ RSpec.describe 'DI integration from remote config' do
     context 'line probe received targeting loaded code not in code tracker' do
       let(:probe_spec) do
         {id: '11', name: 'bar', type: 'LOG_PROBE', where: {
-          sourceFile: 'instrumentation_integration_test_class.rb', lines: [42]
-        }}
+          sourceFile: 'instrumentation_integration_test_class.rb', lines: [42],
+        },}
       end
 
       include_context 'targeting integration test class via require'

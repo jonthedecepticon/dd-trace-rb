@@ -393,7 +393,7 @@ module Datadog
          'DD_TRACE_DEBUG' => ['OTEL_LOG_LEVEL'],
          'DD_TRACE_ENABLED' => ['OTEL_TRACES_EXPORTER'],
          'DD_TRACE_PROPAGATION_STYLE' => ['OTEL_PROPAGATORS'],
-         'DD_TRACE_SAMPLE_RATE' => ['OTEL_TRACES_SAMPLER']}.freeze
+         'DD_TRACE_SAMPLE_RATE' => ['OTEL_TRACES_SAMPLER'],}.freeze
 
       DEPRECATIONS =
         Set['DD_PROFILING_PREVIEW_GVL_ENABLED', 'DISABLE_DATADOG_RAILS']
@@ -407,7 +407,7 @@ module Datadog
          'OTEL_RESOURCE_ATTRIBUTES' => 'DD_TAGS',
          'OTEL_SERVICE_NAME' => 'DD_SERVICE',
          'OTEL_TRACES_EXPORTER' => 'DD_TRACE_ENABLED',
-         'OTEL_TRACES_SAMPLER' => 'DD_TRACE_SAMPLE_RATE'}.freeze
+         'OTEL_TRACES_SAMPLER' => 'DD_TRACE_SAMPLE_RATE',}.freeze
     end
   end
 end

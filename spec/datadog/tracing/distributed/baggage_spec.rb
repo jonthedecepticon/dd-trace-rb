@@ -56,7 +56,7 @@ RSpec.shared_examples 'Baggage distributed format' do
           Datadog::Tracing::TraceDigest.new(
             baggage: {'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$&\'*+-.^_`|~' =>
             'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$&\'()*+-./:<>?@[]^_`{|}~',
-                      'key2' => 'value2'},
+                      'key2' => 'value2',},
           )
         end
 
@@ -563,7 +563,7 @@ RSpec.describe Datadog::Tracing::Distributed::Baggage do
         context 'with a complete entry before the byte limit' do
           let(:data) do
             {
-              'baggage' => "key1=#{'a' * (max_baggage_bytes / 2)},key2=#{'b' * (max_baggage_bytes / 2)}"
+              'baggage' => "key1=#{'a' * (max_baggage_bytes / 2)},key2=#{'b' * (max_baggage_bytes / 2)}",
             }
           end
 

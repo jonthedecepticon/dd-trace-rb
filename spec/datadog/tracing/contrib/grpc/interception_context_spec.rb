@@ -60,7 +60,7 @@ RSpec.describe GRPC::InterceptionContext do
           {request: instance_double(Object),
            call: instance_double('GRPC::ActiveCall'),
            method: '/ruby.test.Testing/Basic',
-           metadata: {some: 'datum'}}
+           metadata: {some: 'datum'},}
         end
 
         it_behaves_like 'span data contents'
@@ -71,7 +71,7 @@ RSpec.describe GRPC::InterceptionContext do
         let(:keywords) do
           {call: instance_double('GRPC::ActiveCall'),
            method: '/ruby.test.Testing/Basic',
-           metadata: {some: 'datum'}}
+           metadata: {some: 'datum'},}
         end
 
         it_behaves_like 'span data contents'
@@ -83,7 +83,7 @@ RSpec.describe GRPC::InterceptionContext do
           {request: instance_double(Object),
            call: instance_double('GRPC::ActiveCall'),
            method: '/ruby.test.Testing/Basic',
-           metadata: {some: 'datum'}}
+           metadata: {some: 'datum'},}
         end
 
         specify do
@@ -107,7 +107,7 @@ RSpec.describe GRPC::InterceptionContext do
           {requests: instance_double(Array),
            call: instance_double('GRPC::ActiveCall'),
            method: '/ruby.test.Testing/Basic',
-           metadata: {some: 'datum'}}
+           metadata: {some: 'datum'},}
         end
 
         it_behaves_like 'span data contents'
@@ -140,7 +140,7 @@ RSpec.describe GRPC::InterceptionContext do
         let(:keywords) do
           {request: instance_double(Object),
            call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-           method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+           method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
         end
 
         it_behaves_like 'span data contents'
@@ -150,7 +150,7 @@ RSpec.describe GRPC::InterceptionContext do
         let(:type) { :client_streamer }
         let(:keywords) do
           {call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-           method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+           method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
         end
 
         it_behaves_like 'span data contents'
@@ -161,7 +161,7 @@ RSpec.describe GRPC::InterceptionContext do
         let(:keywords) do
           {request: instance_double(Object),
            call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-           method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+           method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
         end
 
         it_behaves_like 'span data contents'
@@ -172,7 +172,7 @@ RSpec.describe GRPC::InterceptionContext do
         let(:keywords) do
           {requests: instance_double(Array),
            call: instance_double('GRPC::ActiveCall', metadata: {some: 'datum'}),
-           method: instance_double(Method, owner: 'My::Server', name: 'endpoint')}
+           method: instance_double(Method, owner: 'My::Server', name: 'endpoint'),}
         end
 
         it_behaves_like 'span data contents'

@@ -26,7 +26,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
          # Use a value different from our library default to ensure that
          # it is correctly processed.
          'sampling' => {'snapshotsPerSecond' => 4500},
-         'evaluateAt' => 'EXIT'}
+         'evaluateAt' => 'EXIT',}
       end
 
       it 'creates line probe with corresponding values' do
@@ -80,7 +80,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
          'captureSnapshot' => false,
          'capture' => {'maxReferenceDepth' => 3},
          'sampling' => {'snapshotsPerSecond' => 5000},
-         'evaluateAt' => 'EXIT'}
+         'evaluateAt' => 'EXIT',}
       end
 
       describe 'construction' do
@@ -105,7 +105,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
          'captureSnapshot' => true,
          'capture' => {'maxReferenceDepth' => 3},
          'sampling' => {'snapshotsPerSecond' => 5000},
-         'evaluateAt' => 'EXIT'}
+         'evaluateAt' => 'EXIT',}
       end
 
       it 'capture_snapshot? is true' do
@@ -126,7 +126,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
          'captureSnapshot' => false,
          'capture' => {'maxReferenceDepth' => 3},
          'sampling' => {'snapshotsPerSecond' => 5000},
-         'evaluateAt' => 'EXIT'}
+         'evaluateAt' => 'EXIT',}
       end
 
       it 'capture_snapshot? is false' do
@@ -146,11 +146,11 @@ RSpec.describe Datadog::DI::ProbeBuilder do
            'json' => {
              'contains' => [
                {
-                 'ref' => 'value'
+                 'ref' => 'value',
                },
                'StringLiteral',
-             ]
-           }
+             ],
+           },
          },
          'tags' => [],
          'template' => 'In aaa, line 1',
@@ -158,7 +158,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
          'captureSnapshot' => true,
          'capture' => {'maxReferenceDepth' => 3},
          'sampling' => {'snapshotsPerSecond' => 5000},
-         'evaluateAt' => 'EXIT'}
+         'evaluateAt' => 'EXIT',}
       end
 
       it 'condition on probe is the compiled condition' do

@@ -354,7 +354,7 @@ RSpec.describe 'Tracer integration tests' do
           include_context 'DD_TRACE_SAMPLING_RULES configuration' do
             let(:rule) do
               {resource: 'my.resource', service: 'my.service', tags: {tag: 'tag_value', tag2: 'tag_value2'},
-               sample_rate: 1.0}
+               sample_rate: 1.0,}
             end
           end
 
@@ -369,7 +369,7 @@ RSpec.describe 'Tracer integration tests' do
           include_context 'DD_TRACE_SAMPLING_RULES configuration' do
             let(:rule) do
               {resource: 'my.resource', service: 'my.service', tags: {tag: 'wrong_tag_value'},
-               sample_rate: 1.0}
+               sample_rate: 1.0,}
             end
           end
 
@@ -384,7 +384,7 @@ RSpec.describe 'Tracer integration tests' do
           include_context 'DD_TRACE_SAMPLING_RULES configuration' do
             let(:rule) do
               {resource: 'my.resource', service: 'my.service', tags: {tag: 'tag_value'},
-               sample_rate: 0}
+               sample_rate: 0,}
             end
           end
 
@@ -910,7 +910,7 @@ RSpec.describe 'Tracer integration tests' do
               {'name' => 'event_name',
                'time_unix_nano' => 123,
                'attributes' => {'key' => {
-                 'string_value' => 'value', 'type' => 0
+                 'string_value' => 'value', 'type' => 0,
                }},},
             ],
           )
@@ -928,7 +928,7 @@ RSpec.describe 'Tracer integration tests' do
               [
                 {'name' => 'event_name',
                  'time_unix_nano' => 123,
-                 'attributes' => {'key' => 'value'}},
+                 'attributes' => {'key' => 'value'},},
               ],
             ),
           )

@@ -45,7 +45,7 @@ RSpec.describe Datadog::DI::Serializer do
       database: ENV.fetch('TEST_MYSQL_DB', 'mysql'),
       host: ENV.fetch('TEST_MYSQL_HOST', '127.0.0.1'),
       password: ENV.fetch('TEST_MYSQL_ROOT_PASSWORD', 'root'),
-      port: ENV.fetch('TEST_MYSQL_PORT', '3306')
+      port: ENV.fetch('TEST_MYSQL_PORT', '3306'),
     }
   end
 
@@ -81,7 +81,7 @@ RSpec.describe Datadog::DI::Serializer do
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ],]}},
+       ],],},},
       {name: 'AR model with empty attributes',
        input: -> { SerializerRailsSpecTestBasicModel.new },
        expected: {type: 'SerializerRailsSpecTestBasicModel', entries: [[
@@ -91,11 +91,11 @@ RSpec.describe Datadog::DI::Serializer do
            [{type: 'String', value: 'title'}, {type: 'NilClass', isNull: true}],
            [{type: 'String', value: 'created_at'}, {type: 'NilClass', isNull: true}],
            [{type: 'String', value: 'updated_at'}, {type: 'NilClass', isNull: true}],
-         ]},
+         ],},
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ],]}},
+       ],],},},
       {name: 'AR model with filled out attributes',
        input: -> {
                 SerializerRailsSpecTestBasicModel.new(
@@ -109,11 +109,11 @@ RSpec.describe Datadog::DI::Serializer do
            [{type: 'String', value: 'title'}, {type: 'String', value: 'Hello, world!'}],
            [{type: 'String', value: 'created_at'}, {type: 'Time', value: '2020-01-02T00:00:00Z'}],
            [{type: 'String', value: 'updated_at'}, {type: 'Time', value: '2020-01-03T00:00:00Z'}],
-         ]},
+         ],},
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ],]}},
+       ],],},},
       {name: 'AR model with filled out attributes and persisted',
        input: -> {
                 SerializerRailsSpecTestBasicModel.create!(
@@ -127,11 +127,11 @@ RSpec.describe Datadog::DI::Serializer do
            [{type: 'String', value: 'title'}, {type: 'String', value: 'Hello, world!'}],
            [{type: 'String', value: 'created_at'}, {type: 'Time', value: '2020-01-02T00:00:00Z'}],
            [{type: 'String', value: 'updated_at'}, {type: 'Time', value: '2020-01-03T00:00:00Z'}],
-         ]},
+         ],},
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'FalseClass', value: 'false'},
-       ],]}},
+       ],],},},
     ]
 
     define_serialize_value_cases(cases)
