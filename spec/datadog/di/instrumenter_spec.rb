@@ -784,13 +784,13 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(**base_probe_args.merge(
-          type_name: 'HookTestClass', method_name: 'hook_test_method'
+          type_name: 'HookTestClass', method_name: 'hook_test_method',
         ))
       end
 
       let(:probe2) do
         Datadog::DI::Probe.new(**base_probe_args.merge(
-          type_name: 'HookTestClass', method_name: 'hook_test_method'
+          type_name: 'HookTestClass', method_name: 'hook_test_method',
         ))
       end
 
@@ -844,7 +844,7 @@ RSpec.describe Datadog::DI::Instrumenter do
             hook_method(probe) do |payload|
             end
           end.to raise_error(Datadog::DI::Error::ProbeTargetForbidden,
-            /Method probes on the Datadog namespace are not permitted: #{Regexp.escape(type_name)}#some_method/)
+            /Method probes on the Datadog namespace are not permitted: #{Regexp.escape(type_name)}#some_method/,)
         end
       end
 
@@ -959,7 +959,7 @@ RSpec.describe Datadog::DI::Instrumenter do
             expect do
               hook_method(probe) { |_| }
             end.to raise_error(Datadog::DI::Error::ProbeTargetForbidden,
-              /Method probes on Kernel#lambda are not permitted: #{Regexp.escape(type_name)}#lambda/)
+              /Method probes on Kernel#lambda are not permitted: #{Regexp.escape(type_name)}#lambda/,)
           end
         end
       end
@@ -1002,7 +1002,7 @@ RSpec.describe Datadog::DI::Instrumenter do
             def lambda
               :not_kernel
             end
-          end)
+          end,)
         end
 
         let(:probe_args) do
@@ -1035,7 +1035,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(type_name: 'HookTestClass', method_name: 'hook_test_method',
-          id: 1, type: :log)
+          id: 1, type: :log,)
       end
 
       let(:payload) do
@@ -1109,7 +1109,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'non-enriched probe' do
         let(:probe) do
           Datadog::DI::Probe.new(type_name: 'HookTestClass', method_name: 'recursive',
-            id: 1, type: :log)
+            id: 1, type: :log,)
         end
 
         it 'does not invoke callback' do
@@ -1180,7 +1180,7 @@ RSpec.describe Datadog::DI::Instrumenter do
             Datadog::DI::EL::Expression.new(
               '(expression)',
               # We use "arg1" here, actual variable name is not currently available
-              "ref('arg1') == 41"
+              "ref('arg1') == 41",
             )
           end
 
@@ -1192,7 +1192,7 @@ RSpec.describe Datadog::DI::Instrumenter do
             Datadog::DI::EL::Expression.new(
               '(expression)',
               # We use "arg1" here, actual variable name is not currently available
-              "ref('arg1') == 42"
+              "ref('arg1') == 42",
             )
           end
 
@@ -1205,7 +1205,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "ref('kwarg') == 42"
+              "ref('kwarg') == 42",
             )
           end
 
@@ -1216,7 +1216,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "ref('kwarg') == 41"
+              "ref('kwarg') == 41",
             )
           end
 
@@ -1230,7 +1230,7 @@ RSpec.describe Datadog::DI::Instrumenter do
         let(:condition) do
           Datadog::DI::EL::Expression.new(
             '(expression)',
-            "unknown_function('kwarg') == 42"
+            "unknown_function('kwarg') == 42",
           )
         end
 
@@ -1362,7 +1362,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 25,
-            id: 1, type: :log, rate_limit: rate_limit)
+            id: 1, type: :log, rate_limit: rate_limit,)
         end
 
         it 'invokes the instrumentation every time' do
@@ -1395,7 +1395,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 21,
-            id: 1, type: :log)
+            id: 1, type: :log,)
         end
 
         before(:all) do
@@ -1431,7 +1431,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 21,
-            id: 1, type: :log)
+            id: 1, type: :log,)
         end
 
         before(:all) do
@@ -1459,7 +1459,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(file: 'hook_line.rb', line_no: 2,
-          id: 1, type: :log)
+          id: 1, type: :log,)
       end
 
       it 'does not invoke callback' do
@@ -1486,7 +1486,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(file: 'hook_line.rb', line_no: 3,
-          id: 1, type: :log)
+          id: 1, type: :log,)
       end
 
       let(:payload) do
@@ -1575,7 +1575,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(file: 'hook_line_targeted.rb', line_no: 13,
-          id: 1, type: :log)
+          id: 1, type: :log,)
       end
 
       it 'targets the trace point' do
@@ -1602,7 +1602,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 26,
-            id: 1, type: :log, rate_limit: rate_limit)
+            id: 1, type: :log, rate_limit: rate_limit,)
         end
 
         it 'invokes the instrumentation' do
@@ -1643,7 +1643,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'when instrumenting a line in loaded but not tracked file' do
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line.rb', line_no: 3,
-            id: 1, type: :log)
+            id: 1, type: :log,)
         end
 
         it 'raises DITargetNotInRegistry with no surviving iseqs message' do
@@ -1656,7 +1656,7 @@ RSpec.describe Datadog::DI::Instrumenter do
         context 'with Windows-style probe path requiring prefix stripping' do
           let(:probe) do
             Datadog::DI::Probe.new(file: 'shared\rails\hook_line.rb', line_no: 3,
-              id: 1, type: :log)
+              id: 1, type: :log,)
           end
 
           it 'raises DITargetNotInRegistry after backslash normalization and prefix stripping' do
@@ -1726,7 +1726,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'non-enriched probe' do
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_recursive.rb', line_no: 21,
-            id: 1, type: :log, rate_limit: rate_limit)
+            id: 1, type: :log, rate_limit: rate_limit,)
         end
 
         it 'invokes the callback only once' do
@@ -1757,7 +1757,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 52,
-          id: 1, type: :log, rate_limit: rate_limit)
+          id: 1, type: :log, rate_limit: rate_limit,)
       end
 
       let(:payload) do
@@ -1785,7 +1785,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:probe) do
         Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 30,
-          id: 1, type: :log, rate_limit: rate_limit, condition: condition)
+          id: 1, type: :log, rate_limit: rate_limit, condition: condition,)
       end
 
       let(:condition) {}
@@ -1805,7 +1805,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "ref('local') == 42"
+              "ref('local') == 42",
             )
           end
 
@@ -1821,7 +1821,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "ref('local') == 43"
+              "ref('local') == 43",
             )
           end
 
@@ -1838,14 +1838,14 @@ RSpec.describe Datadog::DI::Instrumenter do
       context 'when condition is on instance variable' do
         let(:probe) do
           Datadog::DI::Probe.new(file: 'hook_line_load.rb', line_no: 47,
-            id: 1, type: :log, rate_limit: rate_limit, condition: condition)
+            id: 1, type: :log, rate_limit: rate_limit, condition: condition,)
         end
 
         context 'when condition is met' do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "iref('@ivar') == 42"
+              "iref('@ivar') == 42",
             )
           end
 
@@ -1861,7 +1861,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           let(:condition) do
             Datadog::DI::EL::Expression.new(
               '(expression)',
-              "iref('@ivar') == 43"
+              "iref('@ivar') == 43",
             )
           end
 
@@ -1918,7 +1918,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           def test_method(arg)
             arg + 1
           end
-        end)
+        end,)
       end
 
       after do
@@ -1928,7 +1928,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       let(:probe) do
         Datadog::DI::Probe.new(
           id: 1, type: :log, type_name: 'DITestClass', method_name: 'test_method',
-          condition: Datadog::DI::EL::Expression.new('(expression)', 'undefined_function()')
+          condition: Datadog::DI::EL::Expression.new('(expression)', 'undefined_function()'),
         )
       end
 
@@ -1967,7 +1967,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           def test_method(arg)
             arg + 1
           end
-        end)
+        end,)
       end
 
       after do
@@ -2019,7 +2019,7 @@ RSpec.describe Datadog::DI::Instrumenter do
           define_method(:test_method) do |_arg|
             raise error_class, 'customer error'
           end
-        end)
+        end,)
 
         begin
           instrumenter.hook_method(probe, responder)
@@ -2047,7 +2047,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       let(:probe) do
         Datadog::DI::Probe.new(
           id: 1, type: :log, file: 'hook_line_load.rb', line_no: 30,
-          condition: Datadog::DI::EL::Expression.new('(expression)', 'undefined_function()')
+          condition: Datadog::DI::EL::Expression.new('(expression)', 'undefined_function()'),
         )
       end
 

@@ -323,7 +323,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Aggregator do
       aggregator_small.record(flag_key: 'f', variant: 'v', allocation_key: '', targeting_key: '', eval_time_ms: 2, attrs: {'x' => 2})
       aggregator_small.record(
         flag_key: 'f', variant: 'v', allocation_key: '', error_message: 'boom',
-        targeting_key: '', eval_time_ms: 3, attrs: {'x' => 3}
+        targeting_key: '', eval_time_ms: 3, attrs: {'x' => 3},
       )
 
       snapshot = aggregator_small.flush_and_reset

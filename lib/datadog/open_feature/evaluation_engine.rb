@@ -26,13 +26,13 @@ module Datadog
         unless ALLOWED_TYPES.include?(expected_type)
           message = "unknown type #{expected_type.inspect}, allowed types #{ALLOWED_TYPES.join(', ')}"
           return ResolutionDetails.build_error(
-            value: default_value, error_code: Ext::UNKNOWN_TYPE, error_message: message
+            value: default_value, error_code: Ext::UNKNOWN_TYPE, error_message: message,
           )
         end
 
         context = evaluation_context&.fields.to_h
         result = @evaluator.get_assignment(
-          flag_key, default_value: default_value, context: context, expected_type: expected_type
+          flag_key, default_value: default_value, context: context, expected_type: expected_type,
         )
 
         @reporter.report(result, flag_key: flag_key, context: evaluation_context)
@@ -42,7 +42,7 @@ module Datadog
         @telemetry.report(e, description: 'OpenFeature: Failed to fetch flag value')
 
         ResolutionDetails.build_error(
-          value: default_value, error_code: Ext::GENERAL, error_message: "#{e.class}: #{e.message}"
+          value: default_value, error_code: Ext::GENERAL, error_message: "#{e.class}: #{e.message}",
         )
       end
 

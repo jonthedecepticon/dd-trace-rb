@@ -20,7 +20,7 @@ RSpec.describe Datadog::Tracing::Transport::HTTP::Client do
     let(:response_class) do
       stub_const('TestResponse', Class.new do
         include Datadog::Core::Transport::HTTP::Response
-      end)
+      end,)
     end
     let(:response) { double(response_class, code: double('status code')) }
 

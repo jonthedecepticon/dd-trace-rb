@@ -22,7 +22,8 @@ AllCops:
   SuggestExtensions: false
 
 Style/TrailingCommaInArguments:
-  Enabled: false
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
 
 Style/TrailingCommaInArrayLiteral:
   Enabled: false

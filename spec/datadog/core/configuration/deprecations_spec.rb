@@ -11,7 +11,7 @@ RSpec.describe Datadog::Core::Configuration::Deprecations do
       described_class.log_deprecations_from_all_sources(
         mock_logger,
         deprecations: Set['DEPRECATED_TEST'],
-        alias_to_canonical: {'DEPRECATED_TEST' => 'TEST'}
+        alias_to_canonical: {'DEPRECATED_TEST' => 'TEST'},
       )
     end
 
@@ -119,7 +119,7 @@ RSpec.describe Datadog::Core::Configuration::Deprecations do
         source_env,
         source_name,
         deprecations,
-        alias_to_canonical)
+        alias_to_canonical,)
     end
 
     context 'when the deprecated environment variable has an alias' do

@@ -107,7 +107,7 @@ class DIInstrumentBenchmark
     redactor = Datadog::DI::Redactor.new(settings)
     serializer = Datadog::DI::Serializer.new(settings, redactor)
     @instrumenter = Datadog::DI::Instrumenter.new(settings, serializer, logger,
-      code_tracker: Datadog::DI.code_tracker)
+      code_tracker: Datadog::DI.code_tracker,)
   end
 
   def run_benchmark

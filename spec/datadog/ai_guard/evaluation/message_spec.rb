@@ -18,7 +18,7 @@ RSpec.describe Datadog::AIGuard::Evaluation::Message do
 
     it 'raises an ArgumentError when :tool_call is not a ToolCall' do
       expect { described_class.new(role: :assistant, tool_call: 'ls -la') }.to raise_error(
-        ArgumentError, 'Expected an instance of Datadog::AIGuard::Evaluation::ToolCall for :tool_call argument'
+        ArgumentError, 'Expected an instance of Datadog::AIGuard::Evaluation::ToolCall for :tool_call argument',
       )
     end
 

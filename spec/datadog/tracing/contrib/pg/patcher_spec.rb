@@ -22,7 +22,7 @@ RSpec.describe 'PG::Connection patcher' do
       port: port,
       dbname: dbname,
       user: user,
-      password: password
+      password: password,
     )
   end
 
@@ -700,7 +700,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 
@@ -839,7 +839,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 
@@ -1498,7 +1498,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 
@@ -1638,7 +1638,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 
@@ -2289,7 +2289,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 
@@ -2427,7 +2427,7 @@ RSpec.describe 'PG::Connection patcher' do
             expect(spans.count).to eq(1)
             expect(span).to have_error
             expect(span).to have_error_message(
-              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist')
+              include('ERROR') & include('prepared statement "invalid prepared select 1" does not exist'),
             )
           end
 

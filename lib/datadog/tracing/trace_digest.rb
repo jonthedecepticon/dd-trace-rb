@@ -189,7 +189,7 @@ module Datadog
           trace_state: trace_state,
           trace_state_unknown_fields: trace_state_unknown_fields,
           span_remote: span_remote,
-          baggage: baggage, **field_value_pairs
+          baggage: baggage, **field_value_pairs,
         )
       end
     end

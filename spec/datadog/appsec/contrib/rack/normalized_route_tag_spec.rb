@@ -160,7 +160,7 @@ RSpec.describe 'Normalized route tag' do
           'datadog.action_dispatch.route' => route_object('/users/:id(.:format)'),
           'action_dispatch.request.path_parameters' => {id: '42', format: nil},
           'PATH_INFO' => '/api/v2/users/42',
-        }, route_path: '/api/v2')
+        }, route_path: '/api/v2',)
       end
 
       it { expect(service_span.get_tag('_dd.appsec.normalized_route')).to eq('/api/v2/users/{id}') }
@@ -197,7 +197,7 @@ RSpec.describe 'Normalized route tag' do
         'datadog.action_dispatch.route' => route_object('/users/:id(.:format)'),
         'action_dispatch.request.path_parameters' => {id: '42', format: nil},
         'PATH_INFO' => '/users/42',
-      }, http_route: nil)
+      }, http_route: nil,)
     end
 
     it { expect(service_span.get_tag('_dd.appsec.normalized_route')).to be_nil }

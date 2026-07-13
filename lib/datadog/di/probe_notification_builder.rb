@@ -40,7 +40,7 @@ module Datadog
         build_status(probe,
           message: "Instrumentation for probe #{probe.id} failed: #{exc}",
           status: 'ERROR',
-          exception: exc)
+          exception: exc,)
       end
 
       def build_disabled(probe, duration)
@@ -72,7 +72,7 @@ module Datadog
             return_arguments = {
               '@return': serializer.serialize_value(context.return_value,
                 depth: probe.max_capture_depth || settings.dynamic_instrumentation.max_capture_depth,
-                attribute_count: probe.max_capture_attribute_count || settings.dynamic_instrumentation.max_capture_attribute_count),
+                attribute_count: probe.max_capture_attribute_count || settings.dynamic_instrumentation.max_capture_attribute_count,),
               self: serializer.serialize_value(context.target_self),
             }
             {
@@ -103,7 +103,7 @@ module Datadog
         end
         build_snapshot_base(context,
           evaluation_errors: evaluation_errors, message: message,
-          captures: captures)
+          captures: captures,)
       end
 
       def build_condition_evaluation_failed(context, expression, exception)

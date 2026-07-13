@@ -10,7 +10,7 @@ require 'datadog/tracing/contrib/rails/rails_helper'
 RSpec.describe 'Rails Redis cache', execute_in_fork: Rails.version.to_i >= 8 do
   before(:all) do
     expect(Datadog::Tracing::Contrib::ActiveSupport::Cache::Patcher.patched?).to(
-      be_falsey, <<MESSAGE)
+      be_falsey, <<MESSAGE,)
       ActiveSupport::Cache has already been patched.
       This suite tests the behaviour of dd-trace-rb when patching with Redis enabled.
       Please run this suite before ActiveSupport::Cache is patched.
@@ -32,13 +32,13 @@ MESSAGE
       expect(cache_store_name).to(
         eq('redis_store'),
         'Tests are running with ENV["EXPECT_RAILS_ACTIVESUPPORT"] = true but the test application is not using ' \
-        'the rails-activesupport gem.'
+        'the rails-activesupport gem.',
       )
     else
       expect(cache_store_name).to(
         eq('redis_cache_store'),
         'Tests are running without ENV["EXPECT_RAILS_ACTIVESUPPORT"] being set but the test application is not using ' \
-        'the rails built-in redis support.'
+        'the rails built-in redis support.',
       )
     end
   end

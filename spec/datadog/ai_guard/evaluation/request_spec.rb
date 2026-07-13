@@ -46,7 +46,7 @@ RSpec.describe Datadog::AIGuard::Evaluation::Request do
               }
             }
           }
-        }
+        },
       ).and_return(raw_response_mock)
 
       response = described_class.new(messages).perform
@@ -57,7 +57,7 @@ RSpec.describe Datadog::AIGuard::Evaluation::Request do
       allow(Datadog::AIGuard).to receive(:api_client).and_return(nil)
 
       expect { described_class.new(messages).perform }.to raise_error(
-        RuntimeError, 'AI Guard API Client not initialized'
+        RuntimeError, 'AI Guard API Client not initialized',
       )
     end
   end

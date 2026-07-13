@@ -166,7 +166,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
       writer = described_class.new(transport: transport, logger: logger)
       writer.instance_variable_set(
         :@aggregator,
-        Datadog::OpenFeature::FlagEvaluation::Aggregator.new(global_cap: 100, per_flag_cap: 12, degraded_cap: 10)
+        Datadog::OpenFeature::FlagEvaluation::Aggregator.new(global_cap: 100, per_flag_cap: 12, degraded_cap: 10),
       )
       queue = writer.instance_variable_get(:@queue)
 
@@ -231,8 +231,8 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
           include(
             'flag' => {'key' => 'prefork-flag'},
             'targeting_key' => 'prefork-user',
-            'evaluation_count' => 1
-          )
+            'evaluation_count' => 1,
+          ),
         )
       end
     ensure
@@ -297,7 +297,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
         telemetry,
         'flagevaluation.rows.dropped',
         3,
-        {reason: 'queue_overflow'}
+        {reason: 'queue_overflow'},
       )
       expect(writer.dropped_queue_overflow).to eq(0)
     end
@@ -437,7 +437,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
         telemetry,
         'flagevaluation.rows.degraded',
         3,
-        {reason: 'cardinality_cap'}
+        {reason: 'cardinality_cap'},
       )
     end
 
@@ -610,7 +610,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
         telemetry,
         'flagevaluation.rows.degraded',
         1,
-        {reason: 'payload_limit'}
+        {reason: 'payload_limit'},
       )
       expect(logged).to be_empty
     end
@@ -630,7 +630,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
         telemetry,
         'flagevaluation.rows.dropped',
         1,
-        {reason: 'payload_limit'}
+        {reason: 'payload_limit'},
       )
     end
   end
@@ -664,7 +664,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
       # Inject an aggregator whose flush reports a degraded-overflow drop.
       fake_aggregator = instance_double(Datadog::OpenFeature::FlagEvaluation::Aggregator)
       allow(fake_aggregator).to receive(:flush_and_reset).and_return(
-        {full: {}, degraded: {}, dropped_degraded_overflow: 7}
+        {full: {}, degraded: {}, dropped_degraded_overflow: 7},
       )
       writer.instance_variable_set(:@aggregator, fake_aggregator)
 
@@ -678,7 +678,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
         telemetry,
         'flagevaluation.rows.dropped',
         7,
-        {reason: 'degraded_cap'}
+        {reason: 'degraded_cap'},
       )
     end
   end

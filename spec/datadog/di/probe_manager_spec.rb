@@ -365,7 +365,7 @@ RSpec.describe Datadog::DI::ProbeManager do
     context 'pending probes' do
       let(:probe) do
         Datadog::DI::Probe.new(id: 1, type: :log,
-          type_name: 'foo', method_name: 'bar')
+          type_name: 'foo', method_name: 'bar',)
       end
 
       before do
@@ -390,7 +390,7 @@ RSpec.describe Datadog::DI::ProbeManager do
     context 'installed probes' do
       let(:probe) do
         Datadog::DI::Probe.new(id: 1, type: :log,
-          type_name: 'ProbeManagerSpecTestClass', method_name: 'bar')
+          type_name: 'ProbeManagerSpecTestClass', method_name: 'bar',)
       end
 
       before do

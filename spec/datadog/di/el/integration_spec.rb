@@ -33,7 +33,7 @@ RSpec.describe Datadog::DI::EL do
         ELTestIvarClass
         SubELTestIvarClass
         ELTestMod::ELTestIvarClass
-      ])
+      ],)
       specs.each do |spec|
         describe name = spec.fetch('name') do
           let(:ast) { spec.fetch('ast') }
@@ -48,7 +48,7 @@ RSpec.describe Datadog::DI::EL do
 
           let(:context) do
             Datadog::DI::Context.new(locals: locals, target_self: target,
-              probe: nil, settings: nil, serializer: nil)
+              probe: nil, settings: nil, serializer: nil,)
           end
 
           if error = spec['error']

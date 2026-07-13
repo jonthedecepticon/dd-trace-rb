@@ -290,7 +290,7 @@ RSpec.describe Datadog::DI::ProbeNotifierWorker do
           expect(probe_notification_builder).to receive(:build_status).with(probe, hash_including(
             message: /JSON encoding failed/,
             status: 'ERROR',
-          ))
+          ),)
 
           worker.send(:handle_serialization_error, 'test-probe', exception)
         end

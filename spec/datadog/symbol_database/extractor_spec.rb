@@ -1334,11 +1334,11 @@ RSpec.describe Datadog::SymbolDatabase::Extractor do
       # source points to lib/datadog/tracing/contrib/. Without this exclusion,
       # Net::HTTP would be incorrectly classified as user code.
       expect(extractor.send(:user_code_path?,
-        '/home/user/.gem/ruby/3.2.0/gems/datadog-2.0.0/lib/datadog/tracing/contrib/http/instrumentation.rb')).to be false
+        '/home/user/.gem/ruby/3.2.0/gems/datadog-2.0.0/lib/datadog/tracing/contrib/http/instrumentation.rb',)).to be false
       expect(extractor.send(:user_code_path?,
-        '/real.home/user/dtr/lib/datadog/tracing/contrib/http/instrumentation.rb')).to be false
+        '/real.home/user/dtr/lib/datadog/tracing/contrib/http/instrumentation.rb',)).to be false
       expect(extractor.send(:user_code_path?,
-        '/app/vendor/bundle/lib/datadog/core/pin.rb')).to be false
+        '/app/vendor/bundle/lib/datadog/core/pin.rb',)).to be false
     end
 
     it 'returns true for user code paths' do

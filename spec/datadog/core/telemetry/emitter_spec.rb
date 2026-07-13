@@ -11,7 +11,7 @@ RSpec.describe Datadog::Core::Telemetry::Emitter do
   let(:transport) { double(Datadog::Core::Transport::HTTP::Client) }
   let(:response) do
     double(Datadog::Core::Transport::HTTP::Adapters::Net::Response,
-      ok?: response_ok)
+      ok?: response_ok,)
   end
   let(:response_ok) { true }
 

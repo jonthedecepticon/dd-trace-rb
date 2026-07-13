@@ -19,7 +19,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Event do
         'doLog' => true
       },
       log?: true,
-      error?: false
+      error?: false,
     )
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Event do
             'nickname' => 'johnny',
             'ignored_hash' => {foo: 'bar'},
             'ignored_array' => [1, 2]
-          }
+          },
         )
       end
       let(:expected) do
@@ -61,7 +61,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Event do
     context 'when context does not contain extra fields' do
       let(:context) do
         instance_double(
-          'OpenFeature::SDK::EvaluationContext', targeting_key: 'john-doe', fields: {'targeting_key' => 'john-doe'}
+          'OpenFeature::SDK::EvaluationContext', targeting_key: 'john-doe', fields: {'targeting_key' => 'john-doe'},
         )
       end
       let(:expected) do

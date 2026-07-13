@@ -563,7 +563,7 @@ RSpec.describe 'Instrumentation integration' do
       context 'when target is invoked' do
         let(:probe) do
           Datadog::DI::Probe.new(id: '1234', type: :log,
-            type_name: 'InstrumentationSpecTestClass', method_name: 'test_method')
+            type_name: 'InstrumentationSpecTestClass', method_name: 'test_method',)
         end
 
         it 'notifies agent that probe is emitting' do
@@ -1395,7 +1395,7 @@ RSpec.describe 'Instrumentation integration' do
           type: :log,
           type_name: 'InstrumentationSpecTestClass',
           method_name: 'binary_data_param_method',
-          capture_snapshot: true
+          capture_snapshot: true,
         )
       end
 
@@ -1484,7 +1484,7 @@ RSpec.describe 'Instrumentation integration' do
           type: :log,
           type_name: 'InstrumentationSpecTestClass',
           method_name: 'binary_data_method',
-          capture_snapshot: true
+          capture_snapshot: true,
         )
       end
 

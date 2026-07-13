@@ -521,7 +521,7 @@ module Datadog
             serialized_entry_args = if probe.capture_snapshot?
               serializer.serialize_args(args, kwargs, target_self,
                 depth: probe.max_capture_depth || settings.dynamic_instrumentation.max_capture_depth,
-                attribute_count: probe.max_capture_attribute_count || settings.dynamic_instrumentation.max_capture_attribute_count)
+                attribute_count: probe.max_capture_attribute_count || settings.dynamic_instrumentation.max_capture_attribute_count,)
             end
             # We intentionally do not use Core::Utils::Time.get_time
             # here because the time provider may be overridden by the

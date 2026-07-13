@@ -17,7 +17,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Reporter do
   let(:deduplicator) { instance_double(Datadog::OpenFeature::Exposures::Deduplicator) }
   let(:context) do
     instance_double(
-      'OpenFeature::SDK::EvaluationContext', targeting_key: 'john-doe', fields: {'targeting_key' => 'john-doe'}
+      'OpenFeature::SDK::EvaluationContext', targeting_key: 'john-doe', fields: {'targeting_key' => 'john-doe'},
     )
   end
   let(:result) do
@@ -31,7 +31,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Reporter do
         'doLog' => true
       },
       log?: true,
-      error?: false
+      error?: false,
     )
   end
 
@@ -76,7 +76,7 @@ RSpec.describe Datadog::OpenFeature::Exposures::Reporter do
           allocation_key: '4-for-john-doe',
           flag_metadata: {},
           log?: false,
-          error?: true
+          error?: true,
         )
       end
 

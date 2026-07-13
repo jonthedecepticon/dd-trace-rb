@@ -382,7 +382,7 @@ module Datadog
           'OTEL_SERVICE_NAME',
           'OTEL_TRACES_EXPORTER',
           'OTEL_TRACES_SAMPLER',
-          'OTEL_TRACES_SAMPLER_ARG'].freeze
+          'OTEL_TRACES_SAMPLER_ARG',].freeze
 
       ALIASES =
         {'DD_DISABLE_DATADOG_RAILS' => ['DISABLE_DATADOG_RAILS'],

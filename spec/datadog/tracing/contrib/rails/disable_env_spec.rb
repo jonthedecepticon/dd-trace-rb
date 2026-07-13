@@ -7,7 +7,7 @@ require 'datadog/tracing/contrib/rails/rails_helper'
 RSpec.describe 'Rails disabled', execute_in_fork: Rails.version.to_i >= 8 do
   before(:all) do
     expect(Datadog::Tracing::Contrib::Rails::Patcher.patched?).to(
-      be_falsey, <<MESSAGE)
+      be_falsey, <<MESSAGE,)
       Rails has already been patched.
       This suite tests the behaviour of dd-trace-rb when patching is disabled for Rails.
       Please run this suite before Rails is patched.
@@ -29,7 +29,7 @@ MESSAGE
           def index
             head :ok
           end
-        end
+        end,
       )
     end
 

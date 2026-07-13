@@ -86,7 +86,7 @@ RSpec.describe Datadog::DI::Probe do
     context 'both method and line' do
       let(:probe) do
         described_class.new(id: '42', type: :log,
-          type_name: 'foo', method_name: 'bar', file: 'baz', line_no: 4)
+          type_name: 'foo', method_name: 'bar', file: 'baz', line_no: 4,)
       end
 
       it 'creates a line probe' do

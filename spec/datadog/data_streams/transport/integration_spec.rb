@@ -8,11 +8,11 @@ RSpec.describe Datadog::DataStreams::Transport do
     double('Settings',
       service: Datadog.configuration.service,
       env: Datadog.configuration.env,
-      experimental_propagate_process_tags_enabled: false)
+      experimental_propagate_process_tags_enabled: false,)
   end
   let(:agent_settings) do
     Datadog::Core::Configuration::AgentSettings.new(
-      adapter: :net_http, hostname: 'localhost', port: http_server_port
+      adapter: :net_http, hostname: 'localhost', port: http_server_port,
     )
   end
   let(:agent_info) { instance_double(Datadog::Core::Environment::AgentInfo, propagation_checksum: nil) }

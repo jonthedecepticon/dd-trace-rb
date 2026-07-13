@@ -71,7 +71,7 @@ RSpec.describe Datadog::Core::FeatureFlags do
       context 'when flag eveluatino was successfull' do
         let(:result) do
           configuration.get_assignment(
-            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'}
+            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'},
           )
         end
 
@@ -90,7 +90,7 @@ RSpec.describe Datadog::Core::FeatureFlags do
       context 'when flag is missing' do
         let(:result) do
           configuration.get_assignment(
-            'non-existent-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'}
+            'non-existent-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'},
           )
         end
 
@@ -104,7 +104,7 @@ RSpec.describe Datadog::Core::FeatureFlags do
       context 'when falling through all allocations' do
         let(:result) do
           configuration.get_assignment(
-            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@different-domain.com'}
+            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@different-domain.com'},
           )
         end
 
@@ -121,7 +121,7 @@ RSpec.describe Datadog::Core::FeatureFlags do
       context 'when expected type is unknown' do
         let(:result) do
           configuration.get_assignment(
-            'test-flag', :unknown_type, {'targeting_key' => 'test-user', 'email' => 'user@example.com'}
+            'test-flag', :unknown_type, {'targeting_key' => 'test-user', 'email' => 'user@example.com'},
           )
         end
 
@@ -135,7 +135,7 @@ RSpec.describe Datadog::Core::FeatureFlags do
 
         let(:result) do
           configuration.get_assignment(
-            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'}
+            'test-flag', :object, {'targeting_key' => 'test-user', 'email' => 'user@example.com'},
           )
         end
 

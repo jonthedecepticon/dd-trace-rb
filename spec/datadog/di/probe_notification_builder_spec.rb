@@ -204,7 +204,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
       builder.send(:build_status, probe,
         message: 'Custom error message',
         status: 'ERROR',
-        exception: nil)
+        exception: nil,)
     end
 
     let(:expected) do
@@ -241,14 +241,14 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
     let(:context) do
       Datadog::DI::Context.new(
         settings: settings, serializer: serializer,
-        probe: probe
+        probe: probe,
       )
     end
 
     context 'with template' do
       let(:probe) do
         Datadog::DI::Probe.new(id: '123', type: :log, file: 'X', line_no: 1,
-          template_segments: ['hello world'])
+          template_segments: ['hello world'],)
       end
 
       let(:expected) do
@@ -299,7 +299,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
     context 'without snapshot capture' do
       let(:probe) do
         Datadog::DI::Probe.new(id: '123', type: :log, file: 'X', line_no: 1,
-          capture_snapshot: false)
+          capture_snapshot: false,)
       end
 
       let(:expected) do
@@ -357,7 +357,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
         Datadog::DI::Context.new(probe: probe,
           settings: settings, serializer: serializer,
           path: '/foo.rb',
-          locals: locals, target_self: Object.new)
+          locals: locals, target_self: Object.new,)
       end
 
       let(:locals) do
@@ -691,7 +691,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
         Datadog::DI::Context.new(
           settings: settings, serializer: serializer,
           locals: vars,
-          probe: probe
+          probe: probe,
         )
       end
 
@@ -711,7 +711,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
     let(:context) do
       Datadog::DI::Context.new(
         settings: settings, serializer: serializer,
-        probe: probe
+        probe: probe,
       )
     end
 
