@@ -267,7 +267,7 @@ RSpec.describe Datadog::Tracing::SpanOperation do
           let(:span_links) do
             [Datadog::Tracing::SpanLink.new(
               Datadog::Tracing::TraceDigest.new(trace_id: 1, span_id: 2),
-              attributes: {"link.name": 'moon'}
+              attributes: {'link.name': 'moon'}
             )]
           end
           it { is_expected.to have_attributes(links: span_links) }

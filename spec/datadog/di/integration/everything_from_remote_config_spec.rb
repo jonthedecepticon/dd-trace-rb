@@ -179,8 +179,8 @@ RSpec.describe 'DI integration from remote config' do
     {
       path: '/debugger/v1/input',
       # We do not have active span/trace in the test.
-      "dd.span_id": nil,
-      "dd.trace_id": nil,
+      'dd.span_id': nil,
+      'dd.trace_id': nil,
       debugger: {
         type: 'snapshot',
         snapshot: {
@@ -449,8 +449,8 @@ RSpec.describe 'DI integration from remote config' do
         {
           path: '/debugger/v1/input',
           # We do not have active span/trace in the test.
-          "dd.span_id": nil,
-          "dd.trace_id": nil,
+          'dd.span_id': nil,
+          'dd.trace_id': nil,
           debugger: {
             type: 'snapshot',
             snapshot: {
@@ -627,8 +627,8 @@ RSpec.describe 'DI integration from remote config' do
         {
           path: '/debugger/v1/input',
           # We do not have active span/trace in the test.
-          "dd.span_id": nil,
-          "dd.trace_id": nil,
+          'dd.span_id': nil,
+          'dd.trace_id': nil,
           debugger: {
             type: 'snapshot',
             snapshot: {
@@ -715,8 +715,8 @@ RSpec.describe 'DI integration from remote config' do
           {
             path: '/debugger/v1/input',
             # We do not have active span/trace in the test.
-            "dd.span_id": nil,
-            "dd.trace_id": nil,
+            'dd.span_id': nil,
+            'dd.trace_id': nil,
             debugger: {
               type: 'snapshot',
               snapshot: {

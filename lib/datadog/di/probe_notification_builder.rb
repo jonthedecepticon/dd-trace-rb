@@ -70,7 +70,7 @@ module Datadog
         captures = if probe.capture_snapshot?
           if probe.method?
             return_arguments = {
-              "@return": serializer.serialize_value(context.return_value,
+              '@return': serializer.serialize_value(context.return_value,
                 depth: probe.max_capture_depth || settings.dynamic_instrumentation.max_capture_depth,
                 attribute_count: probe.max_capture_attribute_count || settings.dynamic_instrumentation.max_capture_attribute_count),
               self: serializer.serialize_value(context.target_self),
@@ -339,8 +339,8 @@ module Datadog
             version: 2,
           },
           # TODO add tests that the trace/span id is correctly propagated
-          "dd.trace_id": active_trace&.id&.to_s,
-          "dd.span_id": active_span&.id&.to_s,
+          'dd.trace_id': active_trace&.id&.to_s,
+          'dd.span_id': active_span&.id&.to_s,
           ddsource: 'dd_debugger',
           message: message,
           timestamp: timestamp,

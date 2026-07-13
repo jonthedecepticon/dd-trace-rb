@@ -401,7 +401,7 @@ RSpec.describe 'Instrumentation integration' do
               self: {
                 type: 'InstrumentationSpecTestClass',
                 fields: {
-                  "@ivar": {type: 'String', value: 'start value'},
+                  '@ivar': {type: 'String', value: 'start value'},
                 },
               },
             }},
@@ -409,10 +409,10 @@ RSpec.describe 'Instrumentation integration' do
               self: {
                 type: 'InstrumentationSpecTestClass',
                 fields: {
-                  "@ivar": {type: 'String', value: 'start value'},
+                  '@ivar': {type: 'String', value: 'start value'},
                 },
               },
-              "@return": {type: 'Integer', value: '42'},
+              '@return': {type: 'Integer', value: '42'},
             }, throwable: nil},
           }
         end
@@ -465,7 +465,7 @@ RSpec.describe 'Instrumentation integration' do
                   self: {
                     type: 'InstrumentationSpecTestClass',
                     fields: {
-                      "@ivar": {type: 'String', value: 'start value'},
+                      '@ivar': {type: 'String', value: 'start value'},
                     },
                   },
                 },
@@ -475,10 +475,10 @@ RSpec.describe 'Instrumentation integration' do
                   self: {
                     type: 'InstrumentationSpecTestClass',
                     fields: {
-                      "@ivar": {type: 'String', value: 'start value'},
+                      '@ivar': {type: 'String', value: 'start value'},
                     },
                   },
-                  "@return": {type: 'String', value: 'bye world'},
+                  '@return': {type: 'String', value: 'bye world'},
                 },
                 throwable: nil,
               },
@@ -536,7 +536,7 @@ RSpec.describe 'Instrumentation integration' do
                 self: {
                   type: 'InstrumentationSpecTestClass',
                   fields: {
-                    "@ivar": {type: 'String', value: 'start value'},
+                    '@ivar': {type: 'String', value: 'start value'},
                   },
                 },
               }},
@@ -544,10 +544,10 @@ RSpec.describe 'Instrumentation integration' do
                 self: {
                   type: 'InstrumentationSpecTestClass',
                   fields: {
-                    "@ivar": {type: 'String', value: 'altered value'},
+                    '@ivar': {type: 'String', value: 'altered value'},
                   },
                 },
-                "@return": {type: 'String', value: 'altered value'},
+                '@return': {type: 'String', value: 'altered value'},
               }, throwable: nil},
             }
           end
@@ -1068,7 +1068,7 @@ RSpec.describe 'Instrumentation integration' do
               self: {
                 type: 'InstrumentationIntegrationTestClass',
                 fields: {
-                  "@ivar": {type: 'Integer', value: '51'},
+                  '@ivar': {type: 'Integer', value: '51'},
                 },
               },
             },
@@ -1126,7 +1126,7 @@ RSpec.describe 'Instrumentation integration' do
                 self: {
                   type: 'InstrumentationIntegrationTestClass',
                   fields: {
-                    "@ivar": {type: 'Integer', value: '51'},
+                    '@ivar': {type: 'Integer', value: '51'},
                   },
                 },
               },

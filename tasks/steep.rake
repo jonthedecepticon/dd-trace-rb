@@ -82,4 +82,4 @@ namespace :steep do
   end
 end
 
-task typecheck: :"steep:check"
+task typecheck: :'steep:check'

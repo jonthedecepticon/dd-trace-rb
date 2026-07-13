@@ -91,7 +91,7 @@ RSpec.describe Datadog::Kit::AppSec::Events::V2 do
       end
 
       it 'sets user id from argument and ignores it in metadata' do
-        expect { sdk.track_user_login_success('john.snow', '42', "usr.id": '13') }
+        expect { sdk.track_user_login_success('john.snow', '42', 'usr.id': '13') }
           .to change { span.tags }.to include(
             'usr.id' => '42',
             'appsec.events.users.login.success.usr.id' => '42'
@@ -99,7 +99,7 @@ RSpec.describe Datadog::Kit::AppSec::Events::V2 do
       end
 
       it 'sets user login from argument and ignores it in metadata' do
-        expect { sdk.track_user_login_success('john.snow', '42', "usr.login": 'john.doe') }
+        expect { sdk.track_user_login_success('john.snow', '42', 'usr.login': 'john.doe') }
           .to change { span.tags }.to include(
             'usr.login' => 'john.snow',
             'appsec.events.users.login.success.usr.login' => 'john.snow'
@@ -348,7 +348,7 @@ RSpec.describe Datadog::Kit::AppSec::Events::V2 do
       end
 
       it 'sets id from argument and ignores it in metadata' do
-        expect { sdk.track_user_login_failure('john.snow', false, "usr.id": 'john.doe') }
+        expect { sdk.track_user_login_failure('john.snow', false, 'usr.id': 'john.doe') }
           .to change { span.tags }.to include(
             'appsec.events.users.login.failure.usr.login' => 'john.snow',
           )
@@ -362,7 +362,7 @@ RSpec.describe Datadog::Kit::AppSec::Events::V2 do
       end
 
       it 'sets exists from argument even if metadata exists key is false' do
-        expect { sdk.track_user_login_failure('john.snow', false, "usr.exists": 'true') }
+        expect { sdk.track_user_login_failure('john.snow', false, 'usr.exists': 'true') }
           .to change { span.tags }.to include(
             'appsec.events.users.login.failure.usr.exists' => 'false',
           )

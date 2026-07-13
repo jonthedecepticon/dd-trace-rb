@@ -310,7 +310,7 @@ RSpec.describe 'Devise sign up tracking with auto user instrumentation' do
             Datadog::Tracing.active_trace,
             Datadog::Tracing.active_span,
             user: {id: '42'},
-            "usr.login": 'hello@gmail.com'
+            'usr.login': 'hello@gmail.com'
           )
 
           super

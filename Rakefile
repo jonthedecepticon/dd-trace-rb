@@ -84,7 +84,7 @@ namespace :spec do
     :graphql, :graphql_unified_trace_patcher, :graphql_trace_patcher, :graphql_tracing_patcher,
     :rails, :railsredis, :railsredis_activesupport, :railsactivejob,
     :elasticsearch, :http, :redis, :sidekiq, :sinatra, :hanami, :hanami_autoinstrument,
-    :profiling, :core_with_libdatadog_api, :"di:di_with_ext", :"di:ractors", :error_tracking, :open_feature, :core_with_rails, :environment, :ai_guard]
+    :profiling, :core_with_libdatadog_api, :'di:di_with_ext', :'di:ractors', :error_tracking, :open_feature, :core_with_rails, :environment, :ai_guard]
 
   desc '' # "Explicitly hiding from `rake -T`"
   RSpec::Core::RakeTask.new(:main) do |t, args|
@@ -420,7 +420,7 @@ namespace :spec do
     end
   end
 
-  task appsec: [:"appsec:all"]
+  task appsec: [:'appsec:all']
 
   namespace :ai_guard do
     task all: [:main, :rack, :ruby_llm]
@@ -445,7 +445,7 @@ namespace :spec do
     end
   end
 
-  task ai_guard: [:"ai_guard:main"]
+  task ai_guard: [:'ai_guard:main']
 
   namespace :di do
     # Datadog DI integrations
@@ -549,7 +549,7 @@ namespace :spec do
     Rake::Task[:all].prerequisite_tasks.each { |t| t.enhance([:compile_native_extensions]) }
   end
 
-  task profiling: [:"profiling:all"]
+  task profiling: [:'profiling:all']
 end
 
 # Jobs are parallelized if running in CI.

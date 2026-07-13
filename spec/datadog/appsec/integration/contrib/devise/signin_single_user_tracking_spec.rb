@@ -328,7 +328,7 @@ RSpec.describe 'Devise auto login and signup events tracking' do
             Datadog::Tracing.active_trace,
             Datadog::Tracing.active_span,
             user: {id: '42'},
-            "usr.login": 'hello@gmail.com'
+            'usr.login': 'hello@gmail.com'
           )
 
           super
@@ -463,7 +463,7 @@ RSpec.describe 'Devise auto login and signup events tracking' do
             Datadog::Tracing.active_span,
             user_exists: true,
             user_id: '42',
-            "usr.login": 'hello@gmail.com'
+            'usr.login': 'hello@gmail.com'
           )
 
           super

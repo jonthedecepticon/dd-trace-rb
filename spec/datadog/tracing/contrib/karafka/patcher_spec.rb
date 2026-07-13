@@ -196,7 +196,7 @@ RSpec.describe 'Karafka patcher' do
 
       it 'automatically enables WaterDrop instrumentation' do
         Karafka::App.setup do |c|
-          c.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+          c.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
         end
 
         expect(Datadog.configuration.tracing[:karafka][:enabled]).to be true
@@ -209,7 +209,7 @@ RSpec.describe 'Karafka patcher' do
       context 'when user does not supply a custom producer' do
         it 'sets up Karafka.producer with the datadog waterdrop middleware' do
           Karafka::App.setup do |c|
-            c.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+            c.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
           end
 
           expect(producer_middlewares).to eq([
@@ -223,9 +223,9 @@ RSpec.describe 'Karafka patcher' do
 
         it 'appends the datadog middleware at the end of the Karafka.producer middleware stack' do
           Karafka::App.setup do |c|
-            c.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+            c.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
             c.producer = WaterDrop::Producer.new do |producer_config|
-              producer_config.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+              producer_config.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
               producer_config.middleware.append(custom_middleware)
             end
           end
@@ -243,7 +243,7 @@ RSpec.describe 'Karafka patcher' do
             c.tracing.instrument :waterdrop, configuration_options
           end
           Karafka::App.setup do |c|
-            c.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+            c.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
           end
 
           expect(producer_middlewares).to eq([
@@ -260,7 +260,7 @@ RSpec.describe 'Karafka patcher' do
 
       it 'does not attempt to activate waterdrop or append any producer middleware' do
         Karafka::App.setup do |c|
-          c.kafka = {"bootstrap.servers": '127.0.0.1:9092'}
+          c.kafka = {'bootstrap.servers': '127.0.0.1:9092'}
         end
 
         expect(producer_middlewares).to be_empty

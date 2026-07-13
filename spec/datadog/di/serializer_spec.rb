@@ -134,20 +134,20 @@ RSpec.describe Datadog::DI::Serializer do
        expected: {type: 'IOError', fields: {}}},
       {name: 'Exception instance with a field', input: DISerializerExceptionWithFieldsTestClass.new('test error'),
        expected: {type: 'DISerializerExceptionWithFieldsTestClass', fields: {
-         "@test_field": {
+         '@test_field': {
            value: 'bar', type: 'String'
          }
        }}},
       {name: 'Exception instance with @message field', input: DISerializerExceptionWithMessageFieldTestClass.new('test error'),
        expected: {type: 'DISerializerExceptionWithMessageFieldTestClass', fields: {
-         "@message": {
+         '@message': {
            value: 'bar', type: 'String'
          }
        }}},
       {name: 'Custom exception instance which raises in #message', input: DISerializerExceptionWithMessageRaiseTestClass.new('test error'),
        expected: {type: 'DISerializerExceptionWithMessageRaiseTestClass', fields: {
          # Fields are still serialized.
-         "@message": {
+         '@message': {
            value: 'bar', type: 'String'
          }
        }}},
@@ -210,11 +210,11 @@ RSpec.describe Datadog::DI::Serializer do
       {name: 'empty object', input: {x: Object.new}, expected: {x: {type: 'Object', fields: {}}}},
       {name: 'object with instance variable', input: {x: DISerializerSpecInstanceVariable.new(42)},
        expected: {x: {type: 'DISerializerSpecInstanceVariable', fields: {
-         "@ivar": {type: 'Integer', value: '42'},
+         '@ivar': {type: 'Integer', value: '42'},
        }}}},
       {name: 'object with redacted instance variable', input: {x: DISerializerSpecRedactedInstanceVariable.new(42)},
        expected: {x: {type: 'DISerializerSpecRedactedInstanceVariable', fields: {
-         "@session": {type: 'Integer', notCapturedReason: 'redactedIdent'},
+         '@session': {type: 'Integer', notCapturedReason: 'redactedIdent'},
        }}}},
       {name: 'depth exceeded: array', input: {v: {a: {b: []}}},
        expected: {v: {type: 'Hash', entries: [
@@ -277,9 +277,9 @@ RSpec.describe Datadog::DI::Serializer do
         {name: 'too many attributes', input: {a: DISerializerSpecManyInstanceVariables.new},
          expected: {a: {type: 'DISerializerSpecManyInstanceVariables',
                         fields: {
-                          "@v1": {type: 'Integer', value: '1'},
-                          "@v2": {type: 'Integer', value: '2'},
-                          "@v3": {type: 'Integer', value: '3'},
+                          '@v1': {type: 'Integer', value: '1'},
+                          '@v2': {type: 'Integer', value: '2'},
+                          '@v3': {type: 'Integer', value: '3'},
                         }, notCapturedReason: 'fieldCount'}}},
       ]
 
@@ -355,7 +355,7 @@ RSpec.describe Datadog::DI::Serializer do
                   self: {
                     type: 'DISerializerSpecInstanceVariable',
                     fields: {
-                      "@ivar": {type: 'String', value: 'quux'},
+                      '@ivar': {type: 'String', value: 'quux'},
                     },
                   },},},
       {name: 'kwargs contains redacted identifier',
@@ -516,7 +516,7 @@ RSpec.describe Datadog::DI::Serializer do
       ['date', Date.new(2020, 1, 2), '2020-01-02'],
       ['string', 'hello world', 'hello world'],
       ['long string', 'loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong string', 'loooooooooooooooooooooooooooooooooooooooooooooooo...ooooooooooooooooooooooooooooooooooooooong string'],
-      ['symbol', :"hello world", ':hello world'],
+      ['symbol', :'hello world', ':hello world'],
       ['empty array', [], '[]'],
       ['small array', [1, '2'], '[1, 2]'],
       ['large array', [1, '2', 3.3, 'hello'], '[1, 2, ..., hello]'],

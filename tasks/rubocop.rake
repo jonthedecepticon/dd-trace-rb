@@ -28,6 +28,6 @@ task :rubocop do
 end
 
 desc 'Autocorrect cops that standard disables or misconfigures (see rubocop/standard_overrides.rubocop.yml)'
-task :"rubocop:fix" do
+task :'rubocop:fix' do
   run_standard_override_rubocop '--autocorrect'
 end

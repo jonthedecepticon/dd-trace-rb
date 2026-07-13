@@ -85,12 +85,12 @@ RSpec.describe Datadog::AIGuard::APIClient do
 
       stub_request(:post, 'https://app.datadoghq.com/api/v2/ai-guard/evaluate')
         .with(headers: {
-          "DD-API-KEY": 'api-key',
-          "DD-APPLICATION-KEY": 'application-key',
-          "DD-AI-GUARD-VERSION": Datadog::VERSION::STRING,
-          "DD-AI-GUARD-SOURCE": 'SDK',
-          "DD-AI-GUARD-LANGUAGE": 'ruby',
-          "content-type": 'application/json'
+          'DD-API-KEY': 'api-key',
+          'DD-APPLICATION-KEY': 'application-key',
+          'DD-AI-GUARD-VERSION': Datadog::VERSION::STRING,
+          'DD-AI-GUARD-SOURCE': 'SDK',
+          'DD-AI-GUARD-LANGUAGE': 'ruby',
+          'content-type': 'application/json'
         })
         .to_return do |request|
           {

@@ -74,7 +74,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
     it 'sets additional user login data from other keys as tags' do
       trace_op.measure('root') do |span, _|
-        expect { described_class.track_login_success(trace_op, user: {id: '42'}, "usr.login": 'hey') }
+        expect { described_class.track_login_success(trace_op, user: {id: '42'}, 'usr.login': 'hey') }
           .to change { span.tags }.to include(
             'usr.id' => '42',
             'usr.login' => 'hey',
@@ -96,7 +96,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
     it 'sets additional user login data as tags with user data priority' do
       trace_op.measure('root') do |span, _|
-        expect { described_class.track_login_success(trace_op, user: {id: '42', login: 'hey'}, "usr.login": 'extra') }
+        expect { described_class.track_login_success(trace_op, user: {id: '42', login: 'hey'}, 'usr.login': 'extra') }
           .to change { span.tags }.to include(
             'usr.id' => '42',
             'usr.login' => 'hey',
@@ -199,7 +199,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
     it 'sets additional user login data from other keys as tags' do
       trace_op.measure('root') do |span, _|
-        expect { described_class.track_login_failure(trace_op, user_id: '42', user_exists: true, "usr.login": 'hey') }
+        expect { described_class.track_login_failure(trace_op, user_id: '42', user_exists: true, 'usr.login': 'hey') }
           .to change { span.tags }.to include('appsec.events.users.login.failure.usr.login' => 'hey')
       end
     end
@@ -267,7 +267,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
       it 'sets user login to given login' do
         trace_op.measure('root') do |span, _trace|
-          described_class.track_login_failure(trace_op, user_id: '42', user_exists: true, "usr.login": 'test-42')
+          described_class.track_login_failure(trace_op, user_id: '42', user_exists: true, 'usr.login': 'test-42')
 
           expect(span.tags).to include('appsec.events.users.login.failure.usr.login' => 'test-42')
         end
@@ -309,7 +309,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
     it 'sets additional user login data from other keys as tags' do
       trace_op.measure('root') do |span, _|
-        expect { described_class.track_signup(trace_op, user: {id: '42'}, "usr.login": 'hey') }
+        expect { described_class.track_signup(trace_op, user: {id: '42'}, 'usr.login': 'hey') }
           .to change { span.tags }.to include(
             'usr.id' => '42',
             'usr.login' => 'hey',
@@ -331,7 +331,7 @@ RSpec.describe Datadog::Kit::AppSec::Events do
 
     it 'sets additional user login data as tags with user data priority' do
       trace_op.measure('root') do |span, _|
-        expect { described_class.track_signup(trace_op, user: {id: '42', login: 'hey'}, "usr.login": 'extra') }
+        expect { described_class.track_signup(trace_op, user: {id: '42', login: 'hey'}, 'usr.login': 'extra') }
           .to change { span.tags }.to include(
             'usr.id' => '42',
             'usr.login' => 'hey',

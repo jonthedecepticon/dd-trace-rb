@@ -5,7 +5,7 @@ Rake::Task['build'].enhance do
 end
 
 desc 'Checks executed before gem is built'
-task :"build:pre_check" do
+task :'build:pre_check' do
   require 'rspec'
   RSpec.world.reset # If any other tests ran before, flushes them
   ret = RSpec::Core::Runner.run(['spec/datadog/release_gem_spec.rb'])
@@ -13,7 +13,7 @@ task :"build:pre_check" do
 end
 
 desc 'Checks executed after gem is built'
-task :"build:after_check" do
+task :'build:after_check' do
   require 'rspec'
   RSpec.world.reset # If any other tests ran before, flushes them
   ret = RSpec::Core::Runner.run(['spec/datadog/gem_packaging_spec.rb'])

@@ -33,9 +33,6 @@ Style/TrailingCommaInHashLiteral:
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
-Style/QuotedSymbols:
-  EnforcedStyle: double_quotes
-
 Style/StringLiteralsInInterpolation:
   Enabled: false
 

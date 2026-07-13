@@ -59,7 +59,7 @@ RSpec.describe Datadog::Core::Telemetry::Component do
     allow(worker).to receive(:start)
     allow(worker).to receive(:enqueue)
     allow(worker).to receive(:stop)
-    allow(worker).to receive(:"enabled=")
+    allow(worker).to receive(:'enabled=')
   end
 
   describe '.build' do
@@ -142,7 +142,7 @@ RSpec.describe Datadog::Core::Telemetry::Component do
     it 'disables worker' do
       telemetry.disable!
 
-      expect(worker).to have_received(:"enabled=").with(false)
+      expect(worker).to have_received(:'enabled=').with(false)
     end
   end
 
