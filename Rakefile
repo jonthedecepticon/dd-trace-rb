@@ -240,9 +240,9 @@ namespace :spec do
     # we forgot to clean it up -- please do!
     if Libdatadog::VERSION.start_with?('30.')
       task :core_with_libdatadog_api_memcheck do
-        warn "Skipping memcheck for libdatadog v30 because of https://github.com/bytecodealliance/rustix/issues/1559" \
-          " (libdatadog v30 causes a crash when running inside valgrind)." \
-          " Libdatadog 31? 32? should include https://github.com/DataDog/libdatadog/pull/1859 and fix this issue."
+        warn 'Skipping memcheck for libdatadog v30 because of https://github.com/bytecodealliance/rustix/issues/1559' \
+          ' (libdatadog v30 causes a crash when running inside valgrind).' \
+          ' Libdatadog 31? 32? should include https://github.com/DataDog/libdatadog/pull/1859 and fix this issue.'
       end
     else
       RubyMemcheck::RSpec::RakeTask.new(:core_with_libdatadog_api_memcheck) do |t, args|
@@ -434,13 +434,13 @@ namespace :spec do
 
     desc '' # "Explicitly hiding from `rake -T`"
     RSpec::Core::RakeTask.new(:rack) do |t, args|
-      t.pattern = "spec/datadog/ai_guard/contrib/rack/**/*_spec.rb"
+      t.pattern = 'spec/datadog/ai_guard/contrib/rack/**/*_spec.rb'
       t.rspec_opts = args.to_a.join(' ')
     end
 
     desc '' # "Explicitly hiding from `rake -T`"
     RSpec::Core::RakeTask.new(:ruby_llm) do |t, args|
-      t.pattern = "spec/datadog/ai_guard/contrib/ruby_llm/**/*_spec.rb"
+      t.pattern = 'spec/datadog/ai_guard/contrib/ruby_llm/**/*_spec.rb'
       t.rspec_opts = args.to_a.join(' ')
     end
   end
@@ -522,9 +522,9 @@ namespace :spec do
       # we forgot to clean it up -- please do!
       if Libdatadog::VERSION.start_with?('30.')
         task :memcheck do
-          warn "Skipping memcheck for libdatadog v30 because of https://github.com/bytecodealliance/rustix/issues/1559" \
-            " (libdatadog v30 causes a crash when running inside valgrind)." \
-            " Libdatadog 31? 32? should include https://github.com/DataDog/libdatadog/pull/1859 and fix this issue."
+          warn 'Skipping memcheck for libdatadog v30 because of https://github.com/bytecodealliance/rustix/issues/1559' \
+            ' (libdatadog v30 causes a crash when running inside valgrind).' \
+            ' Libdatadog 31? 32? should include https://github.com/DataDog/libdatadog/pull/1859 and fix this issue.'
         end
       else
         RubyMemcheck::RSpec::RakeTask.new(:memcheck) do |t, args|

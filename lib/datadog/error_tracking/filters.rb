@@ -37,7 +37,7 @@ module Datadog
 
       def third_party_code?(file_path)
         gem_name = get_gem_name(file_path)
-        gem_name && gem_name != "datadog"
+        gem_name && gem_name != 'datadog'
       end
 
       def file_included?(file_path, instrumented_files)

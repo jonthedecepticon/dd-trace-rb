@@ -76,113 +76,113 @@ module Datadog
         @redacted_type_names_regexp ||= begin
           names = settings.dynamic_instrumentation.redacted_type_names
           names = names.map do |name|
-            if name.start_with?("::")
+            if name.start_with?('::')
               # :: prefix is redundant, all names are expected to be
               # fully-qualified.
               #
               # Defaulting to empty string is for steep.
-              name = name[2...name.length] || ""
+              name = name[2...name.length] || ''
             end
-            if name.end_with?("*")
+            if name.end_with?('*')
               # Defaulting to empty string is for steep.
-              name = name[0..-2] || ""
-              suffix = ".*"
+              name = name[0..-2] || ''
+              suffix = '.*'
             else
-              suffix = ""
+              suffix = ''
             end
             Regexp.escape(name) + suffix
-          end.join("|")
+          end.join('|')
           Regexp.new("\\A(?:#{names})\\z")
         end
       end
 
       # Copied from dd-trace-py
       DEFAULT_REDACTED_IDENTIFIERS = [
-        "2fa",
-        "accesstoken",
-        "aiohttpsession",
-        "apikey",
-        "apisecret",
-        "apisignature",
-        "appkey",
-        "applicationkey",
-        "auth",
-        "authorization",
-        "authtoken",
-        "ccnumber",
-        "certificatepin",
-        "cipher",
-        "clientid",
-        "clientsecret",
-        "connectionstring",
-        "connectsid",
-        "cookie",
-        "credentials",
-        "creditcard",
-        "csrf",
-        "csrftoken",
-        "cvv",
-        "databaseurl",
-        "dburl",
-        "encryptionkey",
-        "encryptionkeyid",
-        "geolocation",
-        "gpgkey",
-        "ipaddress",
-        "jti",
-        "jwt",
-        "licensekey",
-        "masterkey",
-        "mysqlpwd",
-        "nonce",
-        "oauth",
-        "oauthtoken",
-        "otp",
-        "passhash",
-        "passwd",
-        "password",
-        "passwordb",
-        "pemfile",
-        "pgpkey",
-        "phpsessid",
-        "pin",
-        "pincode",
-        "pkcs8",
-        "privatekey",
-        "publickey",
-        "pwd",
-        "recaptchakey",
-        "refreshtoken",
-        "routingnumber",
-        "salt",
-        "secret",
-        "secretkey",
-        "secrettoken",
-        "securityanswer",
-        "securitycode",
-        "securityquestion",
-        "serviceaccountcredentials",
-        "session",
-        "sessionid",
-        "sessionkey",
-        "setcookie",
-        "signature",
-        "signaturekey",
-        "sshkey",
-        "ssn",
-        "symfony",
-        "token",
-        "transactionid",
-        "twiliotoken",
-        "usersession",
-        "voterid",
-        "xapikey",
-        "xauthtoken",
-        "xcsrftoken",
-        "xforwardedfor",
-        "xrealip",
-        "xsrf",
-        "xsrftoken",
+        '2fa',
+        'accesstoken',
+        'aiohttpsession',
+        'apikey',
+        'apisecret',
+        'apisignature',
+        'appkey',
+        'applicationkey',
+        'auth',
+        'authorization',
+        'authtoken',
+        'ccnumber',
+        'certificatepin',
+        'cipher',
+        'clientid',
+        'clientsecret',
+        'connectionstring',
+        'connectsid',
+        'cookie',
+        'credentials',
+        'creditcard',
+        'csrf',
+        'csrftoken',
+        'cvv',
+        'databaseurl',
+        'dburl',
+        'encryptionkey',
+        'encryptionkeyid',
+        'geolocation',
+        'gpgkey',
+        'ipaddress',
+        'jti',
+        'jwt',
+        'licensekey',
+        'masterkey',
+        'mysqlpwd',
+        'nonce',
+        'oauth',
+        'oauthtoken',
+        'otp',
+        'passhash',
+        'passwd',
+        'password',
+        'passwordb',
+        'pemfile',
+        'pgpkey',
+        'phpsessid',
+        'pin',
+        'pincode',
+        'pkcs8',
+        'privatekey',
+        'publickey',
+        'pwd',
+        'recaptchakey',
+        'refreshtoken',
+        'routingnumber',
+        'salt',
+        'secret',
+        'secretkey',
+        'secrettoken',
+        'securityanswer',
+        'securitycode',
+        'securityquestion',
+        'serviceaccountcredentials',
+        'session',
+        'sessionid',
+        'sessionkey',
+        'setcookie',
+        'signature',
+        'signaturekey',
+        'sshkey',
+        'ssn',
+        'symfony',
+        'token',
+        'transactionid',
+        'twiliotoken',
+        'usersession',
+        'voterid',
+        'xapikey',
+        'xauthtoken',
+        'xcsrftoken',
+        'xforwardedfor',
+        'xrealip',
+        'xsrf',
+        'xsrftoken',
       ]
 
       # Input can be a string or a symbol.
@@ -202,7 +202,7 @@ module Datadog
       # strip must run before the punctuation gsub: the gsub removes the
       # underscore, after which `\Ahttp_` could never match.
       def normalize(str)
-        str.to_s.strip.downcase.sub(/\Ahttp_/, "").tr("-_$@", "")
+        str.to_s.strip.downcase.sub(/\Ahttp_/, '').tr('-_$@', '')
       end
     end
   end

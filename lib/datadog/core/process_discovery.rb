@@ -10,8 +10,8 @@ module Datadog
     module ProcessDiscovery
       class << self
         def publish(settings)
-          if RUBY_PLATFORM.include?("darwin")
-            Datadog.logger.debug { "Skipping process discovery, not yet supported on macOS" }
+          if RUBY_PLATFORM.include?('darwin')
+            Datadog.logger.debug { 'Skipping process discovery, not yet supported on macOS' }
             return
           end
 

@@ -21,7 +21,7 @@ module Datadog
         #: () -> ::Array["-rdatadog/profiling/preload"]
         def rubyopts
           [
-            "-rdatadog/profiling/preload"
+            '-rdatadog/profiling/preload'
           ]
         end
 
@@ -29,9 +29,9 @@ module Datadog
 
         #: () -> untyped
         def set_rubyopt!
-          existing_rubyopt = ENV["RUBYOPT"] # rubocop:disable CustomCops/EnvUsageCop
+          existing_rubyopt = ENV['RUBYOPT'] # rubocop:disable CustomCops/EnvUsageCop
 
-          ENV["RUBYOPT"] = existing_rubyopt ? "#{existing_rubyopt} #{rubyopts.join(" ")}" : rubyopts.join(" ") # rubocop:disable CustomCops/EnvUsageCop
+          ENV['RUBYOPT'] = existing_rubyopt ? "#{existing_rubyopt} #{rubyopts.join(" ")}" : rubyopts.join(' ') # rubocop:disable CustomCops/EnvUsageCop
         end
 
         # If there's an error here, rather than throwing a cryptic stack trace, let's instead have clearer messages, and

@@ -5,7 +5,7 @@ module Datadog
     module Evaluation
       # Request builds the request body from an array of messages and processes the response
       class Request
-        REQUEST_PATH = "/evaluate"
+        REQUEST_PATH = '/evaluate'
 
         attr_reader :serialized_messages
 
@@ -20,7 +20,7 @@ module Datadog
           # and this means the API Client was not initialized properly.
           #
           # Please report this at https://github.com/datadog/dd-trace-rb/blob/master/CONTRIBUTING.md#found-a-bug
-          raise "AI Guard API Client not initialized" unless api_client
+          raise 'AI Guard API Client not initialized' unless api_client
 
           raw_response = api_client.post(REQUEST_PATH, body: build_request_body)
 
@@ -74,9 +74,9 @@ module Datadog
           parts.map do |part|
             case part
             when ContentPart::Text
-              {type: "text", text: part.text}
+              {type: 'text', text: part.text}
             when ContentPart::ImageURL
-              {type: "image_url", image_url: {url: part.url}}
+              {type: 'image_url', image_url: {url: part.url}}
             end
           end
         end

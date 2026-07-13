@@ -54,19 +54,19 @@ RSpec.describe 'Schema extraction for API security in Sinatra' do
         ],
         processors: [
           {
-            id: "extract-content",
-            generator: "extract_schema",
+            id: 'extract-content',
+            generator: 'extract_schema',
             conditions: [
               {
-                operator: "equals",
+                operator: 'equals',
                 parameters: {
                   inputs: [
                     {
-                      address: "waf.context.processor",
-                      key_path: ["extract-schema"]
+                      address: 'waf.context.processor',
+                      key_path: ['extract-schema']
                     }
                   ],
-                  type: "boolean",
+                  type: 'boolean',
                   value: true
                 }
               }
@@ -74,24 +74,24 @@ RSpec.describe 'Schema extraction for API security in Sinatra' do
             parameters: {
               mappings: [
                 {
-                  inputs: [{address: "server.request.body"}],
-                  output: "_dd.appsec.s.req.body"
+                  inputs: [{address: 'server.request.body'}],
+                  output: '_dd.appsec.s.req.body'
                 },
                 {
-                  inputs: [{address: "server.request.cookies"}],
-                  output: "_dd.appsec.s.req.cookies"
+                  inputs: [{address: 'server.request.cookies'}],
+                  output: '_dd.appsec.s.req.cookies'
                 },
                 {
-                  inputs: [{address: "server.request.query"}],
-                  output: "_dd.appsec.s.req.query"
+                  inputs: [{address: 'server.request.query'}],
+                  output: '_dd.appsec.s.req.query'
                 },
                 {
-                  inputs: [{address: "server.request.path_params"}],
-                  output: "_dd.appsec.s.req.params"
+                  inputs: [{address: 'server.request.path_params'}],
+                  output: '_dd.appsec.s.req.params'
                 },
                 {
-                  inputs: [{address: "server.response.body"}],
-                  output: "_dd.appsec.s.res.body"
+                  inputs: [{address: 'server.response.body'}],
+                  output: '_dd.appsec.s.res.body'
                 }
               ]
             },
@@ -99,19 +99,19 @@ RSpec.describe 'Schema extraction for API security in Sinatra' do
             output: true
           },
           {
-            id: "extract-headers",
-            generator: "extract_schema",
+            id: 'extract-headers',
+            generator: 'extract_schema',
             conditions: [
               {
-                operator: "equals",
+                operator: 'equals',
                 parameters: {
                   inputs: [
                     {
-                      address: "waf.context.processor",
-                      key_path: ["extract-schema"]
+                      address: 'waf.context.processor',
+                      key_path: ['extract-schema']
                     }
                   ],
-                  type: "boolean",
+                  type: 'boolean',
                   value: true
                 }
               }
@@ -119,12 +119,12 @@ RSpec.describe 'Schema extraction for API security in Sinatra' do
             parameters: {
               mappings: [
                 {
-                  inputs: [{address: "server.request.headers.no_cookies"}],
-                  output: "_dd.appsec.s.req.headers"
+                  inputs: [{address: 'server.request.headers.no_cookies'}],
+                  output: '_dd.appsec.s.req.headers'
                 },
                 {
-                  inputs: [{address: "server.response.headers.no_cookies"}],
-                  output: "_dd.appsec.s.res.headers"
+                  inputs: [{address: 'server.response.headers.no_cookies'}],
+                  output: '_dd.appsec.s.res.headers'
                 }
               ]
             },

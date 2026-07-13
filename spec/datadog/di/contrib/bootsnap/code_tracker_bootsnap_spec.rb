@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di"
-require "tmpdir"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
+require 'tmpdir'
 
 # Load bootsnap at file load time. `require "bootsnap"` alone does not load
 # Bootsnap::CompileCache::ISeq — that submodule requires an explicit require.
 # If these requires fail, the file fails to load — no skip guard needed
 # because bootsnap is in the gemfile for the di:bootsnap CI task.
-require "bootsnap"
-require "bootsnap/compile_cache/iseq"
+require 'bootsnap'
+require 'bootsnap/compile_cache/iseq'
 
 # End-to-end test: DI code tracking works correctly when Bootsnap's iseq
 # cache is active. Bootsnap hooks RubyVM::InstructionSequence.load_iseq
@@ -19,7 +19,7 @@ require "bootsnap/compile_cache/iseq"
 # the one Ruby executes (so targeted TracePoints on it fire correctly).
 #
 # This test uses the real Bootsnap gem — not a simulation.
-RSpec.describe "DI CodeTracker with Bootsnap" do
+RSpec.describe 'DI CodeTracker with Bootsnap' do
   di_test
 
   let(:diagnostics_transport) do
@@ -59,7 +59,7 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
 
   let(:component) do
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
-      raise "Component failed to create" if component.nil?
+      raise 'Component failed to create' if component.nil?
     end
   end
 
@@ -67,9 +67,9 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
     component.probe_manager
   end
 
-  context "file loaded via Bootsnap iseq cache" do
-    let(:cache_dir) { Dir.mktmpdir("bootsnap_di_test") }
-    let(:test_file) { File.join(__dir__, "bootsnap_test_class.rb") }
+  context 'file loaded via Bootsnap iseq cache' do
+    let(:cache_dir) { Dir.mktmpdir('bootsnap_di_test') }
+    let(:test_file) { File.join(__dir__, 'bootsnap_test_class.rb') }
 
     before do
       # Bootsnap's load_iseq returns nil when Coverage is running (SimpleCov),
@@ -117,7 +117,7 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
       Object.send(:remove_const, :BootsnapTestClass) if defined?(BootsnapTestClass)
     end
 
-    it "captures the Bootsnap-cached file in the CodeTracker registry" do
+    it 'captures the Bootsnap-cached file in the CodeTracker registry' do
       # Load the file again — this time Bootsnap serves it from cache.
       load test_file
 
@@ -125,21 +125,21 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
       tracker = Datadog::DI.code_tracker
       expect(tracker).not_to be_nil
 
-      result = tracker.iseqs_for_path_suffix("bootsnap_test_class.rb")
+      result = tracker.iseqs_for_path_suffix('bootsnap_test_class.rb')
       expect(result).not_to be_nil,
-        "CodeTracker registry does not contain bootsnap_test_class.rb " \
-        "after Bootsnap-cached load. :script_compiled may not have fired."
+        'CodeTracker registry does not contain bootsnap_test_class.rb ' \
+        'after Bootsnap-cached load. :script_compiled may not have fired.'
 
       path, iseq = result
-      expect(path).to end_with("bootsnap_test_class.rb")
+      expect(path).to end_with('bootsnap_test_class.rb')
       expect(iseq).to be_a(RubyVM::InstructionSequence)
     end
 
-    it "the registered iseq is the one Ruby executes (TracePoint fires)" do
+    it 'the registered iseq is the one Ruby executes (TracePoint fires)' do
       load test_file
 
       tracker = Datadog::DI.code_tracker
-      result = tracker.iseqs_for_path_suffix("bootsnap_test_class.rb")
+      result = tracker.iseqs_for_path_suffix('bootsnap_test_class.rb')
       expect(result).not_to be_nil
 
       _path, iseq = result
@@ -157,17 +157,17 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
       tp.disable
 
       expect(fired).to be(true),
-        "TracePoint targeted at the CodeTracker iseq did not fire. " \
-        "The iseq captured by :script_compiled may not be the one " \
-        "Ruby is executing (Bootsnap interaction issue)."
+        'TracePoint targeted at the CodeTracker iseq did not fire. ' \
+        'The iseq captured by :script_compiled may not be the one ' \
+        'Ruby is executing (Bootsnap interaction issue).'
     end
 
-    it "installs a probe on the Bootsnap-cached file" do
+    it 'installs a probe on the Bootsnap-cached file' do
       load test_file
 
       probe = Datadog::DI::Probe.new(
-        id: "bootsnap-test-1", type: :log,
-        file: "bootsnap_test_class.rb", line_no: 22,
+        id: 'bootsnap-test-1', type: :log,
+        file: 'bootsnap_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
 
@@ -179,15 +179,15 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
       installed = probe_manager.probe_repository.installed_probes
       expect(installed.length).to eq(1),
         "Expected 1 installed probe, got #{installed.length}. " \
-        "Probe installation failed on Bootsnap-cached file."
+        'Probe installation failed on Bootsnap-cached file.'
     end
 
-    it "fires the probe when the target line executes" do
+    it 'fires the probe when the target line executes' do
       load test_file
 
       probe = Datadog::DI::Probe.new(
-        id: "bootsnap-test-2", type: :log,
-        file: "bootsnap_test_class.rb", line_no: 22,
+        id: 'bootsnap-test-2', type: :log,
+        file: 'bootsnap_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
 
@@ -200,12 +200,12 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
       expect(result).to eq(42)
     end
 
-    it "captures local variables from Bootsnap-cached code" do
+    it 'captures local variables from Bootsnap-cached code' do
       load test_file
 
       probe = Datadog::DI::Probe.new(
-        id: "bootsnap-test-3", type: :log,
-        file: "bootsnap_test_class.rb", line_no: 22,
+        id: 'bootsnap-test-3', type: :log,
+        file: 'bootsnap_test_class.rb', line_no: 22,
         capture_snapshot: true,
       )
 
@@ -223,7 +223,7 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
 
       # Verify the snapshot captured local variables correctly.
       expect(payload).to be_a(Hash),
-        "Snapshot payload is nil — probe did not fire on Bootsnap-cached code."
+        'Snapshot payload is nil — probe did not fire on Bootsnap-cached code.'
 
       captures = payload.dig(:debugger, :snapshot, :captures)
       expect(captures).not_to be_nil,
@@ -231,23 +231,23 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
 
       locals = captures.dig(:lines, 22, :locals)
       expect(locals).not_to be_nil,
-        "Snapshot has no locals for line 22 — capture may have targeted wrong line."
+        'Snapshot has no locals for line 22 — capture may have targeted wrong line.'
 
       expect(locals).to include(:a),
         "Local variable :a not captured. Locals present: #{locals.keys}"
 
-      expect(locals[:a]).to eq({type: "Integer", value: "21"}),
+      expect(locals[:a]).to eq({type: 'Integer', value: '21'}),
         "Local variable :a has wrong value: #{locals[:a].inspect}"
     end
 
-    it "Bootsnap cache was actually used (not just normal compilation)" do
+    it 'Bootsnap cache was actually used (not just normal compilation)' do
       # Verify precondition: the cache file exists on disk, proving
       # Bootsnap wrote a cached binary during the first load.
       iseq_cache_dir = Bootsnap::CompileCache::ISeq.cache_dir
-      cache_files = Dir.glob(File.join(iseq_cache_dir, "**/*")).select { |f| File.file?(f) }
+      cache_files = Dir.glob(File.join(iseq_cache_dir, '**/*')).select { |f| File.file?(f) }
       expect(cache_files).not_to be_empty,
         "No Bootsnap cache files found in #{iseq_cache_dir}. " \
-        "Bootsnap may not have been properly initialized."
+        'Bootsnap may not have been properly initialized.'
 
       # Load the file and verify load_iseq was called (Bootsnap's hook).
       # We can't easily check this without instrumenting Bootsnap itself,
@@ -257,7 +257,7 @@ RSpec.describe "DI CodeTracker with Bootsnap" do
 
       # The file should be in the registry.
       tracker = Datadog::DI.code_tracker
-      result = tracker.iseqs_for_path_suffix("bootsnap_test_class.rb")
+      result = tracker.iseqs_for_path_suffix('bootsnap_test_class.rb')
       expect(result).not_to be_nil
     end
   end

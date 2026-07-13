@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'open3'
 
 RSpec.describe 'DI initializer' do

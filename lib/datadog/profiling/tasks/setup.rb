@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../core/utils/only_once"
-require_relative "../../core/utils/at_fork_monkey_patch"
+require_relative '../../core/utils/only_once'
+require_relative '../../core/utils/at_fork_monkey_patch'
 
 module Datadog
   module Profiling
@@ -19,7 +19,7 @@ module Datadog
               "Profiler extensions unavailable. Cause: #{e.class}: #{e.message} " \
               "Location: #{Array(e.backtrace).first}"
             end
-            Datadog::Core::Telemetry::Logger.report(e, description: "Profiler extensions unavailable")
+            Datadog::Core::Telemetry::Logger.report(e, description: 'Profiler extensions unavailable')
           end
         end
 
@@ -34,7 +34,7 @@ module Datadog
               "Error during post-fork hooks. Cause: #{e.class}: #{e.message} " \
               "Location: #{Array(e.backtrace).first}"
             end
-            Datadog::Core::Telemetry::Logger.report(e, description: "Error during post-fork hooks")
+            Datadog::Core::Telemetry::Logger.report(e, description: 'Error during post-fork hooks')
           end
         end
       end

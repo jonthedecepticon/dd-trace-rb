@@ -20,12 +20,12 @@ module SerializerHelper
         end
 
         if expected_matches = c[:expected_matches]
-          it "serialization matches expectation" do
+          it 'serialization matches expectation' do
             expect(serialized).to match(expected_matches)
           end
         else
           expected = c.fetch(:expected)
-          it "serializes exactly as specified" do
+          it 'serializes exactly as specified' do
             expect(serialized).to eq(expected)
           end
         end
@@ -35,13 +35,13 @@ module SerializerHelper
 
   def default_settings
     let(:settings) do
-      double("settings").tap do |settings|
+      double('settings').tap do |settings|
         allow(settings).to receive(:dynamic_instrumentation).and_return(di_settings)
       end
     end
 
     let(:di_settings) do
-      double("di settings").tap do |settings|
+      double('di settings').tap do |settings|
         allow(settings).to receive(:enabled).and_return(true)
         allow(settings).to receive(:redacted_identifiers).and_return([])
         allow(settings).to receive(:redaction_excluded_identifiers).and_return([])

@@ -115,7 +115,7 @@ RSpec.describe 'Rails Endpoint Collection' do
       end
 
       get '/param/:name' do
-        route = request.env["datadog.http.route"]
+        route = request.env['datadog.http.route']
         {
           message: 'Grape Params Endpoint (GET)',
           route: route,
@@ -125,7 +125,7 @@ RSpec.describe 'Rails Endpoint Collection' do
 
       namespace 'namespaced' do
         get '/param/:name' do
-          route = request.env["datadog.http.route"]
+          route = request.env['datadog.http.route']
           {
             message: 'Grape Params Endpoint (GET)',
             route: route,

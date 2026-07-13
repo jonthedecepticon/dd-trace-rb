@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "uri"
-require_relative "configuration/ext"
+require 'uri'
+require_relative 'configuration/ext'
 
 module Datadog
   module AIGuard
@@ -58,9 +58,9 @@ module Datadog
                   next unless value
 
                   uri = URI(value.to_s)
-                  raise ArgumentError, "Please provide an absolute URI that includes a protocol" unless uri.absolute?
+                  raise ArgumentError, 'Please provide an absolute URI that includes a protocol' unless uri.absolute?
 
-                  uri.to_s.delete_suffix("/")
+                  uri.to_s.delete_suffix('/')
                 end
               end
 

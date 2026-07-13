@@ -44,7 +44,7 @@ RSpec.describe 'DI integration from remote config' do
     # short-circuits when `component.started?` is false.
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
       if component.nil?
-        raise "Component failed to create - unsuitable environment? Check log entries"
+        raise 'Component failed to create - unsuitable environment? Check log entries'
       end
       component.start!
     end

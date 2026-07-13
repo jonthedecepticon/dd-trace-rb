@@ -1,9 +1,9 @@
 require 'datadog/tracing/contrib/rails/rails_helper'
-require "datadog/di/spec_helper"
-require "datadog/di/serializer"
+require 'datadog/di/spec_helper'
+require 'datadog/di/serializer'
 require_relative '../../serializer_helper'
 require 'active_record'
-require "datadog/di/contrib/active_record"
+require 'datadog/di/contrib/active_record'
 
 class SerializerRailsSpecTestEmptyModel < ActiveRecord::Base
 end
@@ -67,24 +67,24 @@ RSpec.describe Datadog::DI::Serializer do
     described_class.new(settings, redactor)
   end
 
-  describe "#serialize_value" do
+  describe '#serialize_value' do
     let(:serialized) do
       serializer.serialize_value(value, **options)
     end
 
     cases = [
-      {name: "AR model with no attributes",
+      {name: 'AR model with no attributes',
        input: -> { SerializerRailsSpecTestEmptyModel.new },
-       expected: {type: "SerializerRailsSpecTestEmptyModel", entries: [[
+       expected: {type: 'SerializerRailsSpecTestEmptyModel', entries: [[
          {type: 'Symbol', value: 'attributes'},
          {type: 'Hash', entries: [[{type: 'String', value: 'id'}, {type: 'NilClass', isNull: true}]]},
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
        ]]}},
-      {name: "AR model with empty attributes",
+      {name: 'AR model with empty attributes',
        input: -> { SerializerRailsSpecTestBasicModel.new },
-       expected: {type: "SerializerRailsSpecTestBasicModel", entries: [[
+       expected: {type: 'SerializerRailsSpecTestBasicModel', entries: [[
          {type: 'Symbol', value: 'attributes'},
          {type: 'Hash', entries: [
            [{type: 'String', value: 'id'}, {type: 'NilClass', isNull: true}],
@@ -96,13 +96,13 @@ RSpec.describe Datadog::DI::Serializer do
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
        ]]}},
-      {name: "AR model with filled out attributes",
+      {name: 'AR model with filled out attributes',
        input: -> {
                 SerializerRailsSpecTestBasicModel.new(
                   title: 'Hello, world!', created_at: Time.utc(2020, 1, 2), updated_at: Time.utc(2020, 1, 3)
                 )
               },
-       expected: {type: "SerializerRailsSpecTestBasicModel", entries: [[
+       expected: {type: 'SerializerRailsSpecTestBasicModel', entries: [[
          {type: 'Symbol', value: 'attributes'},
          {type: 'Hash', entries: [
            [{type: 'String', value: 'id'}, {type: 'NilClass', isNull: true}],
@@ -114,13 +114,13 @@ RSpec.describe Datadog::DI::Serializer do
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
        ]]}},
-      {name: "AR model with filled out attributes and persisted",
+      {name: 'AR model with filled out attributes and persisted',
        input: -> {
                 SerializerRailsSpecTestBasicModel.create!(
                   title: 'Hello, world!', created_at: Time.utc(2020, 1, 2), updated_at: Time.utc(2020, 1, 3)
                 )
               },
-       expected: {type: "SerializerRailsSpecTestBasicModel", entries: [[
+       expected: {type: 'SerializerRailsSpecTestBasicModel', entries: [[
          {type: 'Symbol', value: 'attributes'},
          {type: 'Hash', entries: [
            [{type: 'String', value: 'id'}, {type: 'Integer', value: '1'}],

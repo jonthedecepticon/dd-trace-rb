@@ -12,9 +12,9 @@ module Datadog
             path = path_prefix + route.pattern.origin
 
             {
-              type: "REST",
+              type: 'REST',
               resource_name: "#{route.request_method} #{path}",
-              operation_name: "http.request",
+              operation_name: 'http.request',
               method: route.request_method,
               path: path
             }

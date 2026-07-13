@@ -1,7 +1,7 @@
-require "datadog/di/spec_helper"
-require "datadog/di"
-require "set"
-require "securerandom"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
+require 'set'
+require 'securerandom'
 
 # Integration tests that set DI probes on standard library methods
 # invoked by DI's own processing pipeline.
@@ -44,7 +44,7 @@ require "securerandom"
 # methods to trigger the probes.
 class StdlibProbeTestClass
   def initialize
-    @name = "test_instance"
+    @name = 'test_instance'
   end
 
   def call_string_length(str)
@@ -66,7 +66,7 @@ class StdlibProbeTestClass
   end
 end
 
-RSpec.describe "Stdlib probe integration: probes on methods invoked by DI processing" do
+RSpec.describe 'Stdlib probe integration: probes on methods invoked by DI processing' do
   di_test
 
   let(:diagnostics_transport) do
@@ -98,7 +98,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   let(:component) do
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
       if component.nil?
-        raise "Component failed to create - unsuitable environment? Check log entries"
+        raise 'Component failed to create - unsuitable environment? Check log entries'
       end
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   # Method probes on stdlib classes used by DI serializer
   # ----------------------------------------------------------------
 
-  shared_context "propagate_all_exceptions settings" do
+  shared_context 'propagate_all_exceptions settings' do
     let(:settings) do
       Datadog::Core::Configuration::Settings.new.tap do |settings|
         settings.remote.enabled = true
@@ -141,7 +141,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  shared_context "permissive settings" do
+  shared_context 'permissive settings' do
     let(:settings) do
       Datadog::Core::Configuration::Settings.new.tap do |settings|
         settings.remote.enabled = true
@@ -152,7 +152,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on String#length" do
+  context 'method probe on String#length' do
     # String#length is called by DI's serializer to check string truncation
     # (serializer.rb: `if value.length > max`).
     # A probe here causes re-entrancy: user code calls length -> probe fires ->
@@ -160,22 +160,22 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # fires again. Rate limiter (1/sec for capture probes) prevents infinite
     # recursion because nested invocations are rate-limited.
 
-    context "with snapshot capture" do
-      include_context "permissive settings"
+    context 'with snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-string-length",
+          id: 'stdlib-string-length',
           type: :log,
-          type_name: "String",
-          method_name: "length",
+          type_name: 'String',
+          method_name: 'length',
           capture_snapshot: true,
         )
       end
 
-      it "handles re-entrancy via rate limiting" do
+      it 'handles re-entrancy via rate limiting' do
         payloads = run_stdlib_probe_test(probe) do
-          result = StdlibProbeTestClass.new.call_string_length("hello world")
+          result = StdlibProbeTestClass.new.call_string_length('hello world')
           expect(result).to eq(11)
         end
 
@@ -183,20 +183,20 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
       end
     end
 
-    context "without snapshot capture" do
-      include_context "permissive settings"
+    context 'without snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-string-length-no-snap",
+          id: 'stdlib-string-length-no-snap',
           type: :log,
-          type_name: "String",
-          method_name: "length",
+          type_name: 'String',
+          method_name: 'length',
           capture_snapshot: false,
         )
       end
 
-      it "handles re-entrancy via fiber-local guard" do
+      it 'handles re-entrancy via fiber-local guard' do
         # Without snapshot capture, rate limit is 5000/sec.
         # Without the re-entrancy guard this would cause SystemStackError:
         #   String#length probe fires ->
@@ -209,7 +209,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
         # implemented in C) prevents this: DI-internal calls to String#length
         # see the guard is set and call the original method directly.
         payloads = run_stdlib_probe_test(probe) do
-          result = StdlibProbeTestClass.new.call_string_length("hello world")
+          result = StdlibProbeTestClass.new.call_string_length('hello world')
           expect(result).to eq(11)
         end
 
@@ -218,26 +218,26 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Hash#each" do
+  context 'method probe on Hash#each' do
     # Hash#each is called by DI's serializer to iterate hash entries
     # (serializer.rb: `value.each do |k, v|`).
     # Hash#each is also called by DI's own code during probe installation
     # and diagnostics, so the probe fires immediately after installation.
 
-    context "with snapshot capture" do
-      include_context "propagate_all_exceptions settings"
+    context 'with snapshot capture' do
+      include_context 'propagate_all_exceptions settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-hash-each",
+          id: 'stdlib-hash-each',
           type: :log,
-          type_name: "Hash",
-          method_name: "each",
+          type_name: 'Hash',
+          method_name: 'each',
           capture_snapshot: true,
         )
       end
 
-      it "handles re-entrancy via rate limiting" do
+      it 'handles re-entrancy via rate limiting' do
         payloads = run_stdlib_probe_test(probe) do
           result = StdlibProbeTestClass.new.call_hash_each({a: 1, b: 2})
           expect(result).to eq([[:a, 1], [:b, 2]])
@@ -248,28 +248,28 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Array#map" do
+  context 'method probe on Array#map' do
     # Array#map is called by DI's serializer to serialize array elements
     # (serializer.rb: `entries = value.map do |elt|`)
     # and by probe_notification_builder to format caller_locations.
 
-    context "with snapshot capture" do
-      include_context "permissive settings"
+    context 'with snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-array-map",
+          id: 'stdlib-array-map',
           type: :log,
-          type_name: "Array",
-          method_name: "map",
+          type_name: 'Array',
+          method_name: 'map',
           capture_snapshot: true,
         )
       end
 
-      it "handles re-entrancy via rate limiting" do
+      it 'handles re-entrancy via rate limiting' do
         payloads = run_stdlib_probe_test(probe) do
           result = StdlibProbeTestClass.new.call_array_map([1, 2, 3])
-          expect(result).to eq(["1", "2", "3"])
+          expect(result).to eq(['1', '2', '3'])
         end
 
         expect(payloads.length).to be >= 1
@@ -277,25 +277,25 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Object#instance_variables" do
+  context 'method probe on Object#instance_variables' do
     # Object#instance_variables is called by DI's serializer to enumerate
     # fields of non-primitive objects
     # (serializer.rb: `ivars = value.instance_variables`).
 
-    context "with snapshot capture" do
-      include_context "permissive settings"
+    context 'with snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-obj-ivars",
+          id: 'stdlib-obj-ivars',
           type: :log,
-          type_name: "Object",
-          method_name: "instance_variables",
+          type_name: 'Object',
+          method_name: 'instance_variables',
           capture_snapshot: true,
         )
       end
 
-      it "handles re-entrancy via rate limiting" do
+      it 'handles re-entrancy via rate limiting' do
         payloads = run_stdlib_probe_test(probe) do
           obj = StdlibProbeTestClass.new
           result = obj.call_instance_variables(obj)
@@ -311,7 +311,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   # Line probe on Ruby-implemented stdlib file (SecureRandom.uuid)
   # ----------------------------------------------------------------
 
-  context "line probe on SecureRandom.uuid" do
+  context 'line probe on SecureRandom.uuid' do
     # SecureRandom.uuid is called by DI's probe notification builder
     # during every snapshot generation
     # (probe_notification_builder.rb: `id: SecureRandom.uuid`).
@@ -340,12 +340,12 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     let(:uuid_source_location) do
       loc = SecureRandom.method(:uuid).source_location
       unless loc
-        raise "SecureRandom.uuid has no Ruby source location on Ruby " \
+        raise 'SecureRandom.uuid has no Ruby source location on Ruby ' \
           "#{RUBY_VERSION} (likely reimplemented in C). This test verifies " \
           "line probes on a Ruby-implemented stdlib file called by DI's " \
-          "snapshot pipeline; the target must be Ruby-implemented in the " \
-          "current Ruby version. Either pick a different Ruby-implemented " \
-          "target or replace this test."
+          'snapshot pipeline; the target must be Ruby-implemented in the ' \
+          'current Ruby version. Either pick a different Ruby-implemented ' \
+          'target or replace this test.'
       end
       loc
     end
@@ -357,7 +357,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-securerandom-uuid-line",
+        id: 'stdlib-securerandom-uuid-line',
         type: :log,
         file: source_file,
         line_no: source_line,
@@ -365,8 +365,8 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
       )
     end
 
-    context "with snapshot capture" do
-      it "installs line probe on stdlib and fires" do
+    context 'with snapshot capture' do
+      it 'installs line probe on stdlib and fires' do
         payloads = run_stdlib_probe_test(probe) do
           SecureRandom.uuid
           SecureRandom.uuid
@@ -376,7 +376,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
       end
     end
 
-    context "without snapshot capture" do
+    context 'without snapshot capture' do
       # Line probes use TracePoint, which Ruby self-disables during its
       # callback — the same trace point will NOT fire while already
       # inside its own callback. This is fundamentally different from
@@ -388,7 +388,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-securerandom-uuid-line-no-snap",
+          id: 'stdlib-securerandom-uuid-line-no-snap',
           type: :log,
           file: source_file,
           line_no: source_line,
@@ -396,7 +396,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
         )
       end
 
-      it "does not cause SystemStackError because TracePoint is self-disabling" do
+      it 'does not cause SystemStackError because TracePoint is self-disabling' do
         payloads = run_stdlib_probe_test(probe) do
           SecureRandom.uuid
           SecureRandom.uuid
@@ -414,26 +414,26 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   # Method probe on Set#include? — contrast with line probe above
   # ----------------------------------------------------------------
 
-  context "method probe on Set#include?" do
+  context 'method probe on Set#include?' do
     # Set#include? is called by DI's redactor during serialization.
     # Unlike the line probe test above (which uses TracePoint and is
     # self-disabling), this method probe uses module prepending and
     # has no re-entrancy protection.
 
-    context "with snapshot capture" do
-      include_context "permissive settings"
+    context 'with snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-set-include-method",
+          id: 'stdlib-set-include-method',
           type: :log,
-          type_name: "Set",
-          method_name: "include?",
+          type_name: 'Set',
+          method_name: 'include?',
           capture_snapshot: true,
         )
       end
 
-      it "handles re-entrancy via rate limiting" do
+      it 'handles re-entrancy via rate limiting' do
         payloads = run_stdlib_probe_test(probe) do
           s = Set.new([:a, :b, :c])
           expect(s.include?(:b)).to be true
@@ -444,20 +444,20 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
       end
     end
 
-    context "without snapshot capture" do
-      include_context "permissive settings"
+    context 'without snapshot capture' do
+      include_context 'permissive settings'
 
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "stdlib-set-include-method-no-snap",
+          id: 'stdlib-set-include-method-no-snap',
           type: :log,
-          type_name: "Set",
-          method_name: "include?",
+          type_name: 'Set',
+          method_name: 'include?',
           capture_snapshot: false,
         )
       end
 
-      it "does not cause SystemStackError because non-capture path does not call redactor" do
+      it 'does not cause SystemStackError because non-capture path does not call redactor' do
         # Without snapshot capture, DI's snapshot building does NOT call
         # the serializer or redactor. Set#include? is only called by
         # the redactor during capture serialization, so there is no
@@ -484,7 +484,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   # DI-internal code should not fire probes
   # ----------------------------------------------------------------
 
-  context "desired: probe on stdlib fires only for customer code, not DI-internal code" do
+  context 'desired: probe on stdlib fires only for customer code, not DI-internal code' do
     # When a customer sets a probe on a stdlib method (e.g., String#length),
     # the desired behavior is:
     #   - DI-internal calls to String#length (during add_probe, serialization,
@@ -508,19 +508,19 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # To fully suppress probes during all DI processing, the guard would
     # need to be set around every DI entry point.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-string-length-di-internal",
+        id: 'stdlib-string-length-di-internal',
         type: :log,
-        type_name: "String",
-        method_name: "length",
+        type_name: 'String',
+        method_name: 'length',
         capture_snapshot: true,
       )
     end
 
-    it "fires probe for both user code and DI-internal invocations (current behavior)" do
+    it 'fires probe for both user code and DI-internal invocations (current behavior)' do
       payloads = run_stdlib_probe_test(probe) do
         # This single user-code call to String#length triggers the probe.
         # During DI's snapshot building for this invocation, DI calls
@@ -533,7 +533,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
         # Desired: DI-internal calls should be completely invisible to
         # the probe — no rate limiter check, no enabled? check, just
         # the original method.
-        StdlibProbeTestClass.new.call_string_length("hello world")
+        StdlibProbeTestClass.new.call_string_length('hello world')
       end
 
       expect(payloads.length).to be >= 1
@@ -544,7 +544,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
   # Method probe on method called during probe installation
   # ----------------------------------------------------------------
 
-  context "method probe on Module#prepend" do
+  context 'method probe on Module#prepend' do
     # Module#prepend is called by DI's instrumenter to install method probes
     # (instrumenter.rb: `cls.send(:prepend, mod)`).
     # A probe on prepend fires during probe installation itself.
@@ -557,19 +557,19 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # the same call, so the probe fires correctly (Module#prepend is
     # already instrumented by the time it fires).
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-module-prepend",
+        id: 'stdlib-module-prepend',
         type: :log,
-        type_name: "Module",
-        method_name: "prepend",
+        type_name: 'Module',
+        method_name: 'prepend',
         capture_snapshot: true,
       )
     end
 
-    it "installs without infinite recursion and the system is stable" do
+    it 'installs without infinite recursion and the system is stable' do
       run_stdlib_probe_test(probe) do
         # The probe on Module#prepend fired during its own installation.
         # Trigger an additional prepend to verify the system is stable.
@@ -584,7 +584,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Thread#[]" do
+  context 'method probe on Thread#[]' do
     # The re-entrancy guard storage is the same fiber-local hashtable that
     # Thread#[] / Thread#[]= read and write. A naive implementation that
     # accessed the storage via Thread#[] from Ruby would self-recurse here:
@@ -597,19 +597,19 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # dispatch. The probe wrapper's own guard accesses are therefore
     # invisible to the user-installed Thread#[] probe.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-thread-aref",
+        id: 'stdlib-thread-aref',
         type: :log,
-        type_name: "Thread",
-        method_name: "[]",
+        type_name: 'Thread',
+        method_name: '[]',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through guard storage" do
+    it 'does not self-recurse through guard storage' do
       payloads = run_stdlib_probe_test(probe) do
         Thread.current[:user_key] = 42
         expect(Thread.current[:user_key]).to eq(42)
@@ -619,24 +619,24 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Thread#[]=" do
+  context 'method probe on Thread#[]=' do
     # Same reasoning as Thread#[]: writes to the guard storage from Ruby
     # via Thread#[]= would self-recurse. DI.enter_probe / DI.leave_probe
     # bypass Thread#[]= via rb_thread_local_aset.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-thread-aset",
+        id: 'stdlib-thread-aset',
         type: :log,
-        type_name: "Thread",
-        method_name: "[]=",
+        type_name: 'Thread',
+        method_name: '[]=',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through guard storage" do
+    it 'does not self-recurse through guard storage' do
       payloads = run_stdlib_probe_test(probe) do
         Thread.current[:user_key] = 42
         expect(Thread.current[:user_key]).to eq(42)
@@ -646,7 +646,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Array#empty?" do
+  context 'method probe on Array#empty?' do
     # A probe on Array#empty? must not self-recurse. The method-probe
     # wrapper does not call Array#empty? on customer arguments — forwarding
     # goes straight through super — and any Array#empty? call DI makes
@@ -654,19 +654,19 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # re-entrancy guard (DI.in_probe?), so the original method is reached
     # without re-entering the wrapper.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-array-empty",
+        id: 'stdlib-array-empty',
         type: :log,
-        type_name: "Array",
-        method_name: "empty?",
+        type_name: 'Array',
+        method_name: 'empty?',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through wrapper emptiness check" do
+    it 'does not self-recurse through wrapper emptiness check' do
       payloads = run_stdlib_probe_test(probe) do
         expect([].empty?).to be true
         expect([1].empty?).to be false
@@ -676,25 +676,25 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Hash#empty?" do
+  context 'method probe on Hash#empty?' do
     # Same reasoning as Array#empty?: the wrapper does not call Hash#empty?
     # on customer kwargs, and any internal Hash#empty? call during DI
     # processing is short-circuited by the re-entrancy guard, so a probe on
     # Hash#empty? does not recurse.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-hash-empty",
+        id: 'stdlib-hash-empty',
         type: :log,
-        type_name: "Hash",
-        method_name: "empty?",
+        type_name: 'Hash',
+        method_name: 'empty?',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through wrapper emptiness check" do
+    it 'does not self-recurse through wrapper emptiness check' do
       payloads = run_stdlib_probe_test(probe) do
         expect({}.empty?).to be true
         expect({a: 1}.empty?).to be false
@@ -704,7 +704,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Proc#call" do
+  context 'method probe on Proc#call' do
     # The wrapper used to invoke `do_super` via `do_super.call(args, kwargs, blk)`.
     # `do_super` is a lambda (Proc), so `.call` dispatches through Proc#call.
     # With Proc#call probed, that dispatch is intercepted by the wrapper.
@@ -718,19 +718,19 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # Proc#call dispatch. All do_super.call sites and user_caller_locations.call
     # in the wrapper / run_method_probe use DI.invoke_proc.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-proc-call",
+        id: 'stdlib-proc-call',
         type: :log,
-        type_name: "Proc",
-        method_name: "call",
+        type_name: 'Proc',
+        method_name: 'call',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through wrapper trampoline" do
+    it 'does not self-recurse through wrapper trampoline' do
       payloads = run_stdlib_probe_test(probe) do
         adder = ->(a, b) { a + b }
         expect(adder.call(2, 3)).to eq(5)
@@ -740,7 +740,7 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     end
   end
 
-  context "method probe on Object#send" do
+  context 'method probe on Object#send' do
     # The wrapper used to call `instrumenter.send(:run_method_probe, ...)`
     # because run_method_probe was private. With Object#send probed, that .send
     # would be intercepted by the wrapper before DI.enter_probe ran (the guard
@@ -751,25 +751,25 @@ RSpec.describe "Stdlib probe integration: probes on methods invoked by DI proces
     # `.send` on the hot path means an Object#send / Kernel#send probe cannot
     # intercept the call into run_method_probe.
 
-    include_context "permissive settings"
+    include_context 'permissive settings'
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "stdlib-object-send",
+        id: 'stdlib-object-send',
         type: :log,
-        type_name: "Object",
-        method_name: "send",
+        type_name: 'Object',
+        method_name: 'send',
         capture_snapshot: false,
       )
     end
 
-    it "does not self-recurse through wrapper send call" do
+    it 'does not self-recurse through wrapper send call' do
       payloads = run_stdlib_probe_test(probe) do
         target = Object.new
         def target.greet(name)
           "hello, #{name}"
         end
-        expect(target.send(:greet, "world")).to eq("hello, world")
+        expect(target.send(:greet, 'world')).to eq('hello, world')
       end
 
       expect(payloads.length).to be >= 1

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
 
 # End-to-end test verifying that compile_file iseqs in object space do
 # not cause probes to silently fail.
@@ -22,14 +22,14 @@ require "datadog/di"
 # See: https://github.com/DataDog/dd-trace-rb/pull/5496#discussion_r3052752533
 
 # Step 1: Load the test class before tracking starts.
-require_relative "compile_file_e2e_test_class"
+require_relative 'compile_file_e2e_test_class'
 
 # Step 2: compile_file the same file. We do NOT hold the reference —
 # in production, compile_file results are typically consumed and
 # discarded. Without a reference, GC collects both the :top and its
 # child iseqs.
 RubyVM::InstructionSequence.compile_file(
-  File.join(__dir__, "compile_file_e2e_test_class.rb"),
+  File.join(__dir__, 'compile_file_e2e_test_class.rb'),
 )
 
 # Step 3: GC everything unreferenced — both the require-produced :top
@@ -40,11 +40,11 @@ RubyVM::InstructionSequence.compile_file(
 GC.start
 GC.start
 
-RSpec.describe "compile_file iseq end-to-end probe test" do
+RSpec.describe 'compile_file iseq end-to-end probe test' do
   di_test
 
   before(:all) do
-    skip "Test requires iseq_type (Ruby < 3.1)" unless Datadog::DI.respond_to?(:iseq_type)
+    skip 'Test requires iseq_type (Ruby < 3.1)' unless Datadog::DI.respond_to?(:iseq_type)
 
     # Hard precondition: no :top iseqs survive for the target file.
     # If a :top iseq remains, probe installation can succeed via the
@@ -52,12 +52,12 @@ RSpec.describe "compile_file iseq end-to-end probe test" do
     #
     # We also require method iseqs to survive so line probes still have
     # executable iseqs to target through per-method fallback.
-    target = "compile_file_e2e_test_class.rb"
+    target = 'compile_file_e2e_test_class.rb'
     iseqs = Datadog::DI.all_iseqs.select { |i| i.absolute_path&.end_with?(target) }
     types = iseqs.map { |i| Datadog::DI.iseq_type(i) }
 
-    skip "A :top iseq survived GC (precondition failed)" if types.include?(:top)
-    skip "No method iseqs found (precondition failed)" unless types.include?(:method)
+    skip 'A :top iseq survived GC (precondition failed)' if types.include?(:top)
+    skip 'No method iseqs found (precondition failed)' unless types.include?(:method)
   end
 
   let(:diagnostics_transport) do
@@ -97,7 +97,7 @@ RSpec.describe "compile_file iseq end-to-end probe test" do
 
   let(:component) do
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
-      raise "Component failed to create" if component.nil?
+      raise 'Component failed to create' if component.nil?
     end
   end
 
@@ -113,13 +113,13 @@ RSpec.describe "compile_file iseq end-to-end probe test" do
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "compile-file-e2e-1", type: :log,
-        file: "compile_file_e2e_test_class.rb", line_no: 22,
+        id: 'compile-file-e2e-1', type: :log,
+        file: 'compile_file_e2e_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
     end
 
-    it "installs the probe via per-method iseq fallback" do
+    it 'installs the probe via per-method iseq fallback' do
       expect(diagnostics_transport).to receive(:send_diagnostics)
       probe_manager.add_probe(probe)
       component.probe_notifier_worker.flush
@@ -127,7 +127,7 @@ RSpec.describe "compile_file iseq end-to-end probe test" do
       expect(probe_manager.probe_repository.installed_probes.length).to eq(1)
     end
 
-    it "fires the probe when the target line executes" do
+    it 'fires the probe when the target line executes' do
       expect(diagnostics_transport).to receive(:send_diagnostics)
       probe_manager.add_probe(probe)
       component.probe_notifier_worker.flush

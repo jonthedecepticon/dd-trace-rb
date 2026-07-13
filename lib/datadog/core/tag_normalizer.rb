@@ -37,14 +37,14 @@ module Datadog
         #          is safe to modify the default behavior.
         value = original_value.to_s.encode('UTF-8', invalid: :replace, undef: :replace)
         value.strip!
-        return "" if value.empty?
+        return '' if value.empty?
 
         return value if value.bytesize <= MAX_BYTE_SIZE &&
           value.match?(VALID_ASCII_TAG)
 
         if value.bytesize > MAX_BYTE_SIZE
           value = value.byteslice(0, MAX_BYTE_SIZE)
-          value.scrub!("")
+          value.scrub!('')
         end
 
         value.downcase!
@@ -52,7 +52,7 @@ module Datadog
 
         # The Trace Agent allows tag values to start with a number so this logic is here too
         leading_invalid_regex = remove_digit_start_char ? LEADING_INVALID_CHARS_NO_DIGITS : LEADING_INVALID_CHARS_WITH_DIGITS
-        value.sub!(leading_invalid_regex, "")
+        value.sub!(leading_invalid_regex, '')
 
         value.squeeze!('_') if value.include?('__')
         value.delete_suffix!('_')
@@ -74,7 +74,7 @@ module Datadog
 
         if value.bytesize > MAX_PROCESS_VALUE_BYTE_SIZE
           value = value.byteslice(0, MAX_PROCESS_VALUE_BYTE_SIZE) || value
-          value.scrub!("")
+          value.scrub!('')
         end
 
         value

@@ -8,7 +8,7 @@ namespace :version do
     else
       # When releasing from `master` branch, return the next minor version (ie. 2.0.0 -> 2.1.0)
       major, minor, = current_version.segments
-      [major, minor.succ, 0].join(".")
+      [major, minor.succ, 0].join('.')
     end
   end
 
@@ -24,7 +24,7 @@ namespace :version do
     input = args.extras.first || raise(ArgumentError, 'Please provide a version to bump to')
     next_version = Gem::Version.new(input)
 
-    major, minor, patch, pre = next_version.to_s.split(".")
+    major, minor, patch, pre = next_version.to_s.split('.')
 
     replace_version(/MAJOR = \d+/, "MAJOR = #{major}") if major
     replace_version(/MINOR = \d+/, "MINOR = #{minor}") if minor
@@ -33,7 +33,7 @@ namespace :version do
     if pre
       replace_version(/PRE = \S+/, "PRE = '#{pre}'")
     else
-      replace_version(/PRE = \S+/, "PRE = nil")
+      replace_version(/PRE = \S+/, 'PRE = nil')
     end
 
     updated_version = load_gemspec_version

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../integration"
-require_relative "patcher"
-require_relative "request_middleware"
+require_relative '../integration'
+require_relative 'patcher'
+require_relative 'request_middleware'
 
 module Datadog
   module AIGuard
@@ -12,12 +12,12 @@ module Datadog
         class Integration
           include Datadog::AIGuard::Contrib::Integration
 
-          MINIMUM_VERSION = Gem::Version.new("1.1.0")
+          MINIMUM_VERSION = Gem::Version.new('1.1.0')
 
           register_as :rack, auto_patch: false
 
           def self.version
-            Gem.loaded_specs["rack"]&.version
+            Gem.loaded_specs['rack']&.version
           end
 
           def self.loaded?

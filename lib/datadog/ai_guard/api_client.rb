@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require "uri"
-require "net/http"
-require "json"
+require 'uri'
+require 'net/http'
+require 'json'
 
 module Datadog
   module AIGuard
     # API Client for AI Guard API.
     # Uses net/http to perform request. Raises on client and server errors.
     class APIClient
-      DEFAULT_SITE = "app.datadoghq.com"
-      DEFAULT_PATH = "/api/v2/ai-guard"
+      DEFAULT_SITE = 'app.datadoghq.com'
+      DEFAULT_PATH = '/api/v2/ai-guard'
 
       def initialize(endpoint:, api_key:, application_key:, timeout:)
         @timeout = timeout
@@ -19,7 +19,7 @@ module Datadog
           URI(endpoint) #: URI::HTTP
         elsif Datadog.configuration.site
           host = Datadog.configuration.site.dup
-          host.prepend("app.") if host.count(".") == 1
+          host.prepend('app.') if host.count('.') == 1
 
           URI::HTTPS.build(host: host, path: DEFAULT_PATH)
         else
@@ -30,9 +30,9 @@ module Datadog
           "DD-API-KEY": api_key.to_s,
           "DD-APPLICATION-KEY": application_key.to_s,
           "DD-AI-GUARD-VERSION": Datadog::VERSION::STRING,
-          "DD-AI-GUARD-SOURCE": "SDK",
-          "DD-AI-GUARD-LANGUAGE": "ruby",
-          "content-type": "application/json"
+          "DD-AI-GUARD-SOURCE": 'SDK',
+          "DD-AI-GUARD-LANGUAGE": 'ruby',
+          "content-type": 'application/json'
         }.freeze
       end
 
@@ -47,7 +47,7 @@ module Datadog
           parse_response_body(response.body)
         end
       rescue Net::ReadTimeout
-        raise AIGuardClientError, "Request to AI Guard timed out"
+        raise AIGuardClientError, 'Request to AI Guard timed out'
       end
 
       private
@@ -57,7 +57,7 @@ module Datadog
         when Net::HTTPSuccess
           # do nothing
         when Net::HTTPRedirection
-          raise AIGuardClientError, "Redirects for AI Guard API are not supported"
+          raise AIGuardClientError, 'Redirects for AI Guard API are not supported'
         else
           error_message = begin
             parsed_body = JSON.parse(response.body)
@@ -73,7 +73,7 @@ module Datadog
       def parse_response_body(body)
         JSON.parse(body)
       rescue JSON::ParserError
-        raise AIGuardClientError, "Could not parse response body"
+        raise AIGuardClientError, 'Could not parse response body'
       end
 
       def use_ssl?

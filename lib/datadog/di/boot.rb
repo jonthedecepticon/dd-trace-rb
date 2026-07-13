@@ -28,7 +28,7 @@ if %w[1 true yes].include?(Datadog::DATADOG_ENV['DD_DYNAMIC_INSTRUMENTATION_ENAB
   # If DI is enabled programmatically, the application can (and must,
   # for line probes to work) activate tracking in an initializer.
   # We seem to have Datadog.logger here already
-  Datadog.logger.debug("di: activating code tracking")
+  Datadog.logger.debug('di: activating code tracking')
   Datadog::DI.activate_tracking
 end
 

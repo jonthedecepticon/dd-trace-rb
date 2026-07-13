@@ -76,7 +76,7 @@ module PlatformHelpers
     def ruby_2_only
       if RUBY_VERSION >= '3'
         before(:all) do
-          skip "Test is only for Ruby 2"
+          skip 'Test is only for Ruby 2'
         end
       end
     end
@@ -84,7 +84,7 @@ module PlatformHelpers
     def forking_platform_only
       if PlatformHelpers.jruby?
         before(:all) do
-          skip "Test requires fork to be implemented, JRuby does not"
+          skip 'Test requires fork to be implemented, JRuby does not'
         end
       end
     end

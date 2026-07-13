@@ -12,7 +12,7 @@ RSpec.describe 'Supported configurations' do
       alias_to_canonical = {}
       supported_configurations = json_data[:supportedConfigurations].each.with_object(Set.new) do |(name, configs), result|
         configs.each do |config|
-          config["aliases"]&.each do |alias_name|
+          config['aliases']&.each do |alias_name|
             aliases[name] ||= []
             aliases[name] << alias_name
             alias_to_canonical[alias_name] = name
@@ -21,7 +21,7 @@ RSpec.describe 'Supported configurations' do
             deprecations << alias_name unless json_data.dig(:supportedConfigurations, alias_name)
           end
           # Add deprecated configs with no replacement provided
-          deprecations << name if config["deprecations"]
+          deprecations << name if config['deprecations']
         end
         result << name
       end
@@ -34,7 +34,7 @@ RSpec.describe 'Supported configurations' do
       expect(supported_configurations.sort).to eq(Datadog::Core::Configuration::SUPPORTED_CONFIGURATION_NAMES.sort), error_message
       # check order of the keys
       expect(supported_configurations).to eq(Datadog::Core::Configuration::SUPPORTED_CONFIGURATION_NAMES),
-        "The keys in supported-configurations.json are not correctly sorted. Please keep the keys sorted alphabetically."
+        'The keys in supported-configurations.json are not correctly sorted. Please keep the keys sorted alphabetically.'
 
       # no need to check the order for these as they don't appear in the JSON file
       expect(aliases).to eq(Datadog::Core::Configuration::ALIASES), error_message

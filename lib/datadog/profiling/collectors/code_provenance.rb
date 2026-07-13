@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "set"
-require "json"
+require 'set'
+require 'json'
 
 module Datadog
   module Profiling
@@ -18,7 +18,7 @@ module Datadog
         # @rbs ruby_native_filename: ::String?
         # @rbs return: void
         def initialize(
-          standard_library_path: RbConfig::CONFIG.fetch("rubylibdir"),
+          standard_library_path: RbConfig::CONFIG.fetch('rubylibdir'),
           ruby_native_filename: Datadog::Profiling::Collectors::Stack._native_ruby_native_filename
         )
           @libraries_by_name = {}
@@ -29,8 +29,8 @@ module Datadog
 
           record_library(
             Library.new(
-              kind: "standard library",
-              name: "stdlib",
+              kind: 'standard library',
+              name: 'stdlib',
               version: RUBY_VERSION,
               path: standard_library_path,
               extra_paths: [ruby_native_filename],
@@ -99,7 +99,7 @@ module Datadog
 
             record_library(
               Library.new(
-                kind: "library",
+                kind: 'library',
                 name: spec.name,
                 version: spec.version,
                 path: spec.gem_dir,
@@ -139,13 +139,13 @@ module Datadog
         def bundler_bin_path
           return unless defined?(Bundler)
 
-          path = Bundler.settings[:bin] || "bin"
+          path = Bundler.settings[:bin] || 'bin'
           root = Bundler.root
           result = Pathname.new(path).expand_path(root).expand_path
           result.to_s
         rescue Exception => e # rubocop:disable Lint/RescueException
           Datadog.logger.debug(
-            "CodeProvenance#bundler_bin_path failed. " \
+            'CodeProvenance#bundler_bin_path failed. ' \
             "Cause: #{e.class}: #{e.message} Location: #{Array(e.backtrace).first}"
           )
           nil

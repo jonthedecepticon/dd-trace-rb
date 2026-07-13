@@ -37,9 +37,9 @@ module Datadog
         # This is the recommended method to call to get container information.
         def to_headers
           headers = {}
-          headers["Datadog-Container-ID"] = container_id if container_id
-          headers["Datadog-Entity-ID"] = entity_id if entity_id
-          headers["Datadog-External-Env"] = external_env if external_env
+          headers['Datadog-Container-ID'] = container_id if container_id
+          headers['Datadog-Entity-ID'] = entity_id if entity_id
+          headers['Datadog-External-Env'] = external_env if external_env
           headers
         end
 

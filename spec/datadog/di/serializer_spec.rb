@@ -1,5 +1,5 @@
-require "datadog/di/spec_helper"
-require "datadog/di/serializer"
+require 'datadog/di/spec_helper'
+require 'datadog/di/serializer'
 require_relative 'serializer_helper'
 
 class DISerializerSpecSensitiveType
@@ -59,7 +59,7 @@ end
 
 class DISerializerSpecBrokenHash < Hash
   def keys
-    raise "Arrgh!"
+    raise 'Arrgh!'
   end
 end
 
@@ -98,24 +98,24 @@ RSpec.describe Datadog::DI::Serializer do
     described_class.new(settings, redactor)
   end
 
-  describe "#serialize_value" do
+  describe '#serialize_value' do
     let(:serialized) do
       serializer.serialize_value(value, **options)
     end
 
     cases = [
-      {name: "nil value", input: nil, expected: {type: "NilClass", isNull: true}},
-      {name: "true value", input: true, expected: {type: "TrueClass", value: "true"}},
-      {name: "false value", input: false, expected: {type: "FalseClass", value: "false"}},
-      {name: "int value", input: 42, expected: {type: "Integer", value: "42"}},
-      {name: "bigint value", input: 420000000000000000000042, expected: {type: "Integer", value: "420000000000000000000042"}},
-      {name: "float value", input: 42.02, expected: {type: "Float", value: "42.02"}},
-      {name: "string value", input: "x", expected: {type: "String", value: "x"}},
-      {name: "symbol value", input: :x, expected: {type: "Symbol", value: "x"}},
-      {name: "redacted identifier in predefined list", input: "123", var_name: "password",
-       expected: {type: "String", notCapturedReason: "redactedIdent"}},
-      {name: "variable name given and is not a redacted identifier", input: "123", var_name: "normal",
-       expected: {type: "String", value: "123"}},
+      {name: 'nil value', input: nil, expected: {type: 'NilClass', isNull: true}},
+      {name: 'true value', input: true, expected: {type: 'TrueClass', value: 'true'}},
+      {name: 'false value', input: false, expected: {type: 'FalseClass', value: 'false'}},
+      {name: 'int value', input: 42, expected: {type: 'Integer', value: '42'}},
+      {name: 'bigint value', input: 420000000000000000000042, expected: {type: 'Integer', value: '420000000000000000000042'}},
+      {name: 'float value', input: 42.02, expected: {type: 'Float', value: '42.02'}},
+      {name: 'string value', input: 'x', expected: {type: 'String', value: 'x'}},
+      {name: 'symbol value', input: :x, expected: {type: 'Symbol', value: 'x'}},
+      {name: 'redacted identifier in predefined list', input: '123', var_name: 'password',
+       expected: {type: 'String', notCapturedReason: 'redactedIdent'}},
+      {name: 'variable name given and is not a redacted identifier', input: '123', var_name: 'normal',
+       expected: {type: 'String', value: '123'}},
       # We can assert exact value when the time zone is UTC,
       # since we don't know the local time zone ahead of time.
       {name: 'Time value in UTC', input: Time.utc(2020, 1, 2, 3, 4, 5),
@@ -156,7 +156,7 @@ RSpec.describe Datadog::DI::Serializer do
     define_serialize_value_cases(cases)
   end
 
-  describe "#serialize_vars" do
+  describe '#serialize_vars' do
     let(:serialized) do
       serializer.serialize_vars(vars)
     end
@@ -169,7 +169,7 @@ RSpec.describe Datadog::DI::Serializer do
         context c.fetch(:name) do
           let(:vars) { value }
 
-          it "serializes as expected" do
+          it 'serializes as expected' do
             expect(serialized).to eq(expected)
           end
         end
@@ -177,153 +177,153 @@ RSpec.describe Datadog::DI::Serializer do
     end
 
     cases = [
-      {name: "redacted value in predefined list", input: {password: "123"},
-       expected: {password: {type: "String", notCapturedReason: "redactedIdent"}}},
-      {name: "redacted type", input: {value: DISerializerSpecSensitiveType.new},
-       expected: {value: {type: "DISerializerSpecSensitiveType", notCapturedReason: "redactedType"}}},
-      {name: "redacted wild card type", input: {value: DISerializerSpecWildCardClass.new},
-       expected: {value: {type: "DISerializerSpecWildCardClass", notCapturedReason: "redactedType"}}},
-      {name: "empty array", input: {arr: []},
-       expected: {arr: {type: "Array", elements: []}}},
-      {name: "array of primitives", input: {arr: [42, "hello", nil, true]},
-       expected: {arr: {type: "Array", elements: [
-         {type: "Integer", value: "42"},
-         {type: "String", value: "hello"},
-         {type: "NilClass", isNull: true},
-         {type: "TrueClass", value: "true"},
+      {name: 'redacted value in predefined list', input: {password: '123'},
+       expected: {password: {type: 'String', notCapturedReason: 'redactedIdent'}}},
+      {name: 'redacted type', input: {value: DISerializerSpecSensitiveType.new},
+       expected: {value: {type: 'DISerializerSpecSensitiveType', notCapturedReason: 'redactedType'}}},
+      {name: 'redacted wild card type', input: {value: DISerializerSpecWildCardClass.new},
+       expected: {value: {type: 'DISerializerSpecWildCardClass', notCapturedReason: 'redactedType'}}},
+      {name: 'empty array', input: {arr: []},
+       expected: {arr: {type: 'Array', elements: []}}},
+      {name: 'array of primitives', input: {arr: [42, 'hello', nil, true]},
+       expected: {arr: {type: 'Array', elements: [
+         {type: 'Integer', value: '42'},
+         {type: 'String', value: 'hello'},
+         {type: 'NilClass', isNull: true},
+         {type: 'TrueClass', value: 'true'},
        ]}}},
-      {name: "array with value of redacted type", input: {arr: [1, DISerializerSpecSensitiveType.new]},
-       expected: {arr: {type: "Array", elements: [
-         {type: "Integer", value: "1"},
-         {type: "DISerializerSpecSensitiveType", notCapturedReason: "redactedType"},
+      {name: 'array with value of redacted type', input: {arr: [1, DISerializerSpecSensitiveType.new]},
+       expected: {arr: {type: 'Array', elements: [
+         {type: 'Integer', value: '1'},
+         {type: 'DISerializerSpecSensitiveType', notCapturedReason: 'redactedType'},
        ]}}},
-      {name: "empty hash", input: {h: {}}, expected: {h: {type: "Hash", entries: []}}},
-      {name: "hash with symbol key", input: {h: {hello: 42}}, expected: {h: {type: "Hash", entries: [
-        [{type: "Symbol", value: "hello"}, {type: "Integer", value: "42"}],
+      {name: 'empty hash', input: {h: {}}, expected: {h: {type: 'Hash', entries: []}}},
+      {name: 'hash with symbol key', input: {h: {hello: 42}}, expected: {h: {type: 'Hash', entries: [
+        [{type: 'Symbol', value: 'hello'}, {type: 'Integer', value: '42'}],
       ]}}},
-      {name: "hash with string key", input: {h: {"hello" => 42}}, expected: {h: {type: "Hash", entries: [
-        [{type: "String", value: "hello"}, {type: "Integer", value: "42"}],
+      {name: 'hash with string key', input: {h: {'hello' => 42}}, expected: {h: {type: 'Hash', entries: [
+        [{type: 'String', value: 'hello'}, {type: 'Integer', value: '42'}],
       ]}}},
-      {name: "hash with redacted identifier", input: {h: {"session-key" => 42}}, expected: {h: {type: "Hash", entries: [
-        [{type: "String", value: "session-key"}, {type: "Integer", notCapturedReason: "redactedIdent"}],
+      {name: 'hash with redacted identifier', input: {h: {'session-key' => 42}}, expected: {h: {type: 'Hash', entries: [
+        [{type: 'String', value: 'session-key'}, {type: 'Integer', notCapturedReason: 'redactedIdent'}],
       ]}}},
-      {name: "empty object", input: {x: Object.new}, expected: {x: {type: "Object", fields: {}}}},
-      {name: "object with instance variable", input: {x: DISerializerSpecInstanceVariable.new(42)},
-       expected: {x: {type: "DISerializerSpecInstanceVariable", fields: {
-         "@ivar": {type: "Integer", value: "42"},
+      {name: 'empty object', input: {x: Object.new}, expected: {x: {type: 'Object', fields: {}}}},
+      {name: 'object with instance variable', input: {x: DISerializerSpecInstanceVariable.new(42)},
+       expected: {x: {type: 'DISerializerSpecInstanceVariable', fields: {
+         "@ivar": {type: 'Integer', value: '42'},
        }}}},
-      {name: "object with redacted instance variable", input: {x: DISerializerSpecRedactedInstanceVariable.new(42)},
-       expected: {x: {type: "DISerializerSpecRedactedInstanceVariable", fields: {
-         "@session": {type: "Integer", notCapturedReason: "redactedIdent"},
+      {name: 'object with redacted instance variable', input: {x: DISerializerSpecRedactedInstanceVariable.new(42)},
+       expected: {x: {type: 'DISerializerSpecRedactedInstanceVariable', fields: {
+         "@session": {type: 'Integer', notCapturedReason: 'redactedIdent'},
        }}}},
-      {name: "depth exceeded: array", input: {v: {a: {b: []}}},
-       expected: {v: {type: "Hash", entries: [
-         [{type: "Symbol", value: "a"}, {type: "Hash", entries: [
-           [{type: "Symbol", value: "b"}, {type: "Array", notCapturedReason: "depth"}],
+      {name: 'depth exceeded: array', input: {v: {a: {b: []}}},
+       expected: {v: {type: 'Hash', entries: [
+         [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
+           [{type: 'Symbol', value: 'b'}, {type: 'Array', notCapturedReason: 'depth'}],
          ]}],
        ]}}},
-      {name: "depth exceeded: hash", input: {v: {a: {b: {}}}},
-       expected: {v: {type: "Hash", entries: [
-         [{type: "Symbol", value: "a"}, {type: "Hash", entries: [
-           [{type: "Symbol", value: "b"}, {type: "Hash", notCapturedReason: "depth"}],
+      {name: 'depth exceeded: hash', input: {v: {a: {b: {}}}},
+       expected: {v: {type: 'Hash', entries: [
+         [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
+           [{type: 'Symbol', value: 'b'}, {type: 'Hash', notCapturedReason: 'depth'}],
          ]}],
        ]}}},
-      {name: "depth exceeded: object", input: {v: {a: {b: Object.new}}},
-       expected: {v: {type: "Hash", entries: [
-         [{type: "Symbol", value: "a"}, {type: "Hash", entries: [
-           [{type: "Symbol", value: "b"}, {type: "Object", notCapturedReason: "depth"}],
+      {name: 'depth exceeded: object', input: {v: {a: {b: Object.new}}},
+       expected: {v: {type: 'Hash', entries: [
+         [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
+           [{type: 'Symbol', value: 'b'}, {type: 'Object', notCapturedReason: 'depth'}],
          ]}],
        ]}}},
-      {name: "object with no attributes", input: {v: DISerializerSpecTestClass.new},
-       expected: {v: {type: "DISerializerSpecTestClass", fields: {}}},},
-      {name: "object of anonymous class with no attributes", input: {v: Class.new.new},
-       expected: {v: {type: "[Unnamed class]", fields: {}}},},
+      {name: 'object with no attributes', input: {v: DISerializerSpecTestClass.new},
+       expected: {v: {type: 'DISerializerSpecTestClass', fields: {}}},},
+      {name: 'object of anonymous class with no attributes', input: {v: Class.new.new},
+       expected: {v: {type: '[Unnamed class]', fields: {}}},},
       # TODO hash with a complex object as key?
     ]
 
     define_cases(cases)
 
-    context "when data exceeds collection limits" do
+    context 'when data exceeds collection limits' do
       before do
         allow(di_settings).to receive(:max_capture_collection_size).and_return(3)
       end
 
       cases = [
-        {name: "array too long", input: {a: [10] * 1000},
-         expected: {a: {type: "Array",
+        {name: 'array too long', input: {a: [10] * 1000},
+         expected: {a: {type: 'Array',
                         elements: [
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
-                        ], notCapturedReason: "collectionSize", size: 1000}}},
-        {name: "hash too long", input: {v: {a: 1, b: 2, c: 3, d: 4, e: 5}},
-         expected: {v: {type: "Hash",
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
+                        ], notCapturedReason: 'collectionSize', size: 1000}}},
+        {name: 'hash too long', input: {v: {a: 1, b: 2, c: 3, d: 4, e: 5}},
+         expected: {v: {type: 'Hash',
                         entries: [
-                          [{type: "Symbol", value: "a"}, {type: "Integer", value: "1"}],
-                          [{type: "Symbol", value: "b"}, {type: "Integer", value: "2"}],
-                          [{type: "Symbol", value: "c"}, {type: "Integer", value: "3"}],
-                        ], notCapturedReason: "collectionSize", size: 5}}},
+                          [{type: 'Symbol', value: 'a'}, {type: 'Integer', value: '1'}],
+                          [{type: 'Symbol', value: 'b'}, {type: 'Integer', value: '2'}],
+                          [{type: 'Symbol', value: 'c'}, {type: 'Integer', value: '3'}],
+                        ], notCapturedReason: 'collectionSize', size: 5}}},
       ]
 
       define_cases(cases)
     end
 
-    context "when data exceeds attribute limits" do
+    context 'when data exceeds attribute limits' do
       before do
         allow(di_settings).to receive(:max_capture_attribute_count).and_return(3)
       end
 
       cases = [
-        {name: "too many attributes", input: {a: DISerializerSpecManyInstanceVariables.new},
-         expected: {a: {type: "DISerializerSpecManyInstanceVariables",
+        {name: 'too many attributes', input: {a: DISerializerSpecManyInstanceVariables.new},
+         expected: {a: {type: 'DISerializerSpecManyInstanceVariables',
                         fields: {
-                          "@v1": {type: "Integer", value: "1"},
-                          "@v2": {type: "Integer", value: "2"},
-                          "@v3": {type: "Integer", value: "3"},
-                        }, notCapturedReason: "fieldCount"}}},
+                          "@v1": {type: 'Integer', value: '1'},
+                          "@v2": {type: 'Integer', value: '2'},
+                          "@v3": {type: 'Integer', value: '3'},
+                        }, notCapturedReason: 'fieldCount'}}},
       ]
 
       define_cases(cases)
     end
 
-    context "when strings exceed max length" do
+    context 'when strings exceed max length' do
       before do
         allow(di_settings).to receive(:max_capture_string_length).and_return(3)
       end
 
       cases = [
-        {name: "string too long", input: {a: "abcde"},
-         expected: {a: {type: "String", value: "abc", size: 5, truncated: true}}},
-        {name: "symbol too long", input: {a: :abcde},
-         expected: {a: {type: "Symbol", value: "abc", size: 5, truncated: true}}},
+        {name: 'string too long', input: {a: 'abcde'},
+         expected: {a: {type: 'String', value: 'abc', size: 5, truncated: true}}},
+        {name: 'symbol too long', input: {a: :abcde},
+         expected: {a: {type: 'Symbol', value: 'abc', size: 5, truncated: true}}},
       ]
 
       define_cases(cases)
     end
 
-    context "when limits are zero" do
+    context 'when limits are zero' do
       before do
         allow(di_settings).to receive(:max_capture_collection_size).and_return(0)
       end
 
       cases = [
-        {name: "array", input: {a: [10] * 5},
-         expected: {a: {type: "Array",
+        {name: 'array', input: {a: [10] * 5},
+         expected: {a: {type: 'Array',
                         elements: [
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
-                          {type: "Integer", value: "10"},
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
+                          {type: 'Integer', value: '10'},
                         ]}}},
-        {name: "hash", input: {v: {a: 1, b: 2, c: 3, d: 4, e: 5}},
-         expected: {v: {type: "Hash",
+        {name: 'hash', input: {v: {a: 1, b: 2, c: 3, d: 4, e: 5}},
+         expected: {v: {type: 'Hash',
                         entries: [
-                          [{type: "Symbol", value: "a"}, {type: "Integer", value: "1"}],
-                          [{type: "Symbol", value: "b"}, {type: "Integer", value: "2"}],
-                          [{type: "Symbol", value: "c"}, {type: "Integer", value: "3"}],
-                          [{type: "Symbol", value: "d"}, {type: "Integer", value: "4"}],
-                          [{type: "Symbol", value: "e"}, {type: "Integer", value: "5"}],
+                          [{type: 'Symbol', value: 'a'}, {type: 'Integer', value: '1'}],
+                          [{type: 'Symbol', value: 'b'}, {type: 'Integer', value: '2'}],
+                          [{type: 'Symbol', value: 'c'}, {type: 'Integer', value: '3'}],
+                          [{type: 'Symbol', value: 'd'}, {type: 'Integer', value: '4'}],
+                          [{type: 'Symbol', value: 'e'}, {type: 'Integer', value: '5'}],
                         ]}}},
       ]
 
@@ -331,40 +331,40 @@ RSpec.describe Datadog::DI::Serializer do
     end
   end
 
-  describe "#serialize_args" do
+  describe '#serialize_args' do
     let(:serialized) do
       serializer.serialize_args(args, kwargs, target_self)
     end
 
     cases = [
-      {name: "both args and kwargs",
-       args: [1, "x"],
+      {name: 'both args and kwargs',
+       args: [1, 'x'],
        kwargs: {a: 42},
        target_self: Object.new,
-       expected: {arg1: {type: "Integer", value: "1"},
-                  arg2: {type: "String", value: "x"},
-                  a: {type: "Integer", value: "42"},
+       expected: {arg1: {type: 'Integer', value: '1'},
+                  arg2: {type: 'String', value: 'x'},
+                  a: {type: 'Integer', value: '42'},
                   self: {type: 'Object', fields: {}},}},
-      {name: "args, kwargs and instance vars",
-       args: [1, "x"],
+      {name: 'args, kwargs and instance vars',
+       args: [1, 'x'],
        kwargs: {a: 42},
        target_self: DISerializerSpecInstanceVariable.new('quux'),
-       expected: {arg1: {type: "Integer", value: "1"},
-                  arg2: {type: "String", value: "x"},
-                  a: {type: "Integer", value: "42"},
+       expected: {arg1: {type: 'Integer', value: '1'},
+                  arg2: {type: 'String', value: 'x'},
+                  a: {type: 'Integer', value: '42'},
                   self: {
                     type: 'DISerializerSpecInstanceVariable',
                     fields: {
                       "@ivar": {type: 'String', value: 'quux'},
                     },
                   },},},
-      {name: "kwargs contains redacted identifier",
-       args: [1, "x"],
+      {name: 'kwargs contains redacted identifier',
+       args: [1, 'x'],
        kwargs: {password: 42},
        target_self: Object.new,
-       expected: {arg1: {type: "Integer", value: "1"},
-                  arg2: {type: "String", value: "x"},
-                  password: {type: "Integer", notCapturedReason: "redactedIdent"},
+       expected: {arg1: {type: 'Integer', value: '1'},
+                  arg2: {type: 'String', value: 'x'},
+                  password: {type: 'Integer', notCapturedReason: 'redactedIdent'},
                   self: {type: 'Object', fields: {}},}},
     ]
 
@@ -379,7 +379,7 @@ RSpec.describe Datadog::DI::Serializer do
         let(:kwargs) { kwargs }
         let(:target_self) { target_self }
 
-        it "serializes as expected" do
+        it 'serializes as expected' do
           expect(serialized).to eq(expected)
         end
       end
@@ -587,7 +587,7 @@ RSpec.describe Datadog::DI::Serializer do
         expect(Datadog.logger).to receive(:warn).with(/Custom serializer condition failed: ArgumentError/)
         expect(telemetry).to receive(:report).with(
           an_instance_of(ArgumentError),
-          description: "Custom serializer condition failed"
+          description: 'Custom serializer condition failed'
         )
 
         serialized = serializer.serialize_value(invalid_utf8)
@@ -614,7 +614,7 @@ RSpec.describe Datadog::DI::Serializer do
         expect(Datadog.logger).to receive(:warn).with(/Custom serializer condition failed: ArgumentError/)
         expect(telemetry).to receive(:report).with(
           an_instance_of(ArgumentError),
-          description: "Custom serializer condition failed"
+          description: 'Custom serializer condition failed'
         )
 
         serialized = serializer.serialize_value(invalid_utf8)
@@ -638,7 +638,7 @@ RSpec.describe Datadog::DI::Serializer do
         expect(Datadog.logger).to receive(:warn).with(/Custom serializer condition failed: NotImplementedError/)
         expect(telemetry).to receive(:report).with(
           an_instance_of(NotImplementedError),
-          description: "Custom serializer condition failed"
+          description: 'Custom serializer condition failed'
         )
 
         serialized = serializer.serialize_value('trigger non-standard')
@@ -667,18 +667,18 @@ RSpec.describe Datadog::DI::Serializer do
     before do
       # Register a custom serializer that will raise an exception
       Datadog::DI::Serializer.register(condition: lambda { |value| DISerializerCustomExceptionTestClass === value }) do |*args|
-        raise "Test exception"
+        raise 'Test exception'
       end
     end
 
-    describe "#serialize_value" do
+    describe '#serialize_value' do
       let(:serialized) do
         serializer.serialize_value(value, **options)
       end
 
       cases = [
-        {name: "serializes other values", input: {a: DISerializerCustomExceptionTestClass.new, b: 1},
-         expected: {type: "Hash", entries: [
+        {name: 'serializes other values', input: {a: DISerializerCustomExceptionTestClass.new, b: 1},
+         expected: {type: 'Hash', entries: [
            [{type: 'Symbol', value: 'a'}, {type: 'DISerializerCustomExceptionTestClass', notSerializedReason: 'Test exception'}],
            [{type: 'Symbol', value: 'b'}, {type: 'Integer', value: '1'}],
          ]}},
@@ -725,7 +725,7 @@ RSpec.describe Datadog::DI::Serializer do
 
       it 'escapes binary strings in vars' do
         # Simulate a more realistic snapshot with binary data in locals
-        vars = {binary_data: binary_string, normal_string: "hello"}
+        vars = {binary_data: binary_string, normal_string: 'hello'}
         serialized = serializer.serialize_vars(vars)
 
         # Binary data is escaped
@@ -745,7 +745,7 @@ RSpec.describe Datadog::DI::Serializer do
 
       it 'escapes binary strings in args' do
         # Simulate method arguments containing binary data
-        args = [binary_string, "normal arg"]
+        args = [binary_string, 'normal arg']
         kwargs = {data: binary_string}
         target_self = Object.new
 
@@ -912,7 +912,7 @@ RSpec.describe Datadog::DI::Serializer do
 
     context 'with printable ASCII in binary string' do
       # Printable ASCII in binary strings is preserved during escaping
-      let(:binary_string) { "Hello World! This is a test.".b }
+      let(:binary_string) { 'Hello World! This is a test.'.b }
 
       before do
         # 28 bytes total, limit to 20 bytes
@@ -935,38 +935,38 @@ RSpec.describe Datadog::DI::Serializer do
       # Verify that regular (non-binary) strings use character-based truncation
       it 'truncates based on character count for UTF-8 strings' do
         # 15 character string (no escaping needed)
-        utf8_string = "Hello, World!!!"
+        utf8_string = 'Hello, World!!!'
         allow(di_settings).to receive(:max_capture_string_length).and_return(10)
 
         serialized = serializer.serialize_value(utf8_string)
 
         # Should truncate at 10 characters (not bytes)
-        expect(serialized[:value]).to eq("Hello, Wor")
+        expect(serialized[:value]).to eq('Hello, Wor')
         expect(serialized[:truncated]).to be true
         expect(serialized[:size]).to eq(15)
       end
 
       it 'handles multi-byte UTF-8 characters correctly' do
         # String with emoji: "Hello 👋 World" = 13 characters (emoji is 1 char)
-        utf8_string = "Hello 👋 World"
+        utf8_string = 'Hello 👋 World'
         allow(di_settings).to receive(:max_capture_string_length).and_return(8)
 
         serialized = serializer.serialize_value(utf8_string)
 
         # Should truncate at 8 characters: "Hello 👋 " (includes the space)
-        expect(serialized[:value]).to eq("Hello 👋 ")
+        expect(serialized[:value]).to eq('Hello 👋 ')
         expect(serialized[:truncated]).to be true
         expect(serialized[:size]).to eq(13)
       end
 
       it 'does not escape valid UTF-8 strings' do
-        utf8_string = "Hello"
+        utf8_string = 'Hello'
         allow(di_settings).to receive(:max_capture_string_length).and_return(100)
 
         serialized = serializer.serialize_value(utf8_string)
 
         # Should not have b'...' wrapping
-        expect(serialized[:value]).to eq("Hello")
+        expect(serialized[:value]).to eq('Hello')
         expect(serialized[:truncated]).to be_falsey
       end
     end
@@ -1082,7 +1082,7 @@ RSpec.describe Datadog::DI::Serializer do
     end
 
     context 'with empty binary string' do
-      let(:binary_string) { "".b }
+      let(:binary_string) { ''.b }
 
       it 'produces empty escaped string' do
         serialized = serializer.serialize_value(binary_string)
@@ -1142,7 +1142,7 @@ RSpec.describe Datadog::DI::Serializer do
       Datadog::DI::Serializer.register(
         condition: lambda { |value| DISerializerStackOverflowTestClass === value }
       ) do |*args|
-        raise SystemStackError, "stack level too deep (emulated infinite recursion)"
+        raise SystemStackError, 'stack level too deep (emulated infinite recursion)'
       end
     end
 
@@ -1151,7 +1151,7 @@ RSpec.describe Datadog::DI::Serializer do
       described_class.new(settings, redactor, telemetry: telemetry)
     end
 
-    describe "#serialize_value" do
+    describe '#serialize_value' do
       let(:value) { DISerializerStackOverflowTestClass.new }
 
       it 'returns safe structure with notSerializedReason when SystemStackError is raised' do
@@ -1183,7 +1183,7 @@ RSpec.describe Datadog::DI::Serializer do
       it 'reports SystemStackError to telemetry' do
         expect(telemetry).to receive(:report).with(
           an_instance_of(SystemStackError),
-          description: "Error serializing",
+          description: 'Error serializing',
         )
 
         serializer.serialize_value(value)
@@ -1196,14 +1196,14 @@ RSpec.describe Datadog::DI::Serializer do
         # serialize successfully and one that raises SystemStackError.
         # The exception is caught per-variable, so other values still serialize.
         vars = {
-          normal_value: "hello",
+          normal_value: 'hello',
           problematic_value: DISerializerStackOverflowTestClass.new,
           another_value: 42,
         }
 
         expect(telemetry).to receive(:report).with(
           an_instance_of(SystemStackError),
-          description: "Error serializing",
+          description: 'Error serializing',
         )
 
         serialized = serializer.serialize_vars(vars)
@@ -1249,7 +1249,7 @@ RSpec.describe Datadog::DI::Serializer do
       Datadog::DI::Serializer.register(
         condition: lambda { |value| DISerializerOutOfMemoryTestClass === value }
       ) do |*args|
-        raise NoMemoryError, "failed to allocate memory (emulated out of memory condition)"
+        raise NoMemoryError, 'failed to allocate memory (emulated out of memory condition)'
       end
     end
 
@@ -1258,7 +1258,7 @@ RSpec.describe Datadog::DI::Serializer do
       described_class.new(settings, redactor, telemetry: telemetry)
     end
 
-    describe "#serialize_value" do
+    describe '#serialize_value' do
       let(:value) { DISerializerOutOfMemoryTestClass.new }
 
       it 'returns safe structure with notSerializedReason when NoMemoryError is raised' do
@@ -1290,7 +1290,7 @@ RSpec.describe Datadog::DI::Serializer do
       it 'reports NoMemoryError to telemetry' do
         expect(telemetry).to receive(:report).with(
           an_instance_of(NoMemoryError),
-          description: "Error serializing",
+          description: 'Error serializing',
         )
 
         serializer.serialize_value(value)
@@ -1302,14 +1302,14 @@ RSpec.describe Datadog::DI::Serializer do
         # Even if one value causes NoMemoryError, others should still serialize.
         # The exception is caught per-variable, so other values still serialize.
         vars = {
-          small_value: "tiny",
+          small_value: 'tiny',
           huge_value: DISerializerOutOfMemoryTestClass.new,
           number: 123,
         }
 
         expect(telemetry).to receive(:report).with(
           an_instance_of(NoMemoryError),
-          description: "Error serializing",
+          description: 'Error serializing',
         )
 
         serialized = serializer.serialize_vars(vars)

@@ -104,12 +104,12 @@ module DIHelpers
     def di_test
       if PlatformHelpers.jruby?
         before(:all) do
-          skip "Dynamic instrumentation is not supported on JRuby"
+          skip 'Dynamic instrumentation is not supported on JRuby'
         end
       end
       if RubyVersion.is?('< 2.6')
         before(:all) do
-          skip "Dynamic instrumentation requires Ruby 2.6 or higher"
+          skip 'Dynamic instrumentation requires Ruby 2.6 or higher'
         end
       end
 
@@ -190,7 +190,7 @@ module DIHelpers
   module InstanceMethods
     # Helper method to generate a deeply nested hash for circuit breaker tests
     def generate_deep_hash(keys_per_level, depth)
-      return "leaf_value" if depth == 0
+      return 'leaf_value' if depth == 0
 
       hash = {}
       keys_per_level.times do |i|
@@ -222,7 +222,7 @@ module DIHelpers
     def instance_double_agent_settings_with_stubs
       instance_double(
         Datadog::Core::Configuration::AgentSettings,
-        hostname: "test-host", port: 9000, timeout_seconds: 1, ssl: false
+        hostname: 'test-host', port: 9000, timeout_seconds: 1, ssl: false
       )
     end
   end

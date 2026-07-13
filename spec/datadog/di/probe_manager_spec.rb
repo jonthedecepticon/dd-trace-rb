@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/probe_manager'
 require 'datadog/di/instrumenter'
 require 'logger'
@@ -73,7 +73,7 @@ RSpec.describe Datadog::DI::ProbeManager do
           expect(probe_repository.failed_probes.length).to eq 0
 
           expect(probe_repository.installed_probes.length).to eq 1
-          expect(probe_repository.installed_probes["3ecfd456-2d7c-4359-a51f-d4cc44141ffe"]).to be(probe)
+          expect(probe_repository.installed_probes['3ecfd456-2d7c-4359-a51f-d4cc44141ffe']).to be(probe)
         end
       end
 
@@ -90,7 +90,7 @@ RSpec.describe Datadog::DI::ProbeManager do
           expect(manager.add_probe(probe)).to be false
 
           expect(probe_repository.pending_probes.length).to eq 1
-          expect(probe_repository.pending_probes["3ecfd456-2d7c-4359-a51f-d4cc44141ffe"]).to be(probe)
+          expect(probe_repository.pending_probes['3ecfd456-2d7c-4359-a51f-d4cc44141ffe']).to be(probe)
 
           expect(probe_repository.installed_probes.length).to eq 0
           expect(probe_repository.failed_probes.length).to eq 0
@@ -103,7 +103,7 @@ RSpec.describe Datadog::DI::ProbeManager do
 
           expect(instrumenter).to receive(:hook) do |probe_|
             expect(probe_).to be(probe)
-            raise "Instrumentation error"
+            raise 'Instrumentation error'
           end
 
           expect(probe_notification_builder).not_to receive(:build_installed)
@@ -228,7 +228,7 @@ RSpec.describe Datadog::DI::ProbeManager do
 
       context 'when there is an exception during de-instrumentation' do
         it 'logs warning and keeps probe in installed list' do
-          expect(instrumenter).to receive(:unhook).with(probe).and_raise("Deinstrumentation error")
+          expect(instrumenter).to receive(:unhook).with(probe).and_raise('Deinstrumentation error')
 
           expect_lazy_log(logger, :debug, /error removing log probe.*Deinstrumentation error/)
 

@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 
 RSpec.describe 'all_iseqs' do
   let(:iseqs) do

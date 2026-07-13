@@ -9,7 +9,7 @@ module Datadog
 
         def initialize
           @action = Result::ALLOW_ACTION
-          @reason = "AI Guard is disabled"
+          @reason = 'AI Guard is disabled'
           @tags = []
           @sds_findings = []
           @tag_probabilities = {}

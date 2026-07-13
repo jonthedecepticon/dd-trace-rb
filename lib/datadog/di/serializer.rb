@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "redactor"
+require_relative 'redactor'
 
 module Datadog
   module DI
@@ -168,11 +168,11 @@ module Datadog
         cls = type || value.class
         begin
           if redactor.redact_type?(value)
-            return {type: class_name(cls), notCapturedReason: "redactedType"}
+            return {type: class_name(cls), notCapturedReason: 'redactedType'}
           end
 
           if name && redactor.redact_identifier?(name)
-            return {type: class_name(cls), notCapturedReason: "redactedIdent"}
+            return {type: class_name(cls), notCapturedReason: 'redactedIdent'}
           end
 
           @@flat_registry.each do |entry|
@@ -192,7 +192,7 @@ module Datadog
                 # internally by dd-trace-rb (in which case we need to fix them). We use
                 # WARN level to surface these errors in either case.
                 Datadog.logger.warn("DI: Custom serializer condition failed: #{e.class}: #{e.message}")
-                telemetry&.report(e, description: "Custom serializer condition failed")
+                telemetry&.report(e, description: 'Custom serializer condition failed')
                 next
               end
 
@@ -261,11 +261,11 @@ module Datadog
             serialized.update(value: value)
           when Array
             if depth <= 0
-              serialized.update(notCapturedReason: "depth")
+              serialized.update(notCapturedReason: 'depth')
             else
               max = settings.dynamic_instrumentation.max_capture_collection_size
               if max != 0 && value.length > max
-                serialized.update(notCapturedReason: "collectionSize", size: value.length)
+                serialized.update(notCapturedReason: 'collectionSize', size: value.length)
                 # same steep failure with array slices.
                 # https://github.com/soutaro/steep/issues/1219
                 value = value[0...max] || []
@@ -277,14 +277,14 @@ module Datadog
             end
           when Hash
             if depth <= 0
-              serialized.update(notCapturedReason: "depth")
+              serialized.update(notCapturedReason: 'depth')
             else
               max = settings.dynamic_instrumentation.max_capture_collection_size
               cur = 0
               entries = []
               value.each do |k, v|
                 if max != 0 && cur >= max
-                  serialized.update(notCapturedReason: "collectionSize", size: value.length)
+                  serialized.update(notCapturedReason: 'collectionSize', size: value.length)
                   break
                 end
                 cur += 1
@@ -294,7 +294,7 @@ module Datadog
             end
           else
             if depth <= 0
-              serialized.update(notCapturedReason: "depth")
+              serialized.update(notCapturedReason: 'depth')
             else
               fields = {}
               cur = 0
@@ -323,7 +323,7 @@ module Datadog
 
               ivars.each do |ivar|
                 if cur >= attribute_count
-                  serialized.update(notCapturedReason: "fieldCount", fields: fields)
+                  serialized.update(notCapturedReason: 'fieldCount', fields: fields)
                   break
                 end
                 cur += 1
@@ -343,7 +343,7 @@ module Datadog
           # serialization (e.g., infinite recursion in custom serializers, memory
           # exhaustion from large objects) and should return a safe structure
           # rather than propagating to the transport layer.
-          telemetry&.report(exc, description: "Error serializing")
+          telemetry&.report(exc, description: 'Error serializing')
           {type: class_name(cls), notSerializedReason: exc.to_s}
         end
       end
@@ -437,7 +437,7 @@ module Datadog
       rescue Exception => exc # standard:disable Lint/RescueException
         raise if SERIALIZABLE_FATAL_EXCEPTION_CLASSES.any? { |klass| exc.is_a?(klass) }
 
-        telemetry&.report(exc, description: "Error serializing for message")
+        telemetry&.report(exc, description: 'Error serializing for message')
         # TODO class_name(foo) can also fail, which we don't handle here.
         # Telemetry reporting could potentially also fail?
         "#<#{class_name(value.class)}: serialization error>"
@@ -472,7 +472,7 @@ module Datadog
         # We could call `cls.to_s` to get the "standard" Ruby inspection of
         # the class, but it is likely that user code can override #to_s
         # and we don't want to invoke user code.
-        cls.name || "[Unnamed class]"
+        cls.name || '[Unnamed class]'
       end
 
       def serialize_string_or_symbol_for_message(value)

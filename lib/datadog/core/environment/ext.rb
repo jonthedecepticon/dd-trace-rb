@@ -38,12 +38,12 @@ module Datadog
         PROCESS_TYPE = 'script' # Out of the options [jar, script, class, executable], we consider Ruby to always be a script
         RUBY_ENGINE = ::RUBY_ENGINE # e.g. 'ruby', 'jruby', 'truffleruby'
         TAG_ENV = 'env'
-        TAG_ENTRYPOINT_BASEDIR = "entrypoint.basedir"
-        TAG_ENTRYPOINT_NAME = "entrypoint.name"
-        TAG_ENTRYPOINT_WORKDIR = "entrypoint.workdir"
-        TAG_ENTRYPOINT_TYPE = "entrypoint.type"
-        TAG_RAILS_APPLICATION = "rails.application"
-        TAG_PROCESS_TAGS = "_dd.tags.process"
+        TAG_ENTRYPOINT_BASEDIR = 'entrypoint.basedir'
+        TAG_ENTRYPOINT_NAME = 'entrypoint.name'
+        TAG_ENTRYPOINT_WORKDIR = 'entrypoint.workdir'
+        TAG_ENTRYPOINT_TYPE = 'entrypoint.type'
+        TAG_RAILS_APPLICATION = 'rails.application'
+        TAG_PROCESS_TAGS = '_dd.tags.process'
         TAG_SERVICE = 'service'
         # Service name was automatically populated by this library
         TAG_SVC_AUTO = 'svc.auto'

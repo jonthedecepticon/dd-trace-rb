@@ -141,7 +141,7 @@ module Datadog
         # that a textual "Kernel" name match misses; a type that defines its
         # own lambda has a different owner and is left alone. Probing lambda
         # creation has no legitimate customer use case. See #5560.
-        if method_name == "lambda" && target_method&.owner == ::Kernel
+        if method_name == 'lambda' && target_method&.owner == ::Kernel
           raise Error::ProbeTargetForbidden,
             "Method probes on Kernel#lambda are not permitted: #{probe.type_name}##{method_name}"
         end
@@ -344,7 +344,7 @@ module Datadog
         # performance impact, and we absolutely do not want to set them
         # accidentally.
         if !iseq && !permit_untargeted_trace_points
-          raise Error::InternalError, "Trying to use an untargeted trace point when user did not permit it"
+          raise Error::InternalError, 'Trying to use an untargeted trace point when user did not permit it'
         end
 
         lock.synchronize do
@@ -500,13 +500,13 @@ module Datadog
                   raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
                   logger.debug { "di: error in probe condition evaluation failed callback: #{nested_exc.class}: #{nested_exc.message}" }
-                  telemetry&.report(nested_exc, description: "Error in probe condition evaluation failed callback")
+                  telemetry&.report(nested_exc, description: 'Error in probe condition evaluation failed callback')
                 end
               else
                 raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
                 logger.debug { "di: error evaluating condition without context (tracer bug?): #{exc.class}: #{exc.message}" }
-                telemetry&.report(exc, description: "Error evaluating condition without context")
+                telemetry&.report(exc, description: 'Error evaluating condition without context')
                 # If execution gets here, there is probably a bug in the tracer.
               end
 
@@ -599,7 +599,7 @@ module Datadog
               raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
               logger.debug { "di: unhandled exception in method probe: #{di_exc.class}: #{di_exc.message}" }
-              telemetry&.report(di_exc, description: "Unhandled exception in method probe")
+              telemetry&.report(di_exc, description: 'Unhandled exception in method probe')
             end
 
             if exc
@@ -736,7 +736,7 @@ module Datadog
                 raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
                 logger.debug { "di: error in probe condition evaluation failed callback: #{nested_exc.class}: #{nested_exc.message}" }
-                telemetry&.report(nested_exc, description: "Error in probe condition evaluation failed callback")
+                telemetry&.report(nested_exc, description: 'Error in probe condition evaluation failed callback')
               end
 
               return
@@ -746,7 +746,7 @@ module Datadog
               raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
               logger.debug { "di: error evaluating condition without context (tracer bug?): #{exc.class}: #{exc.message}" }
-              telemetry&.report(exc, description: "Error evaluating condition without context")
+              telemetry&.report(exc, description: 'Error evaluating condition without context')
               # If execution gets here, there is probably a bug in the tracer.
             end
           end
@@ -769,7 +769,7 @@ module Datadog
         Datadog::DI.reraise_if_fatal(exc)
         raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
         logger.debug { "di: unhandled exception in line trace point: #{exc.class}: #{exc.message}" }
-        telemetry&.report(exc, description: "Unhandled exception in line trace point")
+        telemetry&.report(exc, description: 'Unhandled exception in line trace point')
         # TODO test this path
       end
 
@@ -848,12 +848,12 @@ module Datadog
           raise Error::DITargetNotInRegistry,
             "File #{loaded_path} is loaded and has per-method iseqs, " \
             "but none cover line #{line_no}. " \
-            "The line may be in file-level setup code outside any method."
+            'The line may be in file-level setup code outside any method.'
         else
           raise Error::DITargetNotInRegistry,
             "File #{loaded_path} is loaded but has no surviving iseqs " \
-            "(whole-file iseq was garbage collected and no per-method iseqs remain). " \
-            "Line probes cannot target this file."
+            '(whole-file iseq was garbage collected and no per-method iseqs remain). ' \
+            'Line probes cannot target this file.'
         end
       end
 

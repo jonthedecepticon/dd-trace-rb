@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require "datadog/profiling/spec_helper"
+require 'datadog/profiling/spec_helper'
 
-RSpec.describe "Datadog::Profiling::Ext::ExecMonkeyPatch", ruby: '>= 2.7' do
+RSpec.describe 'Datadog::Profiling::Ext::ExecMonkeyPatch', ruby: '>= 2.7' do
   let(:described_class) { Datadog::Profiling::Ext::ExecMonkeyPatch }
 
   subject! do
-    skip("Profiling is not supported on JRuby") if PlatformHelpers.jruby?
+    skip('Profiling is not supported on JRuby') if PlatformHelpers.jruby?
 
-    require "datadog/profiling/ext/exec_monkey_patch"
+    require 'datadog/profiling/ext/exec_monkey_patch'
 
     described_class
   end
@@ -18,8 +18,8 @@ RSpec.describe "Datadog::Profiling::Ext::ExecMonkeyPatch", ruby: '>= 2.7' do
     expect(Object.ancestors).to_not include(Datadog::Profiling::Ext::ExecMonkeyPatch::ObjectMonkeyPatch)
   end
 
-  describe ".apply!" do
-    it "prepends the Object monkey patch" do
+  describe '.apply!' do
+    it 'prepends the Object monkey patch' do
       expect_in_fork do
         described_class.apply!
 
@@ -28,17 +28,17 @@ RSpec.describe "Datadog::Profiling::Ext::ExecMonkeyPatch", ruby: '>= 2.7' do
     end
   end
 
-  describe "ObjectMonkeyPatch#exec" do
-    it "shuts down the profiler before exec" do
+  describe 'ObjectMonkeyPatch#exec' do
+    it 'shuts down the profiler before exec' do
       expect_in_fork do
-        profiler = instance_double("Datadog::Profiling::Profiler", shutdown!: nil)
-        components = instance_double("Datadog::Core::Components", profiler: profiler)
+        profiler = instance_double('Datadog::Profiling::Profiler', shutdown!: nil)
+        components = instance_double('Datadog::Core::Components', profiler: profiler)
         allow(Datadog).to receive(:components).with(allow_initialization: false).and_return(components)
 
         described_class.apply!
 
         # Since the exec fails, our test continues to run, but we get to validate it was actually wrapped correctly
-        expect { exec("this_does_not_exist_and_will_thus_fail") }.to raise_error(Errno::ENOENT)
+        expect { exec('this_does_not_exist_and_will_thus_fail') }.to raise_error(Errno::ENOENT)
 
         expect(profiler).to have_received(:shutdown!).with(report_last_profile: false)
       end

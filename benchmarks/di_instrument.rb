@@ -159,7 +159,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_method(probe, responder)
     unless rv
-      raise "Method probe was not successfully installed (rate_limit=1M)"
+      raise 'Method probe was not successfully installed (rate_limit=1M)'
     end
 
     Benchmark.ips do |x|
@@ -177,7 +177,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Method instrumentation (rate_limit=1M) did not work - callback was never invoked"
+      raise 'Method instrumentation (rate_limit=1M) did not work - callback was never invoked'
     end
 
     if calls < 1000 && !VALIDATE_BENCHMARK_MODE
@@ -193,7 +193,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_method(probe, responder)
     unless rv
-      raise "Method probe was not successfully installed (rate_limit=1)"
+      raise 'Method probe was not successfully installed (rate_limit=1)'
     end
 
     Benchmark.ips do |x|
@@ -211,7 +211,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Method instrumentation (rate_limit=1) did not work - callback was never invoked"
+      raise 'Method instrumentation (rate_limit=1) did not work - callback was never invoked'
     end
 
     # rate_limit=1 with ~12s of total time (2s warmup + 10s measure) should
@@ -238,7 +238,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_line(probe, responder)
     unless rv
-      raise "Line probe (untargeted, rate_limit=1M) was not successfully installed"
+      raise 'Line probe (untargeted, rate_limit=1M) was not successfully installed'
     end
 
     Benchmark.ips do |x|
@@ -255,7 +255,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Line instrumentation (untargeted, rate_limit=1M) did not work - callback was never invoked"
+      raise 'Line instrumentation (untargeted, rate_limit=1M) did not work - callback was never invoked'
     end
 
     if calls < 1000 && !VALIDATE_BENCHMARK_MODE
@@ -270,7 +270,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_line(probe, responder)
     unless rv
-      raise "Line probe (untargeted, rate_limit=1) was not successfully installed"
+      raise 'Line probe (untargeted, rate_limit=1) was not successfully installed'
     end
 
     Benchmark.ips do |x|
@@ -287,7 +287,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Line instrumentation (untargeted, rate_limit=1) did not work - callback was never invoked"
+      raise 'Line instrumentation (untargeted, rate_limit=1) did not work - callback was never invoked'
     end
 
     if calls > 100 && !VALIDATE_BENCHMARK_MODE
@@ -302,11 +302,11 @@ class DIInstrumentBenchmark
     end
 
     if defined?(DITarget)
-      raise "DITarget is already defined, this should not happen"
+      raise 'DITarget is already defined, this should not happen'
     end
     require_relative 'support/di_target'
     unless defined?(DITarget)
-      raise "DITarget is not defined, this should not happen"
+      raise 'DITarget is not defined, this should not happen'
     end
 
     m = DITarget.instance_method(:test_method_for_line_probe)
@@ -318,7 +318,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_line(probe, responder)
     unless rv
-      raise "Line probe (targeted, rate_limit=1M) was not successfully installed"
+      raise 'Line probe (targeted, rate_limit=1M) was not successfully installed'
     end
 
     Benchmark.ips do |x|
@@ -336,7 +336,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Targeted line instrumentation (rate_limit=1M) did not work - callback was never invoked"
+      raise 'Targeted line instrumentation (rate_limit=1M) did not work - callback was never invoked'
     end
 
     if calls < 1000 && !VALIDATE_BENCHMARK_MODE
@@ -351,7 +351,7 @@ class DIInstrumentBenchmark
     responder = Datadog::DI::ProcResponder.new(executed_proc)
     rv = instrumenter.hook_line(probe, responder)
     unless rv
-      raise "Line probe (targeted, rate_limit=1) was not successfully installed"
+      raise 'Line probe (targeted, rate_limit=1) was not successfully installed'
     end
 
     Benchmark.ips do |x|
@@ -369,7 +369,7 @@ class DIInstrumentBenchmark
     end
 
     if calls < 1
-      raise "Targeted line instrumentation (rate_limit=1) did not work - callback was never invoked"
+      raise 'Targeted line instrumentation (rate_limit=1) did not work - callback was never invoked'
     end
 
     if calls > 100 && !VALIDATE_BENCHMARK_MODE

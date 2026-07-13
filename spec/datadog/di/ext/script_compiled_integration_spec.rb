@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
 
 # End-to-end test for the primary :script_compiled code path.
 # File loaded AFTER tracking starts → captured by TracePoint →
@@ -10,7 +10,7 @@ require "datadog/di"
 # This is the normal path that most DI probes use. The backfill path
 # (tested in backfill_integration_spec.rb) is for files loaded before
 # DI activates.
-RSpec.describe "script_compiled integration" do
+RSpec.describe 'script_compiled integration' do
   di_test
 
   let(:diagnostics_transport) do
@@ -51,7 +51,7 @@ RSpec.describe "script_compiled integration" do
 
   let(:component) do
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
-      raise "Component failed to create" if component.nil?
+      raise 'Component failed to create' if component.nil?
     end
   end
 
@@ -60,10 +60,10 @@ RSpec.describe "script_compiled integration" do
   end
 
   let(:test_file) do
-    File.join(__dir__, "script_compiled_integration_test_class.rb")
+    File.join(__dir__, 'script_compiled_integration_test_class.rb')
   end
 
-  context "file loaded after tracking starts" do
+  context 'file loaded after tracking starts' do
     before do
       # Start tracking BEFORE loading the file — this is the normal path.
       Datadog::DI.activate_tracking!
@@ -73,22 +73,22 @@ RSpec.describe "script_compiled integration" do
       load test_file
     end
 
-    it "captures the file in CodeTracker registry" do
+    it 'captures the file in CodeTracker registry' do
       tracker = Datadog::DI.code_tracker
       expect(tracker).not_to be_nil
 
-      result = tracker.iseqs_for_path_suffix("script_compiled_integration_test_class.rb")
+      result = tracker.iseqs_for_path_suffix('script_compiled_integration_test_class.rb')
       expect(result).not_to be_nil,
-        "CodeTracker registry does not contain the test file after loading"
+        'CodeTracker registry does not contain the test file after loading'
 
       path, iseq = result
-      expect(path).to end_with("script_compiled_integration_test_class.rb")
+      expect(path).to end_with('script_compiled_integration_test_class.rb')
       expect(iseq).to be_a(RubyVM::InstructionSequence)
     end
 
-    it "the registered iseq is the one Ruby executes (TracePoint fires)" do
+    it 'the registered iseq is the one Ruby executes (TracePoint fires)' do
       tracker = Datadog::DI.code_tracker
-      result = tracker.iseqs_for_path_suffix("script_compiled_integration_test_class.rb")
+      result = tracker.iseqs_for_path_suffix('script_compiled_integration_test_class.rb')
       expect(result).not_to be_nil
 
       _path, iseq = result
@@ -102,13 +102,13 @@ RSpec.describe "script_compiled integration" do
       tp.disable
 
       expect(fired).to be(true),
-        "TracePoint on the :script_compiled iseq did not fire"
+        'TracePoint on the :script_compiled iseq did not fire'
     end
 
-    it "installs a probe on the file" do
+    it 'installs a probe on the file' do
       probe = Datadog::DI::Probe.new(
-        id: "script-compiled-e2e-1", type: :log,
-        file: "script_compiled_integration_test_class.rb", line_no: 22,
+        id: 'script-compiled-e2e-1', type: :log,
+        file: 'script_compiled_integration_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
 
@@ -121,10 +121,10 @@ RSpec.describe "script_compiled integration" do
         "Expected 1 installed probe, got #{installed.length}"
     end
 
-    it "fires the probe when the target line executes" do
+    it 'fires the probe when the target line executes' do
       probe = Datadog::DI::Probe.new(
-        id: "script-compiled-e2e-2", type: :log,
-        file: "script_compiled_integration_test_class.rb", line_no: 22,
+        id: 'script-compiled-e2e-2', type: :log,
+        file: 'script_compiled_integration_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
 
@@ -137,10 +137,10 @@ RSpec.describe "script_compiled integration" do
       expect(result).to eq(42)
     end
 
-    it "captures local variables from the probe" do
+    it 'captures local variables from the probe' do
       probe = Datadog::DI::Probe.new(
-        id: "script-compiled-e2e-3", type: :log,
-        file: "script_compiled_integration_test_class.rb", line_no: 22,
+        id: 'script-compiled-e2e-3', type: :log,
+        file: 'script_compiled_integration_test_class.rb', line_no: 22,
         capture_snapshot: true,
       )
 
@@ -157,20 +157,20 @@ RSpec.describe "script_compiled integration" do
       component.probe_notifier_worker.flush
 
       expect(payload).to be_a(Hash),
-        "Snapshot payload is nil — probe did not fire"
+        'Snapshot payload is nil — probe did not fire'
 
       captures = payload.dig(:debugger, :snapshot, :captures)
       expect(captures).not_to be_nil,
-        "Snapshot has no captures"
+        'Snapshot has no captures'
 
       locals = captures.dig(:lines, 22, :locals)
       expect(locals).not_to be_nil,
-        "Snapshot has no locals for line 22"
+        'Snapshot has no locals for line 22'
 
       expect(locals).to include(:a),
         "Local variable :a not captured. Locals: #{locals.keys}"
 
-      expect(locals[:a]).to eq({type: "Integer", value: "21"}),
+      expect(locals[:a]).to eq({type: 'Integer', value: '21'}),
         "Local variable :a has wrong value: #{locals[:a].inspect}"
     end
   end

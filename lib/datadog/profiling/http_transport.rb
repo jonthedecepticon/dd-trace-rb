@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../core/transport/ext"
-require_relative "../core/telemetry/logger"
+require_relative '../core/transport/ext'
+require_relative '../core/telemetry/logger'
 
 module Datadog
   module Profiling
@@ -45,7 +45,7 @@ module Datadog
 
         if status == :ok
           if (200..299).cover?(result)
-            Datadog.logger.debug("Successfully reported profiling data")
+            Datadog.logger.debug('Successfully reported profiling data')
             true
           else
             Datadog.logger.warn(
@@ -59,7 +59,7 @@ module Datadog
           end
         else
           Datadog.logger.warn("Failed to report profiling data (#{config_without_api_key}): #{result}")
-          Datadog::Core::Telemetry::Logger.error("Failed to report profiling data")
+          Datadog::Core::Telemetry::Logger.error('Failed to report profiling data')
           false
         end
       end

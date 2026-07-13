@@ -87,7 +87,7 @@ RSpec.describe Datadog::SymbolDatabase::FileHash do
 
     it 'returns nil and logs on read error' do
       allow(File).to receive(:exist?).and_return(true)
-      allow(File).to receive(:read).and_raise(Errno::EACCES, "Permission denied")
+      allow(File).to receive(:read).and_raise(Errno::EACCES, 'Permission denied')
 
       expect(logger).to receive(:debug) { |&block| expect(block.call).to match(/file hash failed/i) }
 

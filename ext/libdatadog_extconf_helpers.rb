@@ -127,7 +127,7 @@ module Datadog
       # Set mkmf global variables
       $INCFLAGS << " -I#{includedir}"
       $LDFLAGS << " -L#{libdir} -Wl,-rpath,#{libdir}"
-      $libs << " -ldatadog_profiling"
+      $libs << ' -ldatadog_profiling'
 
       # Add extra relative rpaths using $ORIGIN to handle environments where gems are moved after installation.
       # The excessive escaping is needed to get these special characters through Make and the shell untouched.
@@ -194,7 +194,7 @@ module Datadog
             $stderr.puts(
               "+------------------------------------------------------------------------------+\n" \
               "| There was an issue setting up extension build:                               |\n" \
-              "+------------------------------------------------------------------------------+" \
+              '+------------------------------------------------------------------------------+' \
               "#{last_entry.chomp}" \
               "+------------------------------------------------------------------------------+\n" \
               "| Full failure log is at #{log_path}\n" \
@@ -214,8 +214,8 @@ module Datadog
       end
 
       unless Libdatadog.pkgconfig_folder
-        "The `libdatadog` gem installed on your system is missing binaries for your platform variant. " \
-          "Your platform: " \
+        'The `libdatadog` gem installed on your system is missing binaries for your platform variant. ' \
+          'Your platform: ' \
           "`#{Libdatadog.current_platform}`; available binaries: `#{Libdatadog.available_binaries.join("`, `")}`"
       end
     end

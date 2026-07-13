@@ -17,7 +17,7 @@ module Datadog
         module WAFAddresses
           BASE64_CHARS_PER_GROUP = 4
           BASE64_BYTES_PER_GROUP = 3
-          BASE64_PADDING_BYTE = "=".ord
+          BASE64_PADDING_BYTE = '='.ord
 
           module_function
 

@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/serializer'
 require 'datadog/di/probe'
 require 'datadog/di/probe_notification_builder'
@@ -182,7 +182,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
           it 'replaces bogus expressions with [evaluation error] and fills out evaluation errors' do
             payload = builder.build_snapshot(context)
             expect(payload).to be_a(Hash)
-            expect(payload[:message]).to eq "hello[evaluation error]"
+            expect(payload[:message]).to eq 'hello[evaluation error]'
             expect(payload.fetch(:debugger).fetch(:snapshot).fetch(:evaluationErrors)).to eq [
               {message: 'ArgumentError: bad value for range', expr: '(expression)'}
             ]
@@ -205,7 +205,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
           it 'attempts to evaluate all expressions' do
             payload = builder.build_snapshot(context)
             expect(payload).to be_a(Hash)
-            expect(payload[:message]).to eq "hello[evaluation error][evaluation error]hello"
+            expect(payload[:message]).to eq 'hello[evaluation error][evaluation error]hello'
             expect(payload.fetch(:debugger).fetch(:snapshot).fetch(:evaluationErrors)).to eq [
               {message: 'ArgumentError: bad value for range', expr: '(bar baz 3)'},
               {message: 'Datadog::DI::Error::ExpressionEvaluationError: Bad collection type for filter: String', expr: '(bar baz)'},

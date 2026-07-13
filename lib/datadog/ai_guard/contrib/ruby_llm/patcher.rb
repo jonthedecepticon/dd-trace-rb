@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "chat_instrumentation"
+require_relative 'chat_instrumentation'
 
 module Datadog
   module AIGuard

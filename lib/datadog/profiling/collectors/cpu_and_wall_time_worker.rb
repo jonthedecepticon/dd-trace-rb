@@ -53,10 +53,10 @@ module Datadog
         )
           unless dynamic_sampling_rate_enabled
             Datadog.logger.warn(
-              "Profiling dynamic sampling rate disabled. This should only be used for testing, and will increase overhead!"
+              'Profiling dynamic sampling rate disabled. This should only be used for testing, and will increase overhead!'
             )
             Datadog::Core::Telemetry::Logger.error(
-              "Profiling dynamic sampling rate disabled. This should only be used for testing, and will increase overhead!"
+              'Profiling dynamic sampling rate disabled. This should only be used for testing, and will increase overhead!'
             )
           end
 
@@ -102,19 +102,19 @@ module Datadog
 
               self.class._native_sampling_loop(self)
 
-              Datadog.logger.debug("CpuAndWallTimeWorker thread stopping cleanly")
+              Datadog.logger.debug('CpuAndWallTimeWorker thread stopping cleanly')
             rescue Profiling::ExistingSignalHandler => e
               @failure_exception = e
               Datadog.logger.warn(
-                "Profiling was not started as another profiler or gem is already using the SIGPROF signal. " \
-                "Please disable the other profiler to use Datadog profiling."
+                'Profiling was not started as another profiler or gem is already using the SIGPROF signal. ' \
+                'Please disable the other profiler to use Datadog profiling.'
               )
               on_failure_proc&.call(log_failure: false)
             rescue Exception => e # rubocop:disable Lint/RescueException
               @failure_exception = e
               operation_name = self.class._native_failure_exception_during_operation(self).inspect
               Datadog.logger.warn(
-                "CpuAndWallTimeWorker thread error. " \
+                'CpuAndWallTimeWorker thread error. ' \
                 "Operation: #{operation_name} Cause: #{e.class}: #{e.message} Location: #{Array(e.backtrace).first}"
               )
               on_failure_proc&.call
@@ -130,7 +130,7 @@ module Datadog
         #: () -> void
         def stop
           @start_stop_mutex.synchronize do
-            Datadog.logger.debug("Requesting CpuAndWallTimeWorker thread shut down")
+            Datadog.logger.debug('Requesting CpuAndWallTimeWorker thread shut down')
 
             @idle_sampling_helper.stop
 

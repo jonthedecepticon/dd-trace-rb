@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 
 RSpec.describe 'iseq_type' do
   def iseq_type(iseq)

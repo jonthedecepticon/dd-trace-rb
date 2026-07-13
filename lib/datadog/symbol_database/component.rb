@@ -81,7 +81,7 @@ module Datadog
 
         # Requires remote config (unless force mode)
         if !settings.remote&.enabled && !settings.symbol_database.internal.force_upload
-          symdb_logger.debug("symdb: remote config not available and force_upload not set, skipping")
+          symdb_logger.debug('symdb: remote config not available and force_upload not set, skipping')
           return nil
         end
 
@@ -206,13 +206,13 @@ module Datadog
               # re-attempts when DI is enabled. Without this gate the tracer would
               # extract and upload symbols for applications that never enabled DI.
               @upload_requested = true
-              @logger.debug("symdb: upload requested but Dynamic Instrumentation is not active; deferring until DI is enabled")
+              @logger.debug('symdb: upload requested but Dynamic Instrumentation is not active; deferring until DI is enabled')
             else
               # Explicit symbol_database.enabled = false: the feature is disabled,
               # not merely waiting on DI. Clear the desire so resume_pending_upload
               # does not retry a disabled feature.
               @upload_requested = false
-              @logger.debug("symdb: upload requested but symbol database upload is disabled; skipping")
+              @logger.debug('symdb: upload requested but symbol database upload is disabled; skipping')
             end
             return
           end
@@ -581,7 +581,7 @@ module Datadog
         @mutex.synchronize { @upload_in_progress = true }
 
         begin
-          @logger.trace { "symdb: starting extraction and upload" }
+          @logger.trace { 'symdb: starting extraction and upload' }
           start_time = Datadog::Core::Utils::Time.get_time
 
           extracted_count = 0
@@ -595,7 +595,7 @@ module Datadog
 
           if @initial_extraction_done
             extract_hot_load_buffer.each(&consume)
-            mode_label = "hot-load"
+            mode_label = 'hot-load'
           else
             # Discard any TracePoint events captured between hook install and
             # this initial scan — extract_all walks ObjectSpace which already
@@ -607,7 +607,7 @@ module Datadog
             # never materialized, keeping peak memory bounded for large workspaces.
             @extractor.extract_all(&consume)
             @initial_extraction_done = true
-            mode_label = "initial"
+            mode_label = 'initial'
           end
 
           extraction_duration = Datadog::Core::Utils::Time.get_time - start_time

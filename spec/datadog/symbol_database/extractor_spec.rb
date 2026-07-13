@@ -42,7 +42,7 @@ RSpec.describe Datadog::SymbolDatabase::Extractor do
 
   describe '.extract' do
     it 'returns nil for non-Module input' do
-      expect(extractor.extract("not a module")).to be_nil
+      expect(extractor.extract('not a module')).to be_nil
       expect(extractor.extract(42)).to be_nil
       expect(extractor.extract(nil)).to be_nil
     end
@@ -411,7 +411,7 @@ RSpec.describe Datadog::SymbolDatabase::Extractor do
       it 'extracts empty top-level class as a CLASS scope with no methods' do
         # Matches Java/NET: empty classes are uploaded so they appear in the probe modal.
         # const_source_location finds the class declaration even with no methods.
-        filename = create_user_code_file("class TestEmptyClass; end")
+        filename = create_user_code_file('class TestEmptyClass; end')
         load filename
         scope = extractor.extract(TestEmptyClass)
         expect(scope).not_to be_nil
@@ -423,7 +423,7 @@ RSpec.describe Datadog::SymbolDatabase::Extractor do
       end
 
       it 'extracts empty top-level module as a MODULE scope with no methods' do
-        filename = create_user_code_file("module TestEmptyModule; end")
+        filename = create_user_code_file('module TestEmptyModule; end')
         load filename
         scope = extractor.extract(TestEmptyModule)
         expect(scope).not_to be_nil

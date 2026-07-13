@@ -529,7 +529,7 @@ RSpec.describe Datadog::Tracing::Distributed::Baggage do
               tags: {'header_style' => 'baggage', 'truncation_reason' => 'baggage_item_count_exceeded'}
             )
 
-            expect(propagation.extract(data).baggage).to eq("same_key" => "value64"), "Keeps the last entry"
+            expect(propagation.extract(data).baggage).to eq('same_key' => 'value64'), 'Keeps the last entry'
           end
         end
       end

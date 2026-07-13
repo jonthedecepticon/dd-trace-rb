@@ -1,6 +1,6 @@
 require 'datadog/di'
 require 'datadog/di/code_tracker'
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 
 RSpec.describe Datadog::DI::CodeTracker do
   di_test
@@ -23,7 +23,7 @@ RSpec.describe Datadog::DI::CodeTracker do
     end
   end
 
-  describe "#start" do
+  describe '#start' do
     before do
       # Stub backfill so :script_compiled tests aren't affected by
       # backfill populating the registry with pre-loaded files.
@@ -34,7 +34,7 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.stop
     end
 
-    it "tracks loaded file" do
+    it 'tracks loaded file' do
       # The expectations appear to be lazy-loaded, therefore
       # we need to invoke the same expectation before starting
       # code tracking as we'll be using later in the test.
@@ -42,21 +42,21 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.start
       # Should still be empty here.
       expect(tracker.send(:registry)).to be_empty
-      load File.join(File.dirname(__FILE__), "code_tracker_load_class.rb")
+      load File.join(File.dirname(__FILE__), 'code_tracker_load_class.rb')
       expect(tracker.send(:registry).length).to eq(1)
 
       path = tracker.send(:registry).to_a.dig(0, 0)
       # The path in the registry should be absolute.
-      expect(path[0]).to eq "/"
+      expect(path[0]).to eq '/'
       # The full path is dependent on the environment/system
       # running the tests, but we can assert on the basename
       # which will be the same.
-      expect(File.basename(path)).to eq("code_tracker_load_class.rb")
+      expect(File.basename(path)).to eq('code_tracker_load_class.rb')
       # And, we should in fact have a full path.
-      expect(path).to start_with("/")
+      expect(path).to start_with('/')
     end
 
-    it "tracks required file" do
+    it 'tracks required file' do
       # The expectations appear to be lazy-loaded, therefore
       # we need to invoke the same expectation before starting
       # code tracking as we'll be using later in the test.
@@ -64,21 +64,21 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.start
       # Should still be empty here.
       expect(tracker.send(:registry)).to be_empty
-      require_relative "code_tracker_require_class"
+      require_relative 'code_tracker_require_class'
       expect(tracker.send(:registry).length).to eq(1)
 
       path = tracker.send(:registry).to_a.dig(0, 0)
       # The path in the registry should be absolute.
-      expect(path[0]).to eq "/"
+      expect(path[0]).to eq '/'
       # The full path is dependent on the environment/system
       # running the tests, but we can assert on the basename
       # which will be the same.
-      expect(File.basename(path)).to eq("code_tracker_require_class.rb")
+      expect(File.basename(path)).to eq('code_tracker_require_class.rb')
       # And, we should in fact have a full path.
-      expect(path).to start_with("/")
+      expect(path).to start_with('/')
     end
 
-    context "eval without location" do
+    context 'eval without location' do
       it "does not track eval'd code" do
         # The expectations appear to be lazy-loaded, therefore
         # we need to invoke the same expectation before starting
@@ -87,13 +87,13 @@ RSpec.describe Datadog::DI::CodeTracker do
         tracker.start
         # Should still be empty here.
         expect(tracker.send(:registry)).to be_empty
-        eval "1 + 2" # standard:disable Style/EvalWithLocation
+        eval '1 + 2' # standard:disable Style/EvalWithLocation
         # Should still be empty here.
         expect(tracker.send(:registry)).to be_empty
       end
     end
 
-    context "eval with location" do
+    context 'eval with location' do
       it "does not track eval'd code" do
         # The expectations appear to be lazy-loaded, therefore
         # we need to invoke the same expectation before starting
@@ -102,7 +102,7 @@ RSpec.describe Datadog::DI::CodeTracker do
         tracker.start
         # Should still be empty here.
         expect(tracker.send(:registry)).to be_empty
-        eval "1 + 2", nil, __FILE__, __LINE__
+        eval '1 + 2', nil, __FILE__, __LINE__
         # Should still be empty here.
         expect(tracker.send(:registry)).to be_empty
       end
@@ -120,17 +120,17 @@ RSpec.describe Datadog::DI::CodeTracker do
         require_relative 'code_tracker_test_class_4'
         expect(tracker.send(:registry).length).to eq(1)
         path = tracker.send(:registry).to_a.dig(0, 0)
-        expect(File.basename(path)).to eq("code_tracker_test_class_4.rb")
+        expect(File.basename(path)).to eq('code_tracker_test_class_4.rb')
 
         expect_in_fork do
           expect(tracker.send(:registry).length).to eq(1)
           path = tracker.send(:registry).to_a.dig(0, 0)
-          expect(File.basename(path)).to eq("code_tracker_test_class_4.rb")
+          expect(File.basename(path)).to eq('code_tracker_test_class_4.rb')
 
           require_relative 'code_tracker_test_class_5'
           expect(tracker.send(:registry).length).to eq(2)
           path = tracker.send(:registry).to_a.dig(1, 0)
-          expect(File.basename(path)).to eq("code_tracker_test_class_5.rb")
+          expect(File.basename(path)).to eq('code_tracker_test_class_5.rb')
         end
 
         begin
@@ -141,27 +141,27 @@ RSpec.describe Datadog::DI::CodeTracker do
         # Verify parent did not change
         expect(tracker.send(:registry).length).to eq(1)
         path = tracker.send(:registry).to_a.dig(0, 0)
-        expect(File.basename(path)).to eq("code_tracker_test_class_4.rb")
+        expect(File.basename(path)).to eq('code_tracker_test_class_4.rb')
       end
     end
   end
 
-  describe "#active?" do
-    context "when started" do
+  describe '#active?' do
+    context 'when started' do
       include_context 'when code tracker is running'
 
-      it "is true" do
+      it 'is true' do
         expect(tracker.active?).to be true
       end
     end
 
-    context "when stopped" do
+    context 'when stopped' do
       before do
         tracker.start
         tracker.stop
       end
 
-      it "is false" do
+      it 'is false' do
         expect(tracker.active?).to be false
       end
     end
@@ -326,7 +326,7 @@ RSpec.describe Datadog::DI::CodeTracker do
 
     it 'does not overwrite entries from script_compiled' do
       tracker.start
-      load File.join(File.dirname(__FILE__), "code_tracker_load_class.rb")
+      load File.join(File.dirname(__FILE__), 'code_tracker_load_class.rb')
 
       path = tracker.send(:registry).keys.find { |p| p.end_with?('code_tracker_load_class.rb') }
       expect(path).not_to be_nil
@@ -452,7 +452,7 @@ RSpec.describe Datadog::DI::CodeTracker do
 
           expect(telemetry).to have_received(:report).with(
             an_instance_of(RuntimeError),
-            hash_including(description: "backfill_registry failed"),
+            hash_including(description: 'backfill_registry failed'),
           )
         end
       end
@@ -551,7 +551,7 @@ RSpec.describe Datadog::DI::CodeTracker do
     end
   end
 
-  describe "#iseqs_for_path_suffix" do
+  describe '#iseqs_for_path_suffix' do
     around do |example|
       # Stub backfill so we only have the 4 explicitly loaded files.
       # Use define_method to avoid rspec allow/receive scoping issues
@@ -559,10 +559,10 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.define_singleton_method(:backfill_registry) {}
       tracker.start
 
-      load File.join(File.dirname(__FILE__), "code_tracker_test_class_1.rb")
-      load File.join(File.dirname(__FILE__), "code_tracker_test_class_2.rb")
-      load File.join(File.dirname(__FILE__), "code_tracker_test_class_3.rb")
-      load File.join(File.dirname(__FILE__), "code_tracker_test_classes", "code_tracker_test_class_1.rb")
+      load File.join(File.dirname(__FILE__), 'code_tracker_test_class_1.rb')
+      load File.join(File.dirname(__FILE__), 'code_tracker_test_class_2.rb')
+      load File.join(File.dirname(__FILE__), 'code_tracker_test_class_3.rb')
+      load File.join(File.dirname(__FILE__), 'code_tracker_test_classes', 'code_tracker_test_class_1.rb')
       expect(tracker.send(:registry).each.to_a.length).to eq(4)
 
       # To be able to assert on the registry, replace values (iseqs)
@@ -576,39 +576,39 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.stop
     end
 
-    context "exact match for full path" do
+    context 'exact match for full path' do
       let(:path) do
-        File.join(File.dirname(__FILE__), "code_tracker_test_class_1.rb")
+        File.join(File.dirname(__FILE__), 'code_tracker_test_class_1.rb')
       end
 
-      it "returns the exact match only" do
+      it 'returns the exact match only' do
         expect(tracker.iseqs_for_path_suffix(path)).to eq([path, path])
       end
     end
 
-    context "basename matches two paths" do
+    context 'basename matches two paths' do
       let(:expected) do
         [
-          File.join(File.dirname(__FILE__), "code_tracker_test_class_1.rb"),
-          File.join(File.dirname(__FILE__), "code_tracker_test_classes", "code_tracker_test_class_1.rb"),
+          File.join(File.dirname(__FILE__), 'code_tracker_test_class_1.rb'),
+          File.join(File.dirname(__FILE__), 'code_tracker_test_classes', 'code_tracker_test_class_1.rb'),
         ]
       end
 
-      it "raises exception" do
+      it 'raises exception' do
         expect do
-          tracker.iseqs_for_path_suffix("code_tracker_test_class_1.rb")
+          tracker.iseqs_for_path_suffix('code_tracker_test_class_1.rb')
         end.to raise_error(Datadog::DI::Error::MultiplePathsMatch)
       end
     end
 
-    context "match not on path component boundary" do
-      it "returns nil" do
-        expect(tracker.iseqs_for_path_suffix("1.rb")).to be nil
+    context 'match not on path component boundary' do
+      it 'returns nil' do
+        expect(tracker.iseqs_for_path_suffix('1.rb')).to be nil
       end
     end
   end
 
-  describe "#iseqs_for_path_suffix with case-different known paths" do
+  describe '#iseqs_for_path_suffix with case-different known paths' do
     # Verifies the case-sensitive-first / case-insensitive-fallback ordering
     # described in the design comment in utils.rb (steps 5-8). When two
     # registry paths differ only in case, a correctly-cased probe path must
@@ -619,40 +619,40 @@ RSpec.describe Datadog::DI::CodeTracker do
       tracker.start
 
       registry = tracker.send(:registry)
-      registry["/app/foo.rb"] = "/app/foo.rb"
-      registry["/app/FOO.rb"] = "/app/FOO.rb"
+      registry['/app/foo.rb'] = '/app/foo.rb'
+      registry['/app/FOO.rb'] = '/app/FOO.rb'
 
       example.run
 
       tracker.stop
     end
 
-    it "uniquely matches a lowercase probe path" do
-      expect(tracker.iseqs_for_path_suffix("foo.rb")).to eq(["/app/foo.rb", "/app/foo.rb"])
+    it 'uniquely matches a lowercase probe path' do
+      expect(tracker.iseqs_for_path_suffix('foo.rb')).to eq(['/app/foo.rb', '/app/foo.rb'])
     end
 
-    it "uniquely matches an uppercase probe path" do
-      expect(tracker.iseqs_for_path_suffix("FOO.rb")).to eq(["/app/FOO.rb", "/app/FOO.rb"])
+    it 'uniquely matches an uppercase probe path' do
+      expect(tracker.iseqs_for_path_suffix('FOO.rb')).to eq(['/app/FOO.rb', '/app/FOO.rb'])
     end
 
-    it "falls back to case-insensitive when no case-sensitive match exists" do
-      tracker.send(:registry).delete("/app/foo.rb")
-      expect(tracker.iseqs_for_path_suffix("foo.rb")).to eq(["/app/FOO.rb", "/app/FOO.rb"])
+    it 'falls back to case-insensitive when no case-sensitive match exists' do
+      tracker.send(:registry).delete('/app/foo.rb')
+      expect(tracker.iseqs_for_path_suffix('foo.rb')).to eq(['/app/FOO.rb', '/app/FOO.rb'])
     end
 
-    it "raises when the case-insensitive fallback is ambiguous" do
+    it 'raises when the case-insensitive fallback is ambiguous' do
       tracker.send(:registry).clear
-      tracker.send(:registry)["/app/foo.rb"] = "/app/foo.rb"
-      tracker.send(:registry)["/app/bar/foo.rb"] = "/app/bar/foo.rb"
+      tracker.send(:registry)['/app/foo.rb'] = '/app/foo.rb'
+      tracker.send(:registry)['/app/bar/foo.rb'] = '/app/bar/foo.rb'
       # "FOO.RB" matches nothing case-sensitively at any suffix; the
       # case-insensitive pass matches both registry entries.
       expect do
-        tracker.iseqs_for_path_suffix("FOO.RB")
+        tracker.iseqs_for_path_suffix('FOO.RB')
       end.to raise_error(Datadog::DI::Error::MultiplePathsMatch)
     end
   end
 
-  describe "#iseqs_for_path_suffix with Windows backslash suffix" do
+  describe '#iseqs_for_path_suffix with Windows backslash suffix' do
     # Verifies that backslash separators (DEBUG-5111) are normalized upfront so
     # the suffix-shortening loop can strip leading components. Probe paths from
     # IDE tooling on Windows arrive with backslashes; the runtime registry path
@@ -664,29 +664,29 @@ RSpec.describe Datadog::DI::CodeTracker do
 
       registry = tracker.send(:registry)
       # Runtime path on the deployed weblog — no shared/rails/ prefix.
-      registry["/app/controllers/debugger_controller.rb"] = "/app/controllers/debugger_controller.rb"
+      registry['/app/controllers/debugger_controller.rb'] = '/app/controllers/debugger_controller.rb'
 
       example.run
 
       tracker.stop
     end
 
-    it "matches when the probe path uses backslashes and needs prefix stripping" do
+    it 'matches when the probe path uses backslashes and needs prefix stripping' do
       expect(
         tracker.iseqs_for_path_suffix('shared\rails\app\controllers\debugger_controller.rb'),
-      ).to eq(["/app/controllers/debugger_controller.rb", "/app/controllers/debugger_controller.rb"])
+      ).to eq(['/app/controllers/debugger_controller.rb', '/app/controllers/debugger_controller.rb'])
     end
 
-    it "matches when the probe path uses backslashes and uppercase, needing both fallbacks" do
+    it 'matches when the probe path uses backslashes and uppercase, needing both fallbacks' do
       expect(
         tracker.iseqs_for_path_suffix('SHARED\RAILS\APP\CONTROLLERS\DEBUGGER_CONTROLLER.RB'),
-      ).to eq(["/app/controllers/debugger_controller.rb", "/app/controllers/debugger_controller.rb"])
+      ).to eq(['/app/controllers/debugger_controller.rb', '/app/controllers/debugger_controller.rb'])
     end
 
-    it "matches when the probe path is an absolute Windows-style path" do
+    it 'matches when the probe path is an absolute Windows-style path' do
       expect(
         tracker.iseqs_for_path_suffix('\app\controllers\debugger_controller.rb'),
-      ).to eq(["/app/controllers/debugger_controller.rb", "/app/controllers/debugger_controller.rb"])
+      ).to eq(['/app/controllers/debugger_controller.rb', '/app/controllers/debugger_controller.rb'])
     end
   end
 
@@ -925,7 +925,7 @@ RSpec.describe Datadog::DI::CodeTracker do
     end
 
     it 'excludes compile_file :top iseqs from per_method_registry' do
-      next skip "iseq_type not available on Ruby < 3.1" unless Datadog::DI.respond_to?(:iseq_type)
+      next skip 'iseq_type not available on Ruby < 3.1' unless Datadog::DI.respond_to?(:iseq_type)
 
       compile_file_iseq = instance_double(RubyVM::InstructionSequence,
         absolute_path: '/app/lib/foo.rb',
@@ -975,7 +975,7 @@ RSpec.describe Datadog::DI::CodeTracker do
 
     let(:component) do
       Datadog::DI::Component.build(settings, agent_settings, logger).tap do |c|
-        raise "Component failed to build" if c.nil?
+        raise 'Component failed to build' if c.nil?
       end
     end
 

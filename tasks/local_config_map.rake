@@ -33,7 +33,7 @@ namespace :local_config_map do
   alias_to_canonical = {}
   supported_configurations = data[:supportedConfigurations].each.with_object([]) do |(name, configs), result|
     configs.each do |config|
-      config["aliases"]&.each do |alias_name|
+      config['aliases']&.each do |alias_name|
         aliases[name] ||= Set.new
         aliases[name].add(alias_name)
         if alias_to_canonical[alias_name] && alias_to_canonical[alias_name] != name
@@ -46,7 +46,7 @@ namespace :local_config_map do
         deprecations.add(alias_name) unless data.dig(:supportedConfigurations, alias_name)
       end
       # Add deprecated configs with no replacement provided
-      deprecations.add(name) if config["deprecations"]
+      deprecations.add(name) if config['deprecations']
     end
     result << name
   end

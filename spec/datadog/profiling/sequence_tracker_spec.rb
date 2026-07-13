@@ -1,8 +1,8 @@
-require "datadog/profiling/spec_helper"
-require "datadog/profiling/sequence_tracker"
+require 'datadog/profiling/spec_helper'
+require 'datadog/profiling/sequence_tracker'
 
 RSpec.describe Datadog::Profiling::SequenceTracker do
-  describe ".get_next" do
+  describe '.get_next' do
     subject(:get_next) { described_class.get_next }
 
     before do
@@ -10,16 +10,16 @@ RSpec.describe Datadog::Profiling::SequenceTracker do
       described_class.send(:reset!)
     end
 
-    it "increments the sequence on every call" do
+    it 'increments the sequence on every call' do
       expect(described_class.get_next).to eq(0)
       expect(described_class.get_next).to eq(1)
       expect(described_class.get_next).to eq(2)
     end
 
-    context "when called after a fork" do
-      before { skip("Spec requires Ruby VM supporting fork") unless PlatformHelpers.supports_fork? }
+    context 'when called after a fork' do
+      before { skip('Spec requires Ruby VM supporting fork') unless PlatformHelpers.supports_fork? }
 
-      it "resets the sequence number to 0 in the forked process" do
+      it 'resets the sequence number to 0 in the forked process' do
         expect(described_class.get_next).to eq(0)
         expect(described_class.get_next).to eq(1)
 
@@ -29,7 +29,7 @@ RSpec.describe Datadog::Profiling::SequenceTracker do
         end
       end
 
-      it "continues incrementing in the parent process after fork" do
+      it 'continues incrementing in the parent process after fork' do
         expect(described_class.get_next).to eq(0)
         expect(described_class.get_next).to eq(1)
 
@@ -44,8 +44,8 @@ RSpec.describe Datadog::Profiling::SequenceTracker do
     end
   end
 
-  describe ".reset!" do
-    it "is private" do
+  describe '.reset!' do
+    it 'is private' do
       expect(described_class.private_methods).to include(:reset!)
     end
   end

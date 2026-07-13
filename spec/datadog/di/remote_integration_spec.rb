@@ -36,7 +36,7 @@ RSpec.describe 'DI remote config' do
     # the new lifecycle gates change processing on `component.started?`.
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
       if component.nil?
-        raise "Component failed to create - unsuitable environment? Check log entries"
+        raise 'Component failed to create - unsuitable environment? Check log entries'
       end
       component.start!
     end

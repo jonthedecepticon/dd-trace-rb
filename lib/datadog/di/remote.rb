@@ -70,13 +70,13 @@ module Datadog
             if enabled
               if explicitly_disabled?
                 Datadog.logger.warn(
-                  "di: cannot enable dynamic instrumentation via remote configuration " \
-                  "because DD_DYNAMIC_INSTRUMENTATION_ENABLED is explicitly set to false",
+                  'di: cannot enable dynamic instrumentation via remote configuration ' \
+                  'because DD_DYNAMIC_INSTRUMENTATION_ENABLED is explicitly set to false',
                 )
               else
                 reason = DI.unsupported_reason
                 Datadog.logger.warn(
-                  "di: cannot enable dynamic instrumentation via remote configuration: " \
+                  'di: cannot enable dynamic instrumentation via remote configuration: ' \
                   "#{reason || "dynamic instrumentation was not initialized at startup"}",
                 )
               end
@@ -87,9 +87,9 @@ module Datadog
           if enabled
             if explicitly_disabled?
               Datadog.logger.warn(
-                "di: ignoring implicit enablement signal from remote configuration " \
-                "because DD_DYNAMIC_INSTRUMENTATION_ENABLED is explicitly set to false. " \
-                "To allow remote enablement, unset DD_DYNAMIC_INSTRUMENTATION_ENABLED.",
+                'di: ignoring implicit enablement signal from remote configuration ' \
+                'because DD_DYNAMIC_INSTRUMENTATION_ENABLED is explicitly set to false. ' \
+                'To allow remote enablement, unset DD_DYNAMIC_INSTRUMENTATION_ENABLED.',
               )
               return
             end
@@ -114,7 +114,7 @@ module Datadog
           Datadog.logger.debug { "di: error handling implicit enablement: #{e.class}: #{e.message}" }
           Datadog.send(:components, allow_initialization: false)&.telemetry&.report(
             e,
-            description: "Error handling DI implicit enablement",
+            description: 'Error handling DI implicit enablement',
           )
         end
 
@@ -208,7 +208,7 @@ module Datadog
             raise if component.settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
             component.logger.debug { "di: unhandled exception adding #{probe.type} probe at #{probe.location} (#{probe.id}) in DI remote receiver: #{exc.class}: #{exc.message}" }
-            component.telemetry&.report(exc, description: "Unhandled exception adding probe in DI remote receiver")
+            component.telemetry&.report(exc, description: 'Unhandled exception adding probe in DI remote receiver')
 
             # TODO test this path
             payload = component.probe_notification_builder.build_errored(probe, exc)
@@ -234,7 +234,7 @@ module Datadog
           raise if component.settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
           component.logger.debug { "di: unhandled exception handling a probe in DI remote receiver: #{exc.class}: #{exc.message}" }
-          component.telemetry&.report(exc, description: "Unhandled exception handling probe in DI remote receiver")
+          component.telemetry&.report(exc, description: 'Unhandled exception handling probe in DI remote receiver')
 
           # TODO assert content state (errored for this example)
           content.errored("Error applying dynamic instrumentation configuration: #{exc.class}: #{exc.message}")
@@ -254,7 +254,7 @@ module Datadog
             next unless content.path.product == PRODUCT
 
             begin
-              probe_id = parse_content(content)["id"]
+              probe_id = parse_content(content)['id']
             rescue => exc
               component.logger.debug { "di: skipping unparseable LIVE_DEBUGGING content on enable reconcile: #{exc.class}: #{exc.message}" }
               next
@@ -277,7 +277,7 @@ module Datadog
         # component. Returns false when the id cannot be determined, so add_probe
         # still runs and reports the parse error through its own handling.
         def probe_in_content_known?(content, component)
-          probe_id = parse_content(content)["id"]
+          probe_id = parse_content(content)['id']
           !!(probe_id && probe_known?(probe_id, component))
         rescue => exc
           component.logger.debug { "di: could not check probe id for insert dedup: #{exc.class}: #{exc.message}" }
@@ -298,7 +298,7 @@ module Datadog
           raise if component.settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
           component.logger.debug { "di: unhandled exception removing probes in DI remote receiver: #{exc.class}: #{exc.message}" }
-          component.telemetry&.report(exc, description: "Unhandled exception removing probes in DI remote receiver")
+          component.telemetry&.report(exc, description: 'Unhandled exception removing probes in DI remote receiver')
         end
 
         def parse_content(content)

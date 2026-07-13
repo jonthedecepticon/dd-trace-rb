@@ -1,5 +1,5 @@
-require "datadog/di/spec_helper"
-require "datadog/di/probe_notifier_worker"
+require 'datadog/di/spec_helper'
+require 'datadog/di/probe_notifier_worker'
 require 'logger'
 
 RSpec.describe Datadog::DI::ProbeNotifierWorker do
@@ -198,12 +198,12 @@ RSpec.describe Datadog::DI::ProbeNotifierWorker do
 
         it 'reports exception to telemetry' do
           expect_lazy_log(logger, :debug, /failed to send snapshot.*network error/)
-          expect(input_transport).to receive(:send_input).and_raise(StandardError, "network error")
+          expect(input_transport).to receive(:send_input).and_raise(StandardError, 'network error')
 
           expect(telemetry).to receive(:report) do |exc, description:|
             expect(exc).to be_a(StandardError)
-            expect(exc.message).to eq("network error")
-            expect(description).to eq("Error sending snapshot")
+            expect(exc.message).to eq('network error')
+            expect(description).to eq('Error sending snapshot')
           end
 
           worker.add_snapshot(snapshot)
@@ -225,12 +225,12 @@ RSpec.describe Datadog::DI::ProbeNotifierWorker do
 
         it 'reports exception to telemetry' do
           expect_lazy_log(logger, :debug, /failed to send probe status.*network error/)
-          expect(diagnostics_transport).to receive(:send_diagnostics).and_raise(StandardError, "network error")
+          expect(diagnostics_transport).to receive(:send_diagnostics).and_raise(StandardError, 'network error')
 
           expect(telemetry).to receive(:report) do |exc, description:|
             expect(exc).to be_a(StandardError)
-            expect(exc.message).to eq("network error")
-            expect(description).to eq("Error sending status")
+            expect(exc.message).to eq('network error')
+            expect(description).to eq('Error sending status')
           end
 
           worker.add_status(status)

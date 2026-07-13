@@ -90,7 +90,7 @@ RSpec.describe Datadog::OpenFeature::EvaluationEngine do
         engine.reconfigure!(configuration)
       end
 
-      let(:error) { RuntimeError.new("Crash") }
+      let(:error) { RuntimeError.new('Crash') }
 
       it 'returns evaluation error and does not report exposure' do
         expect(reporter).not_to receive(:report)

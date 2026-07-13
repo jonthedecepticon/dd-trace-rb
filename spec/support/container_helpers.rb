@@ -402,7 +402,7 @@ module ContainerHelpers
     let(:lines) { 1 }
 
     before do
-      cgroup_file.puts "0::/user.slice/user-1000.slice/user@1000.service/app.slice"
+      cgroup_file.puts '0::/user.slice/user-1000.slice/user@1000.service/app.slice'
       cgroup_file.rewind
     end
   end

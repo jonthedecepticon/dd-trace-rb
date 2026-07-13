@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/component'
 
 RSpec.describe Datadog::DI::Component do
@@ -452,20 +452,20 @@ RSpec.describe Datadog::DI::Component do
         allow(logger).to receive(:debug)
 
         # Make ProbeBuilder raise an error
-        expect(Datadog::DI::ProbeBuilder).to receive(:build_from_remote_config).and_raise(StandardError, "probe build error")
+        expect(Datadog::DI::ProbeBuilder).to receive(:build_from_remote_config).and_raise(StandardError, 'probe build error')
 
         # Make the error notification building also fail
-        expect(component.probe_notification_builder).to receive(:build_errored).and_raise(RuntimeError, "notification build error")
+        expect(component.probe_notification_builder).to receive(:build_errored).and_raise(RuntimeError, 'notification build error')
 
         expect(telemetry).to receive(:report) do |exc, description:|
           expect(exc).to be_a(RuntimeError)
-          expect(exc.message).to eq("notification build error")
-          expect(description).to eq("Error building probe error notification")
+          expect(exc.message).to eq('notification build error')
+          expect(description).to eq('Error building probe error notification')
         end
 
         expect do
           component.parse_probe_spec_and_notify(probe_spec)
-        end.to raise_error(RuntimeError, "notification build error")
+        end.to raise_error(RuntimeError, 'notification build error')
       end
     end
   end

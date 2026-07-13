@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di"
-require "tempfile"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
+require 'tempfile'
 
 # Tests verifying that targeted TracePoints are bound to the specific iseq
 # object, not the source location. A TracePoint targeted at a compile_file
@@ -12,7 +12,7 @@ require "tempfile"
 # probes to silently never fire.
 #
 # See: https://github.com/DataDog/dd-trace-rb/pull/5496#discussion_r3052752533
-RSpec.describe "Targeted TracePoint iseq binding" do
+RSpec.describe 'Targeted TracePoint iseq binding' do
   di_test
 
   # Use a tempfile to guarantee a fresh file that hasn't been required yet.
@@ -28,7 +28,7 @@ RSpec.describe "Targeted TracePoint iseq binding" do
   end
 
   let(:tempfile) do
-    Tempfile.new(["compile_file_test", ".rb"]).tap do |f|
+    Tempfile.new(['compile_file_test', '.rb']).tap do |f|
       f.write(source_code)
       f.flush
     end
@@ -39,7 +39,7 @@ RSpec.describe "Targeted TracePoint iseq binding" do
     Object.send(:remove_const, :CompileFileTestTarget) if defined?(CompileFileTestTarget)
   end
 
-  it "trace point on compile_file iseq does NOT fire for require-produced code" do
+  it 'trace point on compile_file iseq does NOT fire for require-produced code' do
     # 1. Compile the file (produces iseq without executing)
     compiled_iseq = RubyVM::InstructionSequence.compile_file(tempfile.path)
 
@@ -62,7 +62,7 @@ RSpec.describe "Targeted TracePoint iseq binding" do
     expect(fired).to be false
   end
 
-  it "trace point on require-produced iseq DOES fire for require-produced code" do
+  it 'trace point on require-produced iseq DOES fire for require-produced code' do
     # Load the file to get the require-produced iseq
     load tempfile.path
 

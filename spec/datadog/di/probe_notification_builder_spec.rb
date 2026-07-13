@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/probe_notification_builder'
 require 'datadog/di/serializer'
 require 'datadog/di/probe'
@@ -14,7 +14,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
   di_test
 
   let(:settings) do
-    double("settings").tap do |settings|
+    double('settings').tap do |settings|
       allow(settings).to receive(:dynamic_instrumentation).and_return(di_settings)
       allow(settings).to receive(:service).and_return('test service')
       allow(settings).to receive(:env).and_return('test env')
@@ -25,7 +25,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
   end
 
   let(:di_settings) do
-    double("di settings").tap do |settings|
+    double('di settings').tap do |settings|
       allow(settings).to receive(:enabled).and_return(true)
       allow(settings).to receive(:redacted_identifiers).and_return([])
       allow(settings).to receive(:redaction_excluded_identifiers).and_return([])
@@ -63,7 +63,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             status: 'RECEIVED',
           },
         },
-        message: "Probe 123 has been received correctly",
+        message: 'Probe 123 has been received correctly',
         service: 'test service',
         timestamp: Integer,
       }
@@ -92,7 +92,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             status: 'INSTALLED',
           },
         },
-        message: "Probe 123 has been instrumented correctly",
+        message: 'Probe 123 has been instrumented correctly',
         service: 'test service',
         timestamp: Integer,
       }
@@ -121,7 +121,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             status: 'EMITTING',
           },
         },
-        message: "Probe 123 is emitting",
+        message: 'Probe 123 is emitting',
         service: 'test service',
         timestamp: Integer,
       }
@@ -154,7 +154,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             },
           },
         },
-        message: "Instrumentation for probe 123 failed: Test message",
+        message: 'Instrumentation for probe 123 failed: Test message',
         service: 'test service',
         timestamp: Integer,
       }
@@ -183,11 +183,11 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             status: 'ERROR',
             exception: {
               type: 'Error',
-              message: "Probe 123 was disabled because it consumed 0.75 seconds of CPU time in DI processing",
+              message: 'Probe 123 was disabled because it consumed 0.75 seconds of CPU time in DI processing',
             },
           },
         },
-        message: "Probe 123 was disabled because it consumed 0.75 seconds of CPU time in DI processing",
+        message: 'Probe 123 was disabled because it consumed 0.75 seconds of CPU time in DI processing',
         service: 'test service',
         timestamp: Integer,
       }
@@ -202,7 +202,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
   describe '#build_status with ERROR status and no exception' do
     let(:payload) do
       builder.send(:build_status, probe,
-        message: "Custom error message",
+        message: 'Custom error message',
         status: 'ERROR',
         exception: nil)
     end
@@ -223,7 +223,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
             },
           },
         },
-        message: "Custom error message",
+        message: 'Custom error message',
         service: 'test service',
         timestamp: Integer,
       }
@@ -275,7 +275,7 @@ RSpec.describe Datadog::DI::ProbeNotificationBuilder do
               timestamp: Integer,
             },
           },
-          message: "hello world",
+          message: 'hello world',
           service: 'test service',
           timestamp: Integer,
           logger: {

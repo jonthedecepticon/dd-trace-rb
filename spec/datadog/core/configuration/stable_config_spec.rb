@@ -81,8 +81,8 @@ RSpec.describe Datadog::Core::Configuration::StableConfig do
         it 'returns the configuration' do
           expect(described_class.configuration).to include(
             {
-              local: {id: "12345", config: {"DD_LOGS_INJECTION" => "false"}},
-              fleet: {id: "56789", config: {"DD_APPSEC_ENABLED" => "true"}},
+              local: {id: '12345', config: {'DD_LOGS_INJECTION' => 'false'}},
+              fleet: {id: '56789', config: {'DD_APPSEC_ENABLED' => 'true'}},
               logs: be_a(String)
             }
           )
@@ -114,8 +114,8 @@ RSpec.describe Datadog::Core::Configuration::StableConfig do
         it 'returns the configuration' do
           expect(described_class.configuration).to include(
             {
-              local: {config: {"DD_LOGS_INJECTION" => "false"}},
-              fleet: {config: {"DD_APPSEC_ENABLED" => "true"}},
+              local: {config: {'DD_LOGS_INJECTION' => 'false'}},
+              fleet: {config: {'DD_APPSEC_ENABLED' => 'true'}},
               logs: be_a(String)
             }
           )

@@ -1,5 +1,5 @@
-require "datadog/di/spec_helper"
-require "datadog/di/utils"
+require 'datadog/di/spec_helper'
+require 'datadog/di/utils'
 
 RSpec.describe Datadog::DI::Utils do
   di_test
@@ -56,13 +56,13 @@ RSpec.describe Datadog::DI::Utils do
       suffix, path = suffix_, path_
 
       context "#{name} (case-sensitive default)" do
-        it "is false" do
+        it 'is false' do
           expect(described_class.path_matches_suffix?(path, suffix)).to be false
         end
       end
 
       context "#{name} (case_insensitive: true)" do
-        it "is true" do
+        it 'is true' do
           expect(described_class.path_matches_suffix?(path, suffix, case_insensitive: true)).to be true
         end
       end

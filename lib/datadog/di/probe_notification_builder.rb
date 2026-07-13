@@ -62,7 +62,7 @@ module Datadog
         probe = context.probe
 
         if probe.capture_snapshot? && !context.target_self
-          raise ArgumentError, "Asked to build snapshot with snapshot capture but target_self is nil"
+          raise ArgumentError, 'Asked to build snapshot with snapshot capture but target_self is nil'
         end
 
         # TODO also verify that non-capturing probe does not pass

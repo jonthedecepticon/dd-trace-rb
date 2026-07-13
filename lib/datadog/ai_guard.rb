@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "core/configuration"
-require_relative "ai_guard/configuration"
+require_relative 'core/configuration'
+require_relative 'ai_guard/configuration'
 
-require_relative "ai_guard/contrib/rack/integration"
-require_relative "ai_guard/contrib/rails/integration"
-require_relative "ai_guard/contrib/ruby_llm/integration"
+require_relative 'ai_guard/contrib/rack/integration'
+require_relative 'ai_guard/contrib/rails/integration'
+require_relative 'ai_guard/contrib/ruby_llm/integration'
 
 module Datadog
   # A namespace for the AI Guard component.
@@ -119,7 +119,7 @@ module Datadog
       # @public_api
       def message(role:, content: nil)
         if block_given?
-          raise ArgumentError, "Cannot pass both content and a block" if content
+          raise ArgumentError, 'Cannot pass both content and a block' if content
 
           builder = Evaluation::ContentBuilder.new
           yield builder
@@ -178,4 +178,4 @@ module Datadog
   end
 end
 
-require_relative "ai_guard/autoload"
+require_relative 'ai_guard/autoload'

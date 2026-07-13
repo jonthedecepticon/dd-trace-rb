@@ -7,7 +7,7 @@ module Datadog
     module Evaluation
       class << self
         def perform(messages, allow_raise: true)
-          raise ArgumentError, "Messages must not be empty" if messages&.empty?
+          raise ArgumentError, 'Messages must not be empty' if messages&.empty?
 
           Tracing.trace(Ext::SPAN_NAME) do |span, trace|
             trace.keep!
@@ -16,7 +16,7 @@ module Datadog
               Tracing::Sampling::Ext::Decision::AI_GUARD
             )
             trace.set_tag(Ext::EVENT_TAG, true)
-            trace.set_tag(Ext::TRACE_EXECUTED_TAG, "1")
+            trace.set_tag(Ext::TRACE_EXECUTED_TAG, '1')
 
             Ext::TRACE_ANOMALY_DETECTION_TAGS.each do |tag|
               value = trace.get_tag(tag)
@@ -25,16 +25,16 @@ module Datadog
 
             if (last_message = messages.last)
               if last_message.tool_call
-                span.set_tag(Ext::TARGET_TAG, "tool")
+                span.set_tag(Ext::TARGET_TAG, 'tool')
                 span.set_tag(Ext::TOOL_NAME_TAG, last_message.tool_call.tool_name)
               elsif last_message.tool_call_id
-                span.set_tag(Ext::TARGET_TAG, "tool")
+                span.set_tag(Ext::TARGET_TAG, 'tool')
 
                 if (tool_call_message = messages.find { |m| m.tool_call&.id == last_message.tool_call_id })
                   span.set_tag(Ext::TOOL_NAME_TAG, tool_call_message.tool_call.tool_name) # steep:ignore
                 end
               else
-                span.set_tag(Ext::TARGET_TAG, "prompt")
+                span.set_tag(Ext::TARGET_TAG, 'prompt')
               end
             end
 
@@ -64,7 +64,7 @@ module Datadog
         end
 
         def perform_no_op
-          AIGuard.logger&.warn("AI Guard is disabled, messages were not evaluated")
+          AIGuard.logger&.warn('AI Guard is disabled, messages were not evaluated')
 
           NoOpResult.new
         end

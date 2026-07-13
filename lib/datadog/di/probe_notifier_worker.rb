@@ -99,7 +99,7 @@ module Datadog
               raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
               logger.debug { "di: error in probe notifier worker: #{exc.class}: #{exc.message} (at #{exc.backtrace&.first})" }
-              telemetry&.report(exc, description: "Error in probe notifier worker")
+              telemetry&.report(exc, description: 'Error in probe notifier worker')
             end
             @lock.synchronize do
               @wake_scheduled = more

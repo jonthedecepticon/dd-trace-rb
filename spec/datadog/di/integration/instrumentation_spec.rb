@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di'
 
 # Note: this file contains integration tests for instrumentation.
@@ -114,7 +114,7 @@ RSpec.describe 'Instrumentation integration' do
     # notifier worker isn't running until start!.
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
       if component.nil?
-        raise "Component failed to create - unsuitable environment? Check log entries"
+        raise 'Component failed to create - unsuitable environment? Check log entries'
       end
       component.start!
     end
@@ -164,7 +164,7 @@ RSpec.describe 'Instrumentation integration' do
     context 'method probe' do
       context 'basic probe' do
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             type_name: 'InstrumentationSpecTestClass', method_name: 'test_method',
             capture_snapshot: false,)
         end
@@ -205,7 +205,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when class with target method is defined after probe is added to probe manager' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationDelayedTestClass', method_name: 'test_method',
               capture_snapshot: false,)
           end
@@ -254,7 +254,7 @@ RSpec.describe 'Instrumentation integration' do
 
           context 'when the class is a derived class' do
             let(:probe) do
-              Datadog::DI::Probe.new(id: "1234", type: :log,
+              Datadog::DI::Probe.new(id: '1234', type: :log,
                 type_name: 'InstrumentationDelayedDerivedTestClass', method_name: 'test_method',
                 capture_snapshot: false,)
             end
@@ -299,7 +299,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when class exists without target method and method is defined after probe is added to probe manager' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationDelayedPartialTestClass', method_name: 'test_method',
               capture_snapshot: false,)
           end
@@ -346,7 +346,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when class exists and target method is virtual' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationVirtualTestClass', method_name: 'test_method',
               capture_snapshot: false,)
           end
@@ -390,7 +390,7 @@ RSpec.describe 'Instrumentation integration' do
 
       context 'enriched probe' do
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             type_name: 'InstrumentationSpecTestClass', method_name: 'test_method',
             capture_snapshot: true,)
         end
@@ -452,7 +452,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when argument is mutated by method' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationSpecTestClass', method_name: 'mutating_method',
               capture_snapshot: true,)
           end
@@ -494,7 +494,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when method raises an exception' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationSpecTestClass', method_name: 'exception_method',
               capture_snapshot: true,)
           end
@@ -525,7 +525,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when instance variable is mutated by method' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               type_name: 'InstrumentationSpecTestClass', method_name: 'ivar_mutating_method',
               capture_snapshot: true,)
           end
@@ -562,7 +562,7 @@ RSpec.describe 'Instrumentation integration' do
 
       context 'when target is invoked' do
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             type_name: 'InstrumentationSpecTestClass', method_name: 'test_method')
         end
 
@@ -744,7 +744,7 @@ RSpec.describe 'Instrumentation integration' do
 
         let(:probe) do
           Datadog::DI::Probe.new(
-            id: "circuit-breaker-test",
+            id: 'circuit-breaker-test',
             type: :log,
             type_name: 'InstrumentationSpecTestClass',
             method_name: 'mutating_method',
@@ -815,7 +815,7 @@ RSpec.describe 'Instrumentation integration' do
           expect(component.probe_notifier_worker).not_to receive(:add_snapshot)
 
           initial_payload_count = status_payloads.length
-          InstrumentationSpecTestClass.new.mutating_method("hello")
+          InstrumentationSpecTestClass.new.mutating_method('hello')
           component.probe_notifier_worker.flush
 
           # No new status notifications should be sent
@@ -829,7 +829,7 @@ RSpec.describe 'Instrumentation integration' do
 
       context 'simple log probe' do
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             file: 'instrumentation_integration_test_class.rb', line_no: 40,
             capture_snapshot: false,)
         end
@@ -893,7 +893,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line is the end line of a method' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 42,
               capture_snapshot: false,)
           end
@@ -903,7 +903,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line is the end line of a block' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 53,
               capture_snapshot: false,)
           end
@@ -973,7 +973,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line is else of a conditional' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 64,
               capture_snapshot: false,)
           end
@@ -987,7 +987,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line is end of a conditional' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 66,
               capture_snapshot: false,)
           end
@@ -1001,7 +1001,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line contains a comment (no executable code)' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 70,
               capture_snapshot: false,)
           end
@@ -1015,7 +1015,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'target line is in a loaded file that is not in code tracker' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 53,
               capture_snapshot: false,)
           end
@@ -1049,7 +1049,7 @@ RSpec.describe 'Instrumentation integration' do
 
       context 'enriched probe' do
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             file: 'instrumentation_integration_test_class.rb', line_no: 40,
             capture_snapshot: true,)
         end
@@ -1113,7 +1113,7 @@ RSpec.describe 'Instrumentation integration' do
 
         context 'when there are instance variables but no local variables' do
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class.rb', line_no: 27,
               capture_snapshot: true,)
           end
@@ -1144,7 +1144,7 @@ RSpec.describe 'Instrumentation integration' do
           with_code_tracking
 
           let(:probe) do
-            Datadog::DI::Probe.new(id: "1234", type: :log,
+            Datadog::DI::Probe.new(id: '1234', type: :log,
               file: 'instrumentation_integration_test_class_2.rb', line_no: 10,)
           end
 
@@ -1176,7 +1176,7 @@ RSpec.describe 'Instrumentation integration' do
 
           context 'untargeted trace points enabled' do
             let(:probe) do
-              Datadog::DI::Probe.new(id: "1234", type: :log,
+              Datadog::DI::Probe.new(id: '1234', type: :log,
                 file: 'instrumentation_integration_test_class_3.rb', line_no: 10,)
             end
 
@@ -1213,7 +1213,7 @@ RSpec.describe 'Instrumentation integration' do
 
           context 'untargeted trace points disabled' do
             let(:probe) do
-              Datadog::DI::Probe.new(id: "1234", type: :log,
+              Datadog::DI::Probe.new(id: '1234', type: :log,
                 file: 'instrumentation_integration_test_class_4.rb', line_no: 20,)
             end
 
@@ -1249,7 +1249,7 @@ RSpec.describe 'Instrumentation integration' do
         end
 
         let(:probe) do
-          Datadog::DI::Probe.new(id: "1234", type: :log,
+          Datadog::DI::Probe.new(id: '1234', type: :log,
             file: 'instrumentation_integration_test_class.rb', line_no: 40,
             capture_snapshot: false,)
         end
@@ -1303,7 +1303,7 @@ RSpec.describe 'Instrumentation integration' do
 
         let(:probe) do
           Datadog::DI::Probe.new(
-            id: "circuit-breaker-line-test",
+            id: 'circuit-breaker-line-test',
             type: :log,
             file: 'instrumentation_integration_test_class.rb',
             line_no: 63,
@@ -1391,7 +1391,7 @@ RSpec.describe 'Instrumentation integration' do
     context 'with binary data in parameters' do
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "binary-test",
+          id: 'binary-test',
           type: :log,
           type_name: 'InstrumentationSpecTestClass',
           method_name: 'binary_data_param_method',
@@ -1421,7 +1421,7 @@ RSpec.describe 'Instrumentation integration' do
         probe_manager.add_probe(probe)
 
         # Execute the method with binary data
-        result = InstrumentationSpecTestClass.new.binary_data_param_method(binary_string, "hello")
+        result = InstrumentationSpecTestClass.new.binary_data_param_method(binary_string, 'hello')
         expect(result).to eq(10) # 5 + 5
 
         # Wait for flush to complete
@@ -1452,7 +1452,7 @@ RSpec.describe 'Instrumentation integration' do
         probe_manager.add_probe(probe)
 
         # Execute the method
-        InstrumentationSpecTestClass.new.binary_data_param_method(binary_string, "hello")
+        InstrumentationSpecTestClass.new.binary_data_param_method(binary_string, 'hello')
 
         # Wait for flush to complete
         component.probe_notifier_worker.flush
@@ -1480,7 +1480,7 @@ RSpec.describe 'Instrumentation integration' do
     context 'with binary return value' do
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "binary-return-test",
+          id: 'binary-return-test',
           type: :log,
           type_name: 'InstrumentationSpecTestClass',
           method_name: 'binary_data_method',

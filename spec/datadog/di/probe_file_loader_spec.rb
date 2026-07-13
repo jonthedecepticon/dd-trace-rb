@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di'
 require 'datadog/di/probe_file_loader'
 require 'spec_helper'
@@ -37,7 +37,7 @@ RSpec.describe Datadog::DI::ProbeFileLoader do
       it 'parses and adds probes' do
         expect_any_instance_of(Datadog::DI::ProbeManager).to receive(:add_probe) do |_, probe|
           expect(probe).to be_a(Datadog::DI::Probe)
-          expect(probe.id).to eq("100c9a5c-45ad-49dc-818b-c570d31e11d1")
+          expect(probe.id).to eq('100c9a5c-45ad-49dc-818b-c570d31e11d1')
           expect(probe.type).to eq(:log)
         end
         described_class.load_now
@@ -83,7 +83,7 @@ RSpec.describe Datadog::DI::ProbeFileLoader do
 
       it 'does not raise exceptions' do
         expect_any_instance_of(Datadog::DI::ProbeManager).not_to receive(:add_probe)
-        expect(Datadog::DI::Component).to receive(:new).and_raise("Test failure")
+        expect(Datadog::DI::Component).to receive(:new).and_raise('Test failure')
         described_class.load_now
       end
     end

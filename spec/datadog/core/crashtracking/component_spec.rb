@@ -434,7 +434,7 @@ RSpec.describe Datadog::Core::Crashtracking::Component do
       describe 'Ruby and C method runtime stack capture' do
         before do
           if PlatformHelpers.mac?
-            skip "Ruby stack capture is only support on Linux at the moment. We need some fixes in crashtracking_runtime_stacks.c to support macOS."
+            skip 'Ruby stack capture is only support on Linux at the moment. We need some fixes in crashtracking_runtime_stacks.c to support macOS.'
           end
         end
         let(:runtime_stack) {

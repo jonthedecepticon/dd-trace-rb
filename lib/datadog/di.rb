@@ -93,21 +93,21 @@ module Datadog
         # warn instead of raising NoMethodError on the unguarded access at
         # line 92 (`settings.dynamic_instrumentation.internal.development`).
         unless settings.respond_to?(:dynamic_instrumentation)
-          return "dynamic instrumentation settings are not available"
+          return 'dynamic instrumentation settings are not available'
         end
         unless settings.respond_to?(:remote) && settings.remote.enabled
-          return "Remote Configuration is not enabled. See https://docs.datadoghq.com/agent/remote_config"
+          return 'Remote Configuration is not enabled. See https://docs.datadoghq.com/agent/remote_config'
         end
         unless settings.dynamic_instrumentation.internal.development
           if Datadog::Core::Environment::Execution.development?
-            return "development environment detected"
+            return 'development environment detected'
           end
         end
         if (reason = unsupported_platform_reason)
           return reason
         end
         unless respond_to?(:exception_message)
-          return "C extension is not available"
+          return 'C extension is not available'
         end
         nil
       end

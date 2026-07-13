@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'open3'
 
 # DI source files call Datadog::DI.reraise_if_fatal in their catch-all rescues.

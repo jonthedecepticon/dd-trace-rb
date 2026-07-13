@@ -22,7 +22,7 @@ module Datadog
 
       def probe_condition_evaluation_failed_callback(context, exc)
         if failed_proc.nil?
-          raise NotImplementedError, "Failed proc not provided"
+          raise NotImplementedError, 'Failed proc not provided'
         end
 
         failed_proc.call(context, exc)

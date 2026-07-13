@@ -80,7 +80,7 @@ class DISnapshotBenchmark
     )
 
     unless probe_manager.add_probe(probe)
-      raise "Failed to instrument method (without snapshot capture)"
+      raise 'Failed to instrument method (without snapshot capture)'
     end
 
     @received_snapshot_count = 0
@@ -119,7 +119,7 @@ class DISnapshotBenchmark
     )
 
     unless probe_manager.add_probe(probe)
-      raise "Failed to instrument method (with snapshot capture)"
+      raise 'Failed to instrument method (with snapshot capture)'
     end
 
     @received_snapshot_count = 0
@@ -154,7 +154,7 @@ class DISnapshotBenchmark
     )
 
     unless probe_manager.add_probe(probe)
-      raise "Failed to instrument line (with snapshot capture)"
+      raise 'Failed to instrument line (with snapshot capture)'
     end
 
     @received_snapshot_count = 0
@@ -189,7 +189,7 @@ class DISnapshotBenchmark
     )
 
     unless probe_manager.add_probe(probe)
-      raise "Failed to instrument line (with snapshot capture)"
+      raise 'Failed to instrument line (with snapshot capture)'
     end
 
     @received_snapshot_count = 0

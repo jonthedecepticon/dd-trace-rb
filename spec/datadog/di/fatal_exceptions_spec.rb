@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di/fatal_exceptions"
+require 'datadog/di/spec_helper'
+require 'datadog/di/fatal_exceptions'
 
-RSpec.describe "Datadog::DI.reraise_if_fatal" do
+RSpec.describe 'Datadog::DI.reraise_if_fatal' do
   describe '.reraise_if_fatal' do
     context 'when given a fatal exception' do
       [SystemExit.new, SignalException.new('TERM'), Interrupt.new, NoMemoryError.new].each do |exc|

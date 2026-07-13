@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "../core/utils/time"
+require_relative '../core/utils/time'
 
-require_relative "../core/worker"
-require_relative "../core/workers/polling"
-require_relative "../core/telemetry/logger"
+require_relative '../core/worker'
+require_relative '../core/workers/polling'
+require_relative '../core/telemetry/logger'
 
 module Datadog
   module Profiling
@@ -64,14 +64,14 @@ module Datadog
         interrupted = false
       rescue Exception => e # rubocop:disable Lint/RescueException
         Datadog.logger.warn(
-          "Profiling::Scheduler thread error. " \
+          'Profiling::Scheduler thread error. ' \
           "Cause: #{e.class}: #{e.message} Location: #{Array(e.backtrace).first}"
         )
         on_failure_proc&.call
-        Datadog::Core::Telemetry::Logger.report(e, description: "Profiling::Scheduler thread error")
+        Datadog::Core::Telemetry::Logger.report(e, description: 'Profiling::Scheduler thread error')
         raise
       ensure
-        Datadog.logger.debug("#flush was interrupted or failed before it could complete") if interrupted
+        Datadog.logger.debug('#flush was interrupted or failed before it could complete') if interrupted
       end
 
       # Configure Workers::IntervalLoop to not report immediately when scheduler starts
@@ -138,7 +138,7 @@ module Datadog
           Datadog.logger.warn(
             "Unable to report profile. Cause: #{e.class}: #{e.message} Location: #{Array(e.backtrace).first}"
           )
-          Datadog::Core::Telemetry::Logger.report(e, description: "Unable to report profile")
+          Datadog::Core::Telemetry::Logger.report(e, description: 'Unable to report profile')
         end
 
         @stop_requested = !run_loop?

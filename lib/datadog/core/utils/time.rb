@@ -13,7 +13,7 @@ module Datadog
         #
         # @param unit [Symbol] unit for the resulting value, same as ::Process#clock_gettime, defaults to :float_second
         # @return [Float|Integer] timestamp in the requested unit, since some unspecified starting point
-        MONOTONIC_CLOCK_ID = RUBY_PLATFORM.include?("darwin") ? Process::CLOCK_MONOTONIC_RAW : Process::CLOCK_MONOTONIC
+        MONOTONIC_CLOCK_ID = RUBY_PLATFORM.include?('darwin') ? Process::CLOCK_MONOTONIC_RAW : Process::CLOCK_MONOTONIC
 
         def get_time(unit = :float_second)
           Process.clock_gettime(MONOTONIC_CLOCK_ID, unit)

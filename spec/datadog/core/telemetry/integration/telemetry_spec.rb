@@ -806,7 +806,7 @@ RSpec.describe 'Telemetry integration tests' do
       let(:product_mock_setup) do
         # AppSec has very modest prerequisites, it's easier to fail
         # its initialization than to make the prerequisites not fulfilled.
-        expect(Datadog::AppSec::SecurityEngine::Engine).to receive(:new).and_raise("fake exception")
+        expect(Datadog::AppSec::SecurityEngine::Engine).to receive(:new).and_raise('fake exception')
       end
 
       let(:product_configuration) { ->(c) { c.appsec.enabled = true } }

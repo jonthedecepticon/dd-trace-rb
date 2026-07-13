@@ -148,7 +148,7 @@ module Datadog
                 option :protocol do |o|
                   o.type :string, nilable: true
                   o.env 'OTEL_EXPORTER_OTLP_METRICS_PROTOCOL'
-                  o.default "http/protobuf"
+                  o.default 'http/protobuf'
                   o.setter(&Settings.normalize_protocol('OTEL_EXPORTER_OTLP_METRICS_PROTOCOL'))
                 end
               end
@@ -189,7 +189,7 @@ module Datadog
                 option :protocol do |o|
                   o.type :string, nilable: true
                   o.env 'OTEL_EXPORTER_OTLP_LOGS_PROTOCOL'
-                  o.default "http/protobuf"
+                  o.default 'http/protobuf'
                   o.setter(&Settings.normalize_protocol('OTEL_EXPORTER_OTLP_LOGS_PROTOCOL'))
                 end
 

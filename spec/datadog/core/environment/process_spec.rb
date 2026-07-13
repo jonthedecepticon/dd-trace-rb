@@ -101,13 +101,13 @@ RSpec.describe Datadog::Core::Environment::Process do
           Dir.chdir(tmp_dir) do
             Bundler.with_unbundled_env do
               _, _, _ = Open3.capture3('rails new test@_app --minimal --skip-active-record --skip-test --skip-keeps --skip-git --skip-docker')
-              expect(File.exist?("test@_app/Gemfile")).to be true
+              expect(File.exist?('test@_app/Gemfile')).to be true
             end
 
-            File.open("test@_app/Gemfile", 'a') do |file|
+            File.open('test@_app/Gemfile', 'a') do |file|
               file.puts "gem 'datadog', path: '#{project_root_directory}', require: false"
             end
-            File.write("test@_app/config/initializers/process_initializer.rb", <<-RUBY)
+            File.write('test@_app/config/initializers/process_initializer.rb', <<-RUBY)
                         require 'datadog'
                         Datadog.configure { }
                         ActiveSupport.on_load(:after_initialize) do
@@ -118,7 +118,7 @@ RSpec.describe Datadog::Core::Environment::Process do
             RUBY
 
             Bundler.with_unbundled_env do
-              Dir.chdir("test@_app") do
+              Dir.chdir('test@_app') do
                 _, _, _ = Open3.capture3('bundle install')
                 _, err, _ = Open3.capture3('bundle exec rails s')
                 expect(err).to include('entrypoint.workdir:test_app')
@@ -283,19 +283,19 @@ RSpec.describe Datadog::Core::Environment::Process do
     end
 
     it 'includes the rails app name in the tags' do
-      described_class.rails_application_name = "Test::App"
+      described_class.rails_application_name = 'Test::App'
       expect(described_class.tags).to include('rails.application:test_app')
     end
 
     it 'is reflected in subsequent calls to tags' do
       described_class.tags
-      described_class.rails_application_name = "Test::App"
+      described_class.rails_application_name = 'Test::App'
       expect(described_class.tags).to include('rails.application:test_app')
     end
 
     it 'is reflected in subsequent calls to serialized' do
       described_class.serialized
-      described_class.rails_application_name = "Test::App"
+      described_class.rails_application_name = 'Test::App'
       expect(described_class.serialized).to include('rails.application:test_app')
     end
   end

@@ -6,7 +6,7 @@ module Datadog
       module EndpointCollection
         # This module serializes Rails Journey Router routes.
         module RailsRouteSerializer
-          FORMAT_SUFFIX = "(.:format)"
+          FORMAT_SUFFIX = '(.:format)'
 
           module_function
 
@@ -14,7 +14,7 @@ module Datadog
             method = if method_override
               method_override
             elsif route.verb.empty?
-              "*"
+              '*'
             else
               route.verb
             end
@@ -22,9 +22,9 @@ module Datadog
             path = route.path.spec.to_s.delete_suffix(FORMAT_SUFFIX)
 
             {
-              type: "REST",
+              type: 'REST',
               resource_name: "#{method} #{path}",
-              operation_name: "http.request",
+              operation_name: 'http.request',
               method: method,
               path: path
             }

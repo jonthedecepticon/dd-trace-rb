@@ -29,22 +29,22 @@ Datadog.shutdown!
 flush = CaptureFlush::INSTANCE.flush
 
 unless VALIDATE_BENCHMARK_MODE
-  require "zstd-ruby"
-  File.write("profiler-sample-overhead.pprof", Zstd.decompress(flush.encoded_profile._native_bytes))
+  require 'zstd-ruby'
+  File.write('profiler-sample-overhead.pprof', Zstd.decompress(flush.encoded_profile._native_bytes))
 end
 
 data = JSON.parse(flush.internal_metadata_json)
 duration = flush.finish - flush.start
 duration_ns = duration * 1e9
-samples = data.dig("worker_stats", "cpu_sampled")
-cpu_sampling_time_ns_total = data.dig("worker_stats", "cpu_sampling_time_ns_total")
-serialization_time_ns_total = data.dig("recorder_stats", "serialization_time_ns_total")
-inactive_thread_samples_skipped = data.dig("worker_stats", "inactive_thread_samples_skipped")
-profiler_thread_samples_skipped = data.dig("worker_stats", "profiler_thread_samples_skipped")
+samples = data.dig('worker_stats', 'cpu_sampled')
+cpu_sampling_time_ns_total = data.dig('worker_stats', 'cpu_sampling_time_ns_total')
+serialization_time_ns_total = data.dig('recorder_stats', 'serialization_time_ns_total')
+inactive_thread_samples_skipped = data.dig('worker_stats', 'inactive_thread_samples_skipped')
+profiler_thread_samples_skipped = data.dig('worker_stats', 'profiler_thread_samples_skipped')
 cpu_sampling_overhead = cpu_sampling_time_ns_total / duration_ns
 
 overhead = ->(total) {
-  "%.2f%%" % ((total / duration_ns) * 100.0)
+  '%.2f%%' % ((total / duration_ns) * 100.0)
 }
 
 pp data
@@ -52,7 +52,7 @@ pp data
 pp({
   duration: duration,
   samples: samples,
-  trigger_simulated_signal_delivery_attempts: data.dig("worker_stats", "trigger_simulated_signal_delivery_attempts"),
+  trigger_simulated_signal_delivery_attempts: data.dig('worker_stats', 'trigger_simulated_signal_delivery_attempts'),
   cpu_sampling_time_ns_total: cpu_sampling_time_ns_total,
   cpu_sampling_overhead: overhead[cpu_sampling_time_ns_total],
   serialization_time_ns_total: serialization_time_ns_total,
@@ -71,15 +71,15 @@ unless VALIDATE_BENCHMARK_MODE
   json = [
     {
       # Invert since higher must be better
-      item: "profiling - 1 / cpu sampling overhead",
+      item: 'profiling - 1 / cpu sampling overhead',
       samples: [1 / cpu_sampling_overhead]
     },
     {
-      item: "profiling - samples",
+      item: 'profiling - samples',
       samples: [samples]
     },
     {
-      item: "profiling - skipped samples",
+      item: 'profiling - skipped samples',
       samples: [inactive_thread_samples_skipped]
     },
   ]

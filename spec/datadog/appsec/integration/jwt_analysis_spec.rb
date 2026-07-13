@@ -64,24 +64,24 @@ RSpec.describe 'Blocking with deny and pass list configuration' do
       ],
       'processors' => [
         {
-          "id" => "decode-auth-jwt",
-          "generator" => "jwt_decode",
-          "min_version" => "1.25.0",
-          "parameters" => {
-            "mappings" => [
+          'id' => 'decode-auth-jwt',
+          'generator' => 'jwt_decode',
+          'min_version' => '1.25.0',
+          'parameters' => {
+            'mappings' => [
               {
-                "inputs" => [
+                'inputs' => [
                   {
-                    "address" => "server.request.headers.no_cookies",
-                    "key_path" => ["authorization"]
+                    'address' => 'server.request.headers.no_cookies',
+                    'key_path' => ['authorization']
                   }
                 ],
-                "output" => "server.request.jwt"
+                'output' => 'server.request.jwt'
               }
             ]
           },
-          "evaluate" => true,
-          "output" => false
+          'evaluate' => true,
+          'output' => false
         },
         {
           'id' => 'extract-token',

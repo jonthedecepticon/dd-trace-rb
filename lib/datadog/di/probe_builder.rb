@@ -2,7 +2,7 @@
 
 # rubocop:disable Lint/AssignmentInCondition
 
-require_relative "probe"
+require_relative 'probe'
 require_relative 'el'
 
 module Datadog
@@ -39,22 +39,22 @@ module Datadog
           EL::Expression.new(cond_spec['dsl'], compiled)
         end
         Probe.new(
-          id: config.fetch("id"),
+          id: config.fetch('id'),
           type: type_symbol,
-          file: config["where"]&.[]("sourceFile"),
+          file: config['where']&.[]('sourceFile'),
           # Sometimes lines are sometimes received as an array of nil
           # for some reason.
-          line_no: config["where"]&.[]("lines")&.compact&.map(&:to_i)&.first,
-          type_name: config["where"]&.[]("typeName"),
-          method_name: config["where"]&.[]("methodName"),
+          line_no: config['where']&.[]('lines')&.compact&.map(&:to_i)&.first,
+          type_name: config['where']&.[]('typeName'),
+          method_name: config['where']&.[]('methodName'),
           # We should not be using the template for anything - we instead
           # use +segments+ - but keep the template for debugging.
-          template: config["template"],
+          template: config['template'],
           template_segments: build_template_segments(config['segments']),
-          capture_snapshot: !!config["captureSnapshot"],
-          max_capture_depth: config["capture"]&.[]("maxReferenceDepth"),
-          max_capture_attribute_count: config["capture"]&.[]("maxFieldCount"),
-          rate_limit: config["sampling"]&.[]("snapshotsPerSecond"),
+          capture_snapshot: !!config['captureSnapshot'],
+          max_capture_depth: config['capture']&.[]('maxReferenceDepth'),
+          max_capture_attribute_count: config['capture']&.[]('maxFieldCount'),
+          rate_limit: config['sampling']&.[]('snapshotsPerSecond'),
           condition: cond,
         )
       rescue KeyError => exc

@@ -1,6 +1,6 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di'
-require "datadog/di/probe_notifier_worker"
+require 'datadog/di/probe_notifier_worker'
 
 # standard tries to wreck regular expressions in this file
 # rubocop:disable Style/PercentLiteralDelimiters

@@ -606,7 +606,7 @@ RSpec.describe Datadog::Core::Configuration::Settings do
       describe '#timeline_enabled=' do
         before { allow(Datadog::Core).to receive(:log_deprecation) }
 
-        it "logs a warning informing customers this no longer does anything" do
+        it 'logs a warning informing customers this no longer does anything' do
           expect(Datadog::Core).to receive(:log_deprecation)
 
           settings.profiling.advanced.timeline_enabled = false
@@ -694,7 +694,7 @@ RSpec.describe Datadog::Core::Configuration::Settings do
             .from(nil).to(true)
         end
 
-        it "logs a warning informing customers this no longer does anything" do
+        it 'logs a warning informing customers this no longer does anything' do
           expect(Datadog::Core).to receive(:log_deprecation)
 
           settings.profiling.advanced.experimental_crash_tracking_enabled = false
@@ -1089,7 +1089,7 @@ RSpec.describe Datadog::Core::Configuration::Settings do
         it { is_expected.to be true }
       end
 
-      context "when primary env var is false and fallback is true" do
+      context 'when primary env var is false and fallback is true' do
         let(:primary_enabled) { 'false' }
         let(:fallback_enabled) { 'true' }
 
@@ -1361,7 +1361,7 @@ RSpec.describe Datadog::Core::Configuration::Settings do
       end
     end
 
-    context "when OTEL_RESOURCE_ATTRIBUTES" do
+    context 'when OTEL_RESOURCE_ATTRIBUTES' do
       around do |example|
         ClimateControl.modify(
           'OTEL_RESOURCE_ATTRIBUTES' => otel_tags,

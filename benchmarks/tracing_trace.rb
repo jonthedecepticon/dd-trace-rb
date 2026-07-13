@@ -37,7 +37,7 @@ class TracingTraceBenchmark
       def trace(x, depth) # standard:disable Lint/NestedMethodDefinition
         x.report(
           "#{depth} span trace - no writer",
-          (depth.times.map { "Datadog::Tracing.trace('op.name') {" } + depth.times.map { "}" }).join
+          (depth.times.map { "Datadog::Tracing.trace('op.name') {" } + depth.times.map { '}' }).join
         )
       end
 
@@ -65,7 +65,7 @@ class TracingTraceBenchmark
       def trace(x, depth) # standard:disable Lint/NestedMethodDefinition
         x.report(
           "#{depth} span trace - no network",
-          (depth.times.map { "Datadog::Tracing.trace('op.name') {" } + depth.times.map { "}" }).join
+          (depth.times.map { "Datadog::Tracing.trace('op.name') {" } + depth.times.map { '}' }).join
         )
       end
 
@@ -83,7 +83,7 @@ class TracingTraceBenchmark
       Benchmark.ips do |x|
         x.config(**benchmark_time)
 
-        x.report("trace.to_digest") do
+        x.report('trace.to_digest') do
           trace.to_digest
         end
 
@@ -98,7 +98,7 @@ class TracingTraceBenchmark
       Benchmark.ips do |x|
         x.config(**benchmark_time)
 
-        x.report("Tracing.log_correlation") do
+        x.report('Tracing.log_correlation') do
           Datadog::Tracing.log_correlation
         end
 
@@ -113,7 +113,7 @@ class TracingTraceBenchmark
       Benchmark.ips do |x|
         x.config(**benchmark_time)
 
-        x.report("trace.to_digest - Continue") do
+        x.report('trace.to_digest - Continue') do
           digest = trace.to_digest
           Datadog::Tracing.continue_trace!(digest)
         end
@@ -140,7 +140,7 @@ class TracingTraceBenchmark
       Benchmark.ips do |x|
         x.config(**benchmark_time)
 
-        x.report("Propagation - Datadog") do
+        x.report('Propagation - Datadog') do
           env = {}
           Datadog::Tracing::Contrib::HTTP.inject(injected_trace_digest, env)
           extracted_trace_digest = Datadog::Tracing::Contrib::HTTP.extract(env)
@@ -163,7 +163,7 @@ class TracingTraceBenchmark
       Benchmark.ips do |x|
         x.config(**benchmark_time)
 
-        x.report("Propagation - Trace Context") do
+        x.report('Propagation - Trace Context') do
           env = {}
           Datadog::Tracing::Contrib::HTTP.inject(injected_trace_digest, env)
           extracted_trace_digest = Datadog::Tracing::Contrib::HTTP.extract(env)

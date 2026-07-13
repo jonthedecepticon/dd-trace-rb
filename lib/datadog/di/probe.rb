@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "error"
-require_relative "utils"
-require_relative "../core/rate_limiter"
+require_relative 'error'
+require_relative 'utils'
+require_relative '../core/rate_limiter'
 
 module Datadog
   module DI
@@ -205,10 +205,10 @@ module Datadog
       # matching. See the comments in utils.rb for details.
       def file_matches?(path)
         if path.nil?
-          raise ArgumentError, "Cannot match against a nil path"
+          raise ArgumentError, 'Cannot match against a nil path'
         end
         unless file
-          raise ArgumentError, "Probe does not have a file to match against"
+          raise ArgumentError, 'Probe does not have a file to match against'
         end
         Utils.path_can_match_spec?(path, file)
       end

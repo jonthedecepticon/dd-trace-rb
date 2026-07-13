@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/transport/http'
 
 RSpec.describe Datadog::DI::Transport::Input::Transport do
@@ -185,12 +185,12 @@ RSpec.describe Datadog::DI::Transport::Input::Transport do
 
     it 'reports exception to telemetry and continues' do
       allow(logger).to receive(:debug)
-      expect(transport).to receive(:send_input_chunk).and_raise(StandardError, "network error")
+      expect(transport).to receive(:send_input_chunk).and_raise(StandardError, 'network error')
 
       expect(telemetry).to receive(:report) do |exc, description:|
         expect(exc).to be_a(StandardError)
-        expect(exc.message).to eq("network error")
-        expect(description).to eq("Error sending snapshot chunk")
+        expect(exc.message).to eq('network error')
+        expect(description).to eq('Error sending snapshot chunk')
       end
 
       # Should not raise despite the error
@@ -278,7 +278,7 @@ RSpec.describe Datadog::DI::Transport::Input::Transport do
 
     context 'when on_serialization_error callback raises' do
       it 'catches the callback exception and continues processing' do
-        on_error = ->(_probe_id, _exc) { raise "callback error" }
+        on_error = ->(_probe_id, _exc) { raise 'callback error' }
 
         expect(transport).to receive(:send_input_chunk).once
 
@@ -286,7 +286,7 @@ RSpec.describe Datadog::DI::Transport::Input::Transport do
       end
 
       it 'reports the callback exception to telemetry' do
-        on_error = ->(_probe_id, _exc) { raise "callback error" }
+        on_error = ->(_probe_id, _exc) { raise 'callback error' }
 
         reports = []
         allow(telemetry).to receive(:report) do |exc, description:|

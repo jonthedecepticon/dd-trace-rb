@@ -19,7 +19,7 @@ class ProfilerStringStorageIntern
         **benchmark_time,
       )
       x.report('intern_all 1000 repeated strings') do
-        Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(@recorder, "hello, world!", 1000, true)
+        Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(@recorder, 'hello, world!', 1000, true)
       end
 
       x.save! "#{File.basename(__FILE__, '.rb')}-1-results.json" unless VALIDATE_BENCHMARK_MODE
@@ -40,11 +40,11 @@ class ProfilerStringStorageIntern
         new_strings = strings_to_intern - existing_strings
 
         new_strings.times do |i|
-          Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(recorder, "%010d" % i, 1, false)
+          Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(recorder, '%010d' % i, 1, false)
         end
 
         existing_strings.times do |i|
-          Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(recorder, "hello, world!", 1, false)
+          Datadog::Profiling::StackRecorder::Testing._native_benchmark_intern(recorder, 'hello, world!', 1, false)
         end
       end
 

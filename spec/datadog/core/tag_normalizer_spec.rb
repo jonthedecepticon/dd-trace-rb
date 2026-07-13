@@ -42,9 +42,9 @@ RSpec.describe Datadog::Core::TagNormalizer do
       {in: ' regulartag ', out: 'regulartag'},
       {in: "\u017Fodd_\u017Fcase\u017F", out: "\u017Fodd_\u017Fcase\u017F"},
       {in: '™Ö™Ö™™Ö™', out: 'ö_ö_ö'},
-      {in: "a�", out: 'a'},
-      {in: "a��", out: 'a'},
-      {in: "a��b", out: 'a_b'},
+      {in: 'a�', out: 'a'},
+      {in: 'a��', out: 'a'},
+      {in: 'a��b', out: 'a_b'},
       {in: 'a' + ('🐶' * 799) + 'b', out: 'a'},
       # This test case doesn't work with the current logic because it yields 202 characters
       # {in: 'A' + ('0' * 200) + ' ' + ('0' * 11), out: 'a' + ('0' * 200) + '_0'},
@@ -96,9 +96,9 @@ RSpec.describe Datadog::Core::TagNormalizer do
       {in: ' regulartag ', out: 'regulartag'},
       {in: "\u017Fodd_\u017Fcase\u017F", out: "\u017Fodd_\u017Fcase\u017F"},
       {in: '™Ö™Ö™™Ö™', out: 'ö_ö_ö'},
-      {in: "a�", out: 'a'},
-      {in: "a��", out: 'a'},
-      {in: "a��b", out: 'a_b'},
+      {in: 'a�', out: 'a'},
+      {in: 'a��', out: 'a'},
+      {in: 'a��b', out: 'a_b'},
       {in: 'a' + ('🐶' * 799) + 'b', out: 'a'},
     ]
 
@@ -149,9 +149,9 @@ RSpec.describe Datadog::Core::TagNormalizer do
       {in: ' regulartag ', out: 'regulartag'},
       {in: "\u017Fodd_\u017Fcase\u017F", out: "\u017Fodd_\u017Fcase\u017F"},
       {in: '™Ö™Ö™™Ö™', out: 'ö_ö_ö'},
-      {in: "a�", out: 'a'},
-      {in: "a��", out: 'a'},
-      {in: "a��b", out: 'a_b'},
+      {in: 'a�', out: 'a'},
+      {in: 'a��', out: 'a'},
+      {in: 'a��b', out: 'a_b'},
       {in: 'a' + ('🐶' * 799) + 'b', out: 'a'},
     ]
 

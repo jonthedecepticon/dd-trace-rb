@@ -24,7 +24,7 @@ module Datadog
           # debug and emit no telemetry error. Capabilities#register skips the
           # DI RC block under the same condition, so no enable signal arrives.
           if Remote.explicitly_disabled?(settings)
-            logger.debug("di: dynamic instrumentation is explicitly disabled (DD_DYNAMIC_INSTRUMENTATION_ENABLED=false); not building component")
+            logger.debug('di: dynamic instrumentation is explicitly disabled (DD_DYNAMIC_INSTRUMENTATION_ENABLED=false); not building component')
             return
           end
 

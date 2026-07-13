@@ -34,7 +34,7 @@ module Datadog
           Datadog::DI.reraise_if_fatal(exc)
           raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
           logger.debug { "di: unhandled exception in definition trace point: #{exc.class}: #{exc.message}" }
-          telemetry&.report(exc, description: "Unhandled exception in definition trace point")
+          telemetry&.report(exc, description: 'Unhandled exception in definition trace point')
         end
       end
 
@@ -63,7 +63,7 @@ module Datadog
           rescue => exc
             raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
             logger.debug { "di: error unhooking #{probe.type} probe at #{probe.location} (#{probe.id}) on stop: #{exc.class}: #{exc.message}" }
-            telemetry&.report(exc, description: "Error unhooking probe on stop")
+            telemetry&.report(exc, description: 'Error unhooking probe on stop')
           end
         end
       end
@@ -92,7 +92,7 @@ module Datadog
           rescue => exc
             raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
             logger.debug { "di: error re-hooking #{probe.type} probe at #{probe.location} (#{probe.id}) on reopen: #{exc.class}: #{exc.message}" }
-            telemetry&.report(exc, description: "Error re-hooking probe on reopen")
+            telemetry&.report(exc, description: 'Error re-hooking probe on reopen')
           end
         end
       end
@@ -190,7 +190,7 @@ module Datadog
         raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
         logger.debug { "di: error processing probe configuration: #{exc.class}: #{exc.message}" }
-        telemetry&.report(exc, description: "Error processing probe configuration")
+        telemetry&.report(exc, description: 'Error processing probe configuration')
 
         payload = probe_notification_builder.build_errored(probe, exc)
         probe_notifier_worker.add_status(payload, probe: probe)
@@ -222,7 +222,7 @@ module Datadog
             # Silence all exceptions?
             # TODO should we propagate here and rescue upstream?
             logger.debug { "di: error removing #{probe.type} probe at #{probe.location} (#{probe.id}): #{exc.class}: #{exc.message}" }
-            telemetry&.report(exc, description: "Error removing probe")
+            telemetry&.report(exc, description: 'Error removing probe')
           end
         end
       end
@@ -252,7 +252,7 @@ module Datadog
                   raise if settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
                   logger.debug { "di: error installing #{probe.type} probe at #{probe.location} (#{probe.id}) after class is defined: #{exc.class}: #{exc.message}" }
-                  telemetry&.report(exc, description: "Error installing probe after class is defined")
+                  telemetry&.report(exc, description: 'Error installing probe after class is defined')
 
                   payload = probe_notification_builder.build_errored(probe, exc)
                   probe_notifier_worker.add_status(payload, probe: probe)
@@ -273,7 +273,7 @@ module Datadog
       # (and also for eval'd code, but those invocations are filtered out).
       def install_pending_line_probes(path)
         if path.nil?
-          raise ArgumentError, "path must not be nil"
+          raise ArgumentError, 'path must not be nil'
         end
         probe_repository.synchronize do
           probe_repository.pending_probes.values.each do |probe|

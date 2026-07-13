@@ -420,7 +420,7 @@ RSpec.describe Datadog::Core::Remote::Component::Barrier do
     context('with an instance timeout') do
       let(:instance_timeout) { delay / 4 }
 
-      it "unblocks on timeout with" do
+      it 'unblocks on timeout with' do
         record << :one
         expect(barrier.wait_once).to eq :timeout
         record << :two

@@ -1,5 +1,5 @@
 require 'datadog/tracing/contrib/rails/rails_helper'
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di'
 require 'datadog/di/probe_file_loader'
 

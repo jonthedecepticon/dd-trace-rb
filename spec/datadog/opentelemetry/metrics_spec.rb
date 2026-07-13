@@ -193,7 +193,7 @@ RSpec.describe 'OpenTelemetry Metrics Integration', ruby: '>= 3.1' do
     end
 
     it 'includes custom tags as resource attributes' do
-      setup_metrics('DD_SERVICE' => 'unused-name', 'DD_VERSION' => 'x.y.z', 'DD_ENV' => 'unused-env', "DD_TAGS" => "host.name:unused-hostname") do |c|
+      setup_metrics('DD_SERVICE' => 'unused-name', 'DD_VERSION' => 'x.y.z', 'DD_ENV' => 'unused-env', 'DD_TAGS' => 'host.name:unused-hostname') do |c|
         c.service = 'test-service'
         c.version = '1.0.0'
         c.env = 'test'
@@ -204,7 +204,7 @@ RSpec.describe 'OpenTelemetry Metrics Integration', ruby: '>= 3.1' do
       expect(attributes['service.name']).to eq('test-service')
       expect(attributes['service.version']).to eq('1.0.0')
       expect(attributes['deployment.environment']).to eq('test')
-      expect(attributes['host.name']).to eq("myhost")
+      expect(attributes['host.name']).to eq('myhost')
       expect(attributes['team']).to eq('backend')
       expect(attributes['region']).to eq('us-east-1')
     end

@@ -74,7 +74,7 @@ module Datadog
             payload.each do |snapshot|
               encoded = encoder.encode(snapshot)
               if encoded.length > MAX_SERIALIZED_SNAPSHOT_SIZE
-                logger.debug { "di: dropping too big snapshot" }
+                logger.debug { 'di: dropping too big snapshot' }
                 next
               end
               encoded_snapshots << encoded
@@ -84,7 +84,7 @@ module Datadog
               # This catches JSON::GeneratorError, Encoding errors, TypeError, etc.
               probe_id = snapshot.dig(:debugger, :snapshot, :probe, :id)
               logger.debug { "di: JSON encoding failed for snapshot (probe #{probe_id}): #{exc.class}: #{exc.message}" }
-              telemetry&.report(exc, description: "JSON encoding failed for snapshot")
+              telemetry&.report(exc, description: 'JSON encoding failed for snapshot')
 
               if probe_id
                 begin
@@ -92,7 +92,7 @@ module Datadog
                 rescue Exception => callback_exc # standard:disable Lint/RescueException
                   Datadog::DI.reraise_if_fatal(callback_exc)
                   logger.debug { "di: error in serialization error callback for probe #{probe_id}: #{callback_exc.class}: #{callback_exc.message}" }
-                  telemetry&.report(callback_exc, description: "Error in serialization error callback")
+                  telemetry&.report(callback_exc, description: 'Error in serialization error callback')
                 end
               end
             end
@@ -115,7 +115,7 @@ module Datadog
               rescue Exception => exc # standard:disable Lint/RescueException
                 Datadog::DI.reraise_if_fatal(exc)
                 logger.debug { "di: failed to send snapshot chunk: #{exc.class}: #{exc.message} (at #{exc.backtrace&.first})" }
-                telemetry&.report(exc, description: "Error sending snapshot chunk")
+                telemetry&.report(exc, description: 'Error sending snapshot chunk')
               end
             end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../core/telemetry/logger"
+require_relative '../core/telemetry/logger'
 
 module Datadog
   module Profiling

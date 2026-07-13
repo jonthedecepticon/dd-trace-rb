@@ -1,7 +1,7 @@
-require "datadog/profiling"
+require 'datadog/profiling'
 if Datadog::Profiling.supported?
-  require "datadog/profiling/pprof/pprof_pb"
-  require "zstd-ruby"
+  require 'datadog/profiling/pprof/pprof_pb'
+  require 'zstd-ruby'
 end
 
 module ProfileHelpers
@@ -23,10 +23,10 @@ module ProfileHelpers
 
     # Profiling is not officially supported on macOS
     # but it's still useful to allow it to be enabled for development.
-    if PlatformHelpers.mac? && ENV["DD_PROFILING_MACOS_TESTING"] != "true"
+    if PlatformHelpers.mac? && ENV['DD_PROFILING_MACOS_TESTING'] != 'true'
       testcase.skip(
-        "Profiling is not supported on macOS. If you still want to run these specs, you can use " \
-        "DD_PROFILING_MACOS_TESTING=true to override this check."
+        'Profiling is not supported on macOS. If you still want to run these specs, you can use ' \
+        'DD_PROFILING_MACOS_TESTING=true to override this check.'
       )
     end
 
@@ -34,7 +34,7 @@ module ProfileHelpers
 
     # Ensure profiling was loaded correctly
     raise "Profiling does not seem to be available: #{Datadog::Profiling.unsupported_reason}. " \
-      "Try running `bundle exec rake clean compile` before running this test."
+      'Try running `bundle exec rake clean compile` before running this test.'
   end
 
   def decode_profile(encoded_profile)
@@ -62,7 +62,7 @@ module ProfileHelpers
   def decode_frame_from_pprof(decoded_profile, location_id)
     strings = decoded_profile.string_table
     location = decoded_profile.location.find { |loc| loc.id == location_id }
-    raise "Unexpected: Multiple lines for location" unless location.line.size == 1
+    raise 'Unexpected: Multiple lines for location' unless location.line.size == 1
 
     line_entry = location.line.first
     function = decoded_profile.function.find { |func| func.id == line_entry.function_id }
@@ -103,14 +103,14 @@ module ProfileHelpers
   end
 
   def skip_if_gvl_profiling_not_supported(testcase)
-    if RubyVersion.is?("< 3.2")
-      testcase.skip "GVL profiling is only supported on Ruby >= 3.2"
+    if RubyVersion.is?('< 3.2')
+      testcase.skip 'GVL profiling is only supported on Ruby >= 3.2'
     end
   end
 
   def asan_build?
     %w[CFLAGS LDFLAGS configure_args].any? do |key|
-      RbConfig::CONFIG[key].to_s.include?("sanitize=address")
+      RbConfig::CONFIG[key].to_s.include?('sanitize=address')
     end
   end
 
@@ -118,7 +118,7 @@ module ProfileHelpers
   # We suspect this may be the ASAN fake stack keeping things alive, although we're not entirely sure...
   # For now let's skip these tests when testing with ASAN to avoid impacting CI
   def skip_asan_flaky
-    skip "Skipped test to avoid flakiness in ASAN builds" if asan_build?
+    skip 'Skipped test to avoid flakiness in ASAN builds' if asan_build?
   end
 
   def loop_until(timeout_seconds: 5, check_condition_every_seconds: 0)
@@ -140,7 +140,7 @@ module ProfileHelpers
       return result if result
     end
 
-    raise("Wait time exhausted!")
+    raise('Wait time exhausted!')
   end
 end
 

@@ -349,7 +349,7 @@ RSpec.describe Datadog::OpenFeature::Provider do
       Datadog::Core::Utils::Time.now_provider = -> { Time.now }
     end
 
-    it "exposes the stamped timestamp on the success-path ResolutionDetails metadata" do
+    it 'exposes the stamped timestamp on the success-path ResolutionDetails metadata' do
       result = Datadog::OpenFeature::ResolutionDetails.new(
         value: 'v', reason: 'STATIC', variant: 'v',
         flag_metadata: {'existing' => 'kept'}, allocation_key: nil, extra_logging: {},
@@ -363,7 +363,7 @@ RSpec.describe Datadog::OpenFeature::Provider do
       expect(res.flag_metadata['existing']).to eq('kept')
     end
 
-    it "does not mutate the engine result metadata when stamping evaluation metadata" do
+    it 'does not mutate the engine result metadata when stamping evaluation metadata' do
       metadata = {'existing' => 'kept'}
       result = Datadog::OpenFeature::ResolutionDetails.new(
         value: 'v', reason: 'STATIC', variant: 'v',
@@ -382,7 +382,7 @@ RSpec.describe Datadog::OpenFeature::Provider do
       expect(metadata).to eq('existing' => 'kept')
     end
 
-    it "exposes the stamped timestamp on provider error metadata" do
+    it 'exposes the stamped timestamp on provider error metadata' do
       result = Datadog::OpenFeature::ResolutionDetails.new(
         value: 'd', reason: 'ERROR', variant: nil, error_code: 'FLAG_NOT_FOUND',
         error_message: 'missing', flag_metadata: {}, allocation_key: nil, extra_logging: {},

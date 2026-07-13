@@ -214,7 +214,7 @@ RSpec.describe 'Mongo::Client instrumentation' do
         unless json_cmd
           # Convert Ruby Hash#to_s to a JSON string
           # DEV-3.0: Remove conversion when the json_command option is removed, since only JSON should be supported.
-          actual = actual.gsub(/:(\w+)/, '"\1"').gsub(/(\w+):/, '"\1":').gsub("=>", ':')
+          actual = actual.gsub(/:(\w+)/, '"\1"').gsub(/(\w+):/, '"\1":').gsub('=>', ':')
         end
 
         actual_obj = actual.is_a?(String) ? JSON.parse(actual) : actual

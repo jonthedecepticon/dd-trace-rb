@@ -29,29 +29,29 @@ RSpec.describe 'WAF requests telemetry' do
       c.appsec.ruleset = {
         rules: [
           {
-            id: "ua0-600-10x",
-            name: "Nessus",
+            id: 'ua0-600-10x',
+            name: 'Nessus',
             tags: {
-              type: "attack_tool",
-              category: "attack_attempt",
-              cwe: "200",
-              capec: "1000/118/169",
-              tool_name: "Nessus",
-              confidence: "1",
-              module: "waf"
+              type: 'attack_tool',
+              category: 'attack_attempt',
+              cwe: '200',
+              capec: '1000/118/169',
+              tool_name: 'Nessus',
+              confidence: '1',
+              module: 'waf'
             },
             conditions: [
               {
                 parameters: {
                   inputs: [
                     {
-                      address: "server.request.headers.no_cookies",
-                      key_path: ["user-agent"]
+                      address: 'server.request.headers.no_cookies',
+                      key_path: ['user-agent']
                     }
                   ],
-                  regex: "(?i)^Nessus(/|([ :]+SOAP))"
+                  regex: '(?i)^Nessus(/|([ :]+SOAP))'
                 },
-                operator: "match_regex"
+                operator: 'match_regex'
               }
             ],
             transformers: []

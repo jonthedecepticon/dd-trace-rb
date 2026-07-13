@@ -63,7 +63,7 @@ RSpec.describe Datadog::Core::Transport::Response do
         let(:payload) { 'hello world' }
 
         it 'includes the complete payload' do
-          expect(inspect).to include("payload:hello world")
+          expect(inspect).to include('payload:hello world')
         end
       end
 

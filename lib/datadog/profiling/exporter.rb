@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "ext"
-require_relative "tag_builder"
+require_relative 'ext'
+require_relative 'tag_builder'
 
 module Datadog
   module Profiling
@@ -76,7 +76,7 @@ module Datadog
         @last_flush_finish_at = finish
 
         if duration_below_threshold?(start, finish)
-          Datadog.logger.debug("Skipped exporting profiling events as profile duration is below minimum")
+          Datadog.logger.debug('Skipped exporting profiling events as profile duration is below minimum')
           return
         end
 
@@ -90,7 +90,7 @@ module Datadog
         # The key is always there, but the value might be nil if GVL profiling is disabled.
         # We delete it to avoid reporting the same data point twice.
         gvl_waiting_time_ns_total = worker_stats.delete(:gvl_waiting_time_ns_total)
-        metrics << ["ruby_global_lock_wait_time_total", gvl_waiting_time_ns_total] if gvl_waiting_time_ns_total
+        metrics << ['ruby_global_lock_wait_time_total', gvl_waiting_time_ns_total] if gvl_waiting_time_ns_total
 
         process_tags = Datadog.configuration.experimental_propagate_process_tags_enabled ?
           Core::Environment::Process.serialized : ''

@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di/instrumenter'
 require 'datadog/di/code_tracker'
 require 'datadog/di/serializer'
@@ -1935,7 +1935,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       let(:responder) do
         double('responder').tap do |r|
           # Allow the callback to be called, but have it raise an error
-          allow(r).to receive(:probe_condition_evaluation_failed_callback).and_raise(StandardError, "callback error")
+          allow(r).to receive(:probe_condition_evaluation_failed_callback).and_raise(StandardError, 'callback error')
         end
       end
 
@@ -1944,8 +1944,8 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         expect(telemetry).to receive(:report) do |exc, description:|
           expect(exc).to be_a(StandardError)
-          expect(exc.message).to eq("callback error")
-          expect(description).to eq("Error in probe condition evaluation failed callback")
+          expect(exc.message).to eq('callback error')
+          expect(description).to eq('Error in probe condition evaluation failed callback')
         end
 
         begin
@@ -1983,7 +1983,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
       let(:responder) do
         double('responder').tap do |r|
-          allow(r).to receive(:probe_executed_callback).and_raise(StandardError, "callback error")
+          allow(r).to receive(:probe_executed_callback).and_raise(StandardError, 'callback error')
         end
       end
 
@@ -1992,8 +1992,8 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         expect(telemetry).to receive(:report) do |exc, description:|
           expect(exc).to be_a(StandardError)
-          expect(exc.message).to eq("callback error")
-          expect(description).to eq("Unhandled exception in method probe")
+          expect(exc.message).to eq('callback error')
+          expect(description).to eq('Unhandled exception in method probe')
         end
 
         begin
@@ -2017,7 +2017,7 @@ RSpec.describe Datadog::DI::Instrumenter do
         Object.send(:remove_const, :DITestClass)
         Object.const_set(:DITestClass, Class.new do
           define_method(:test_method) do |_arg|
-            raise error_class, "customer error"
+            raise error_class, 'customer error'
           end
         end)
 
@@ -2026,7 +2026,7 @@ RSpec.describe Datadog::DI::Instrumenter do
 
           expect do
             DITestClass.new.test_method(42)
-          end.to raise_error(error_class, "customer error")
+          end.to raise_error(error_class, 'customer error')
         ensure
           instrumenter.unhook_method(probe)
         end
@@ -2054,7 +2054,7 @@ RSpec.describe Datadog::DI::Instrumenter do
       let(:responder) do
         double('responder').tap do |r|
           # Allow the callback to be called, but have it raise an error
-          allow(r).to receive(:probe_condition_evaluation_failed_callback).and_raise(StandardError, "callback error")
+          allow(r).to receive(:probe_condition_evaluation_failed_callback).and_raise(StandardError, 'callback error')
         end
       end
 
@@ -2063,8 +2063,8 @@ RSpec.describe Datadog::DI::Instrumenter do
 
         expect(telemetry).to receive(:report) do |exc, description:|
           expect(exc).to be_a(StandardError)
-          expect(exc.message).to eq("callback error")
-          expect(description).to eq("Error in probe condition evaluation failed callback")
+          expect(exc.message).to eq('callback error')
+          expect(description).to eq('Error in probe condition evaluation failed callback')
         end
 
         instrumenter.hook_line(probe, responder)

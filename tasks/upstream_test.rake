@@ -73,7 +73,7 @@ namespace :upstream do
       skipped_tests.empty? ? '' : "-e='/(#{skipped_tests})/'"
     end
 
-    desc "Run opentelemetry-api tests with datadog enabled"
+    desc 'Run opentelemetry-api tests with datadog enabled'
     task :api do
       skipped_tests = [
         'finishes the new span at the end of the block', # Mocked OTel Span errors when datadog invokes required methods
@@ -87,7 +87,7 @@ namespace :upstream do
       end
     end
 
-    desc "Run opentelemetry-sdk tests with datadog enabled"
+    desc 'Run opentelemetry-sdk tests with datadog enabled'
     task :sdk do
       skipped_tests = [
         'defaults to trace context and baggage', # The defaults are now Datadog-specific defaults
@@ -125,7 +125,7 @@ namespace :upstream do
 
   task opentelemetry: ['opentelemetry:api', 'opentelemetry:sdk']
 
-  desc "Removes cloned files of instrumented gems"
+  desc 'Removes cloned files of instrumented gems'
   task :clean do
     FileUtils.rm_r(BASE_CLONE_DIR)
   end

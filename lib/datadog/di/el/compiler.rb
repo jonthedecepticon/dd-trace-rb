@@ -71,16 +71,16 @@ module Datadog
               when '@return'
                 # For @return, @duration and @exception we shadow
                 # instance variables.
-                "context.return_value"
+                'context.return_value'
               when '@duration'
                 # There is no way to explicitly format the duration.
                 # TODO come up with better formatting?
                 # We could format to a string here but what if customer
                 # has @duration as part of an expression and wants
                 # to retain it as a number?
-                "(context.duration * 1000)"
+                '(context.duration * 1000)'
               when '@exception'
-                "context.exception"
+                'context.exception'
               else
                 # Ruby technically allows all kinds of symbols in variable
                 # names, for example spaces and many characters.
@@ -160,7 +160,7 @@ module Datadog
         end
 
         def escape(needle)
-          needle.gsub("\\") { "\\\\" }.gsub('"') { "\\\"" }.gsub('#') { "\\#" }
+          needle.gsub('\\') { '\\\\' }.gsub('"') { '\"' }.gsub('#') { '\\#' }
         end
       end
     end

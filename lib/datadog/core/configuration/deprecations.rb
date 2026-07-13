@@ -26,7 +26,7 @@ module Datadog
 
             Datadog::Core.log_deprecation(disallowed_next_major: false, logger: logger) do
               "#{deprecated_env_var} #{source_name} variable is deprecated" +
-                (alias_to_canonical[deprecated_env_var] ? ", use #{alias_to_canonical[deprecated_env_var]} instead." : ".")
+                (alias_to_canonical[deprecated_env_var] ? ", use #{alias_to_canonical[deprecated_env_var]} instead." : '.')
             end
           end
         end

@@ -45,7 +45,7 @@ module Datadog
             begin
               component.probe_manager.add_probe(probe)
             rescue DI::Error::DITargetNotInRegistry => exc
-              component.telemetry&.report(exc, description: "Line probe is targeting a loaded file that is not in code tracker")
+              component.telemetry&.report(exc, description: 'Line probe is targeting a loaded file that is not in code tracker')
 
               payload = component.probe_notification_builder.build_errored(probe, exc)
               component.probe_notifier_worker.add_status(payload, probe: probe)
@@ -54,7 +54,7 @@ module Datadog
               raise if component.settings.dynamic_instrumentation.internal.propagate_all_exceptions
 
               component.logger.debug { "di: unhandled exception adding #{probe.type} probe at #{probe.location} (#{probe.id}) in DI probe file loader: #{exc.class}: #{exc.message}" }
-              component.telemetry&.report(exc, description: "Unhandled exception adding probe in DI probe file loader")
+              component.telemetry&.report(exc, description: 'Unhandled exception adding probe in DI probe file loader')
 
               # TODO test this path
               payload = component.probe_notification_builder.build_errored(probe, exc)
@@ -69,7 +69,7 @@ module Datadog
           end
 
           component.logger.debug { "di: unhandled exception handling a probe in DI probe file loader: #{exc.class}: #{exc.message}" }
-          component.telemetry&.report(exc, description: "Unhandled exception handling probe in DI probe file loader")
+          component.telemetry&.report(exc, description: 'Unhandled exception handling probe in DI probe file loader')
         end
       rescue Exception => exc # standard:disable Lint/RescueException
         Datadog::DI.reraise_if_fatal(exc)

@@ -8,7 +8,7 @@ module Datadog
         attr_reader :role, :content, :tool_call, :tool_call_id
 
         def initialize(role:, content: nil, tool_call: nil, tool_call_id: nil)
-          raise ArgumentError, "Role must be set to a non-empty value" if role.to_s.empty?
+          raise ArgumentError, 'Role must be set to a non-empty value' if role.to_s.empty?
 
           @role = role.to_sym
           @content = content

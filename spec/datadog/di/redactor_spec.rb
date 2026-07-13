@@ -1,5 +1,5 @@
-require "datadog/di/spec_helper"
-require "datadog/di/redactor"
+require 'datadog/di/spec_helper'
+require 'datadog/di/redactor'
 
 class DIRedactorSpecSensitiveType; end
 
@@ -31,13 +31,13 @@ RSpec.describe Datadog::DI::Redactor do
   di_test
 
   let(:settings) do
-    double("settings").tap do |settings|
+    double('settings').tap do |settings|
       allow(settings).to receive(:dynamic_instrumentation).and_return(di_settings)
     end
   end
 
   let(:di_settings) do
-    double("di settings").tap do |settings|
+    double('di settings').tap do |settings|
       allow(settings).to receive(:enabled).and_return(true)
       allow(settings).to receive(:redacted_identifiers).and_return([])
       allow(settings).to receive(:redaction_excluded_identifiers).and_return([])
@@ -48,7 +48,7 @@ RSpec.describe Datadog::DI::Redactor do
     Datadog::DI::Redactor.new(settings)
   end
 
-  describe "#redact_identifier?" do
+  describe '#redact_identifier?' do
     def self.define_cases(cases)
       cases.each do |(label, identifier_, redact_)|
         identifier, redact = identifier_, redact_
@@ -64,90 +64,90 @@ RSpec.describe Datadog::DI::Redactor do
     end
 
     cases = [
-      ["lowercase", "password", true],
-      ["uppercase", "PASSWORD", true],
-      ["with removed punctiation", "pass_word", true],
-      ["with non-removed punctuation", "pass/word", false],
+      ['lowercase', 'password', true],
+      ['uppercase', 'PASSWORD', true],
+      ['with removed punctiation', 'pass_word', true],
+      ['with non-removed punctuation', 'pass/word', false],
       # Rack rewrites incoming HTTP headers to CGI form (HTTP_<HEADER>);
       # the CGI-prefixed key must normalize to the same identifier as the
       # bare header name, otherwise hash captures of a Rack env emit
       # bearer tokens, session cookies and API keys in plaintext.
-      ["rack CGI authorization header", "HTTP_AUTHORIZATION", true],
-      ["rack CGI cookie header", "HTTP_COOKIE", true],
-      ["rack CGI X-API-Key header", "HTTP_X_API_KEY", true],
-      ["rack CGI X-Auth-Token header", "HTTP_X_AUTH_TOKEN", true],
-      ["rack CGI Set-Cookie header", "HTTP_SET_COOKIE", true],
-      ["rack CGI non-sensitive header", "HTTP_REFERER", false],
-      ["rack CGI Host header", "HTTP_HOST", false],
+      ['rack CGI authorization header', 'HTTP_AUTHORIZATION', true],
+      ['rack CGI cookie header', 'HTTP_COOKIE', true],
+      ['rack CGI X-API-Key header', 'HTTP_X_API_KEY', true],
+      ['rack CGI X-Auth-Token header', 'HTTP_X_AUTH_TOKEN', true],
+      ['rack CGI Set-Cookie header', 'HTTP_SET_COOKIE', true],
+      ['rack CGI non-sensitive header', 'HTTP_REFERER', false],
+      ['rack CGI Host header', 'HTTP_HOST', false],
       # The strip only matches the literal CGI form (leading `http_`),
       # not arbitrary identifiers that happen to begin with `http`.
-      ["identifier starting with http but no underscore", "httpinfo", false],
+      ['identifier starting with http but no underscore', 'httpinfo', false],
     ]
 
     define_cases(cases)
 
-    context "when user-defined redacted identifiers exist" do
+    context 'when user-defined redacted identifiers exist' do
       before do
         expect(di_settings).to receive(:redacted_identifiers).and_return(%w[foo пароль Ключ @var http_custom])
       end
 
       cases = [
-        ["exact user-defined identifier", "foo", true],
-        ["prefix of user-defined identifier", "f", false],
-        ["suffix of user-defined identifier", "oo", false],
-        ["user-defined identifier with extra removeable punctuation", "f-o-o", true],
-        ["user-defined identifier with extra non-removeable punctuation", "f.o.o", false],
-        ["user-defined identifier is not ascii, target identifier is in another case", "ПАРОЛь", true],
-        ["user-defined identifier is not ascii and uses mixed case in definition", "ключ", true],
-        ["user-defined identifier is not ascii and uses mixed case in definition and is not exact match", "ключ1", false],
-        ["@ in definition", "var", true],
-        ["@ in definition but name does not match", "var1", false],
-        ["@ in target identifier", "@foo", true],
-        ["@ in target identifier but name does not match", "@foo1", false],
+        ['exact user-defined identifier', 'foo', true],
+        ['prefix of user-defined identifier', 'f', false],
+        ['suffix of user-defined identifier', 'oo', false],
+        ['user-defined identifier with extra removeable punctuation', 'f-o-o', true],
+        ['user-defined identifier with extra non-removeable punctuation', 'f.o.o', false],
+        ['user-defined identifier is not ascii, target identifier is in another case', 'ПАРОЛь', true],
+        ['user-defined identifier is not ascii and uses mixed case in definition', 'ключ', true],
+        ['user-defined identifier is not ascii and uses mixed case in definition and is not exact match', 'ключ1', false],
+        ['@ in definition', 'var', true],
+        ['@ in definition but name does not match', 'var1', false],
+        ['@ in target identifier', '@foo', true],
+        ['@ in target identifier but name does not match', '@foo1', false],
         # User-defined identifiers go through the same normalization, so a
         # user-provided name starting with `http_` collapses to its tail.
-        ["user-defined identifier with http_ prefix matches CGI form", "HTTP_CUSTOM", true],
-        ["user-defined identifier with http_ prefix matches bare form", "custom", true],
+        ['user-defined identifier with http_ prefix matches CGI form', 'HTTP_CUSTOM', true],
+        ['user-defined identifier with http_ prefix matches bare form', 'custom', true],
       ]
 
       define_cases(cases)
     end
 
-    context "when excluded identifiers are specified" do
+    context 'when excluded identifiers are specified' do
       before do
         expect(di_settings).to receive(:redaction_excluded_identifiers).and_return(%w[password token session])
       end
 
       cases = [
-        ["excluded default identifier", "password", false],
-        ["excluded identifier with different case", "PASSWORD", false],
-        ["excluded identifier with punctuation", "pass_word", false],
-        ["non-excluded default identifier", "secret", true],
+        ['excluded default identifier', 'password', false],
+        ['excluded identifier with different case', 'PASSWORD', false],
+        ['excluded identifier with punctuation', 'pass_word', false],
+        ['non-excluded default identifier', 'secret', true],
         # The HTTP_ prefix strip applies to the excluded list too, so
         # excluding the bare name also suppresses redaction of the Rack
         # CGI form.
-        ["excluded default identifier in Rack CGI form", "HTTP_PASSWORD", false],
+        ['excluded default identifier in Rack CGI form', 'HTTP_PASSWORD', false],
       ]
 
       define_cases(cases)
     end
 
-    context "when excluded identifiers with normalization are specified" do
+    context 'when excluded identifiers with normalization are specified' do
       before do
         expect(di_settings).to receive(:redaction_excluded_identifiers).and_return(%w[pass_word])
       end
 
       cases = [
-        ["excluded identifier normalized from pass_word matches password", "password", false],
-        ["excluded identifier normalized from pass_word matches pass_word", "pass_word", false],
-        ["excluded identifier normalized from pass_word matches PASSWORD", "PASSWORD", false],
+        ['excluded identifier normalized from pass_word matches password', 'password', false],
+        ['excluded identifier normalized from pass_word matches pass_word', 'pass_word', false],
+        ['excluded identifier normalized from pass_word matches PASSWORD', 'PASSWORD', false],
       ]
 
       define_cases(cases)
     end
   end
 
-  describe "#redact_type?" do
+  describe '#redact_type?' do
     let(:redacted_type_names) {
       %w[
         DIRedactorSpecSensitiveType
@@ -176,39 +176,39 @@ RSpec.describe Datadog::DI::Redactor do
       end
     end
 
-    context "redacted type list is checked" do
+    context 'redacted type list is checked' do
       before do
         expect(di_settings).to receive(:redacted_type_names).and_return(redacted_type_names)
       end
 
       cases = [
-        ["redacted", DIRedactorSpecSensitiveType.new, true],
-        ["not redacted", /123/, false],
-        ["primitive type", nil, false],
-        ["wild card type whose name is the same as prefix", DIRedactorSpecWildCard.new, true],
-        ["wild card type", DIRedactorSpecWildCardClass.new, true],
-        ["wild card does not match from beginning", DIRedactorSpecPrefixWildCard.new, false],
-        ["partial wild card prefix match", DIRedactorSpecWildCa.new, false],
-        ["class object", String, false],
-        ["anonymous class object", Class.new, false],
-        ["namespaced class - exact match", DIRedactorSpec::ExactMatch.new, true],
-        ["namespaced class - wildcard - matched", DIRedactorSpec::WildCardSensitiveType.new, true],
-        ["namespaced class - tail component match only", DIRedactorSpec::SensitiveType.new, false],
-        ["double-colon top-level specification", DIRedactorSpecDoubleColon.new, true],
-        ["double-colon nested specification", DIRedactorSpec::DoubleColonNested.new, true],
-        ["double-colon nested wildcard", DIRedactorSpec::DoubleColonWildCardType.new, true],
+        ['redacted', DIRedactorSpecSensitiveType.new, true],
+        ['not redacted', /123/, false],
+        ['primitive type', nil, false],
+        ['wild card type whose name is the same as prefix', DIRedactorSpecWildCard.new, true],
+        ['wild card type', DIRedactorSpecWildCardClass.new, true],
+        ['wild card does not match from beginning', DIRedactorSpecPrefixWildCard.new, false],
+        ['partial wild card prefix match', DIRedactorSpecWildCa.new, false],
+        ['class object', String, false],
+        ['anonymous class object', Class.new, false],
+        ['namespaced class - exact match', DIRedactorSpec::ExactMatch.new, true],
+        ['namespaced class - wildcard - matched', DIRedactorSpec::WildCardSensitiveType.new, true],
+        ['namespaced class - tail component match only', DIRedactorSpec::SensitiveType.new, false],
+        ['double-colon top-level specification', DIRedactorSpecDoubleColon.new, true],
+        ['double-colon nested specification', DIRedactorSpec::DoubleColonNested.new, true],
+        ['double-colon nested wildcard', DIRedactorSpec::DoubleColonWildCardType.new, true],
       ]
 
       define_cases(cases)
     end
 
-    context "redacted type list is not checked" do
+    context 'redacted type list is not checked' do
       before do
         expect(di_settings).not_to receive(:redacted_type_names)
       end
 
       cases = [
-        ["instance of anonymous class", Class.new.new, false],
+        ['instance of anonymous class', Class.new.new, false],
       ]
 
       define_cases(cases)

@@ -21,7 +21,7 @@ module Datadog
                 # turned on (i.e. DD_DYNAMIC_INSTRUMENTATION_ENABLED)
                 # do not enable Ruby DI until the latter is ready for
                 # customer testing.
-                o.env "DD_DYNAMIC_INSTRUMENTATION_ENABLED"
+                o.env 'DD_DYNAMIC_INSTRUMENTATION_ENABLED'
                 o.default false
               end
 
@@ -37,9 +37,9 @@ module Datadog
               # to instance variables, it does not have any significance
               # for this setting (and is removed before matching identifiers).
               option :redacted_identifiers do |o|
-                o.env "DD_DYNAMIC_INSTRUMENTATION_REDACTED_IDENTIFIERS"
+                o.env 'DD_DYNAMIC_INSTRUMENTATION_REDACTED_IDENTIFIERS'
                 o.env_parser do |value|
-                  value&.split(",")&.map(&:strip)
+                  value&.split(',')&.map(&:strip)
                 end
 
                 o.type :array
@@ -59,9 +59,9 @@ module Datadog
               # by removing the following symbols: _, -, @, $, and then matched
               # against the complete variable or key name while ignoring the case.
               option :redaction_excluded_identifiers do |o|
-                o.env "DD_DYNAMIC_INSTRUMENTATION_REDACTION_EXCLUDED_IDENTIFIERS"
+                o.env 'DD_DYNAMIC_INSTRUMENTATION_REDACTION_EXCLUDED_IDENTIFIERS'
                 o.env_parser do |value|
-                  value&.split(",")&.map(&:strip)
+                  value&.split(',')&.map(&:strip)
                 end
 
                 o.type :array
@@ -92,9 +92,9 @@ module Datadog
               # to be redacted. Use Foo::* to redact all classes under
               # the Foo module.
               option :redacted_type_names do |o|
-                o.env "DD_DYNAMIC_INSTRUMENTATION_REDACTED_TYPES"
+                o.env 'DD_DYNAMIC_INSTRUMENTATION_REDACTED_TYPES'
                 o.env_parser do |value|
-                  value&.split(",")&.map(&:strip)
+                  value&.split(',')&.map(&:strip)
                 end
 
                 o.type :array

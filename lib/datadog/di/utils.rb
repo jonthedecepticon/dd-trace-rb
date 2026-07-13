@@ -108,10 +108,10 @@ module Datadog
       # the provided suffix, at a path component boundary.
       module_function def path_matches_suffix?(path, suffix, case_insensitive: false)
         if path.nil?
-          raise ArgumentError, "nil path passed"
+          raise ArgumentError, 'nil path passed'
         end
         if suffix.nil?
-          raise ArgumentError, "nil suffix passed"
+          raise ArgumentError, 'nil suffix passed'
         end
 
         suffix = normalize_windows_separators(suffix)
@@ -130,7 +130,7 @@ module Datadog
           !!
           if path.length > suffix.length && path.end_with?(suffix)
             previous_char = path[path.length - suffix.length - 1]
-            previous_char == "/" || suffix[0] == "/"
+            previous_char == '/' || suffix[0] == '/'
           end
 
           # Alternative implementation using a regular expression:

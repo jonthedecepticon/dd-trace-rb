@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "datadog/di/spec_helper"
-require "datadog/di"
+require 'datadog/di/spec_helper'
+require 'datadog/di'
 
 # Load the test class BEFORE code tracking starts.
 # This simulates the common case of application/gem code loaded at boot
@@ -14,7 +14,7 @@ require "datadog/di"
 # referenced by any constant or method after loading completes — only
 # class/method child iseqs survive via BackfillIntegrationTestClass.
 GC.disable
-require_relative "backfill_integration_test_class"
+require_relative 'backfill_integration_test_class'
 
 # Keep the top-level iseq alive across tests by holding a reference.
 # Without this, deactivate_tracking! in the after block clears the
@@ -24,13 +24,13 @@ require_relative "backfill_integration_test_class"
 # for profiler frames during require. Filter them out — only the real
 # top-level iseq has trace events and can target child iseq lines.
 BACKFILL_TEST_TOP_ISEQ = Datadog::DI.file_iseqs.find { |i|
-  i.absolute_path&.end_with?("backfill_integration_test_class.rb") &&
+  i.absolute_path&.end_with?('backfill_integration_test_class.rb') &&
     !i.trace_points.empty? &&
     (Datadog::DI.respond_to?(:iseq_type) ? Datadog::DI.iseq_type(i) == :top : i.first_lineno == 0)
 }
 GC.enable
 
-RSpec.describe "CodeTracker backfill integration" do
+RSpec.describe 'CodeTracker backfill integration' do
   di_test
 
   let(:diagnostics_transport) do
@@ -70,7 +70,7 @@ RSpec.describe "CodeTracker backfill integration" do
 
   let(:component) do
     Datadog::DI::Component.build(settings, agent_settings, logger).tap do |component|
-      raise "Component failed to create" if component.nil?
+      raise 'Component failed to create' if component.nil?
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe "CodeTracker backfill integration" do
     component.probe_manager
   end
 
-  context "line probe on pre-loaded file" do
+  context 'line probe on pre-loaded file' do
     before do
       # Activate tracking AFTER the test class was loaded (at require_relative
       # above). The backfill in CodeTracker#start should recover the iseq
@@ -91,13 +91,13 @@ RSpec.describe "CodeTracker backfill integration" do
 
     let(:probe) do
       Datadog::DI::Probe.new(
-        id: "backfill-test-1", type: :log,
-        file: "backfill_integration_test_class.rb", line_no: 22,
+        id: 'backfill-test-1', type: :log,
+        file: 'backfill_integration_test_class.rb', line_no: 22,
         capture_snapshot: false,
       )
     end
 
-    it "backfills the iseq and allows the probe to be installed" do
+    it 'backfills the iseq and allows the probe to be installed' do
       expect(diagnostics_transport).to receive(:send_diagnostics)
       probe_manager.add_probe(probe)
       component.probe_notifier_worker.flush
@@ -105,7 +105,7 @@ RSpec.describe "CodeTracker backfill integration" do
       expect(probe_manager.probe_repository.installed_probes.length).to eq(1)
     end
 
-    it "fires the probe when the target line executes" do
+    it 'fires the probe when the target line executes' do
       expect(diagnostics_transport).to receive(:send_diagnostics)
       probe_manager.add_probe(probe)
       component.probe_notifier_worker.flush
@@ -114,16 +114,16 @@ RSpec.describe "CodeTracker backfill integration" do
       expect(BackfillIntegrationTestClass.new.test_method).to eq(42)
     end
 
-    context "with snapshot capture" do
+    context 'with snapshot capture' do
       let(:probe) do
         Datadog::DI::Probe.new(
-          id: "backfill-test-2", type: :log,
-          file: "backfill_integration_test_class.rb", line_no: 22,
+          id: 'backfill-test-2', type: :log,
+          file: 'backfill_integration_test_class.rb', line_no: 22,
           capture_snapshot: true,
         )
       end
 
-      it "captures local variables from the backfilled iseq" do
+      it 'captures local variables from the backfilled iseq' do
         expect(diagnostics_transport).to receive(:send_diagnostics)
         probe_manager.add_probe(probe)
 
@@ -139,7 +139,7 @@ RSpec.describe "CodeTracker backfill integration" do
         captures = payload.dig(:debugger, :snapshot, :captures)
         locals = captures.dig(:lines, 22, :locals)
         expect(locals).to include(:a)
-        expect(locals[:a]).to eq({type: "Integer", value: "21"})
+        expect(locals[:a]).to eq({type: 'Integer', value: '21'})
       end
     end
   end

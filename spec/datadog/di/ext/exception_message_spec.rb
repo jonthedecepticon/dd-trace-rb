@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 
 RSpec.describe 'exception_message' do
   subject(:message) do

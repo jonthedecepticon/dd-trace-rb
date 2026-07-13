@@ -127,7 +127,7 @@ module Datadog
         # pre-loaded code won't work but everything else is unaffected.
         if component = DI.current_component
           component.logger.debug { "di: backfill_registry failed: #{exc.class}: #{exc.message}" }
-          component.telemetry&.report(exc, description: "backfill_registry failed")
+          component.telemetry&.report(exc, description: 'backfill_registry failed')
         end
         nil
       end
@@ -201,7 +201,7 @@ module Datadog
             if component = DI.current_component
               raise if component.settings.dynamic_instrumentation.internal.propagate_all_exceptions
               component.logger.debug { "di: unhandled exception in script_compiled trace point: #{exc.class}: #{exc.message}" }
-              component.telemetry&.report(exc, description: "Unhandled exception in script_compiled trace point")
+              component.telemetry&.report(exc, description: 'Unhandled exception in script_compiled trace point')
               # TODO test this path
             else
               # If we don't have a component, we cannot log anything properly.
@@ -270,7 +270,7 @@ module Datadog
                 end
               end
               if inexact.length > 1
-                raise Error::MultiplePathsMatch, "Multiple paths matched requested suffix"
+                raise Error::MultiplePathsMatch, 'Multiple paths matched requested suffix'
               end
               if inexact.any?
                 return inexact.first
@@ -391,7 +391,7 @@ module Datadog
           working_suffix = suffix.dup
           loop do
             matches = paths.select { |p| Utils.path_matches_suffix?(p, working_suffix, case_insensitive: case_insensitive) }
-            raise Error::MultiplePathsMatch, "Multiple paths matched requested suffix" if matches.length > 1
+            raise Error::MultiplePathsMatch, 'Multiple paths matched requested suffix' if matches.length > 1
             return matches.first if matches.any?
             break unless working_suffix.include?('/')
             working_suffix.sub!(%r{.*/+}, '')

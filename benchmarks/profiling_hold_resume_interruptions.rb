@@ -21,7 +21,7 @@ class ProfilerHoldResumeInterruptions
         **benchmark_time,
       )
 
-      x.report("hold / resume") do
+      x.report('hold / resume') do
         Datadog::Profiling::Collectors::CpuAndWallTimeWorker._native_hold_signals
         Datadog::Profiling::Collectors::CpuAndWallTimeWorker._native_resume_signals
       end

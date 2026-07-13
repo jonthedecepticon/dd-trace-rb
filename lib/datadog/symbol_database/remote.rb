@@ -134,10 +134,10 @@ module Datadog
           end
 
           if config['upload_symbols']
-            component.logger.debug { "symdb: upload enabled via remote config" }
+            component.logger.debug { 'symdb: upload enabled via remote config' }
             component.start_upload
           else
-            component.logger.debug { "symdb: upload disabled in config" }
+            component.logger.debug { 'symdb: upload disabled in config' }
           end
         end
 
@@ -146,7 +146,7 @@ module Datadog
         # @return [void]
         # @api private
         def disable_upload(component)
-          component.logger.debug { "symdb: upload disabled via remote config" }
+          component.logger.debug { 'symdb: upload disabled via remote config' }
           component.stop_upload
         end
 

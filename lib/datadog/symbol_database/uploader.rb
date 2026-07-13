@@ -215,7 +215,7 @@ module Datadog
           @logger.debug { "symdb: uploaded #{scope_count} scopes successfully" }
           true
         when 429
-          @logger.debug { "symdb: upload rejected: rate limited (429)" }
+          @logger.debug { 'symdb: upload rejected: rate limited (429)' }
           false
         when 500..599
           @logger.debug { "symdb: upload rejected: server error (#{response.code})" }

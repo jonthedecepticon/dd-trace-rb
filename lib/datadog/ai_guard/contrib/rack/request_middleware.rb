@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "../../../tracing/client_ip"
-require_relative "../../../tracing/contrib/rack/header_collection"
-require_relative "../../../tracing/metadata/ext"
-require_relative "../../ext"
+require_relative '../../../tracing/client_ip'
+require_relative '../../../tracing/contrib/rack/header_collection'
+require_relative '../../../tracing/metadata/ext'
+require_relative '../../ext'
 
 module Datadog
   module AIGuard
@@ -42,17 +42,17 @@ module Datadog
 
           # steep:ignore:start
           def store_anomaly_detection_tags!(trace, env)
-            remote_ip = env["REMOTE_ADDR"]
+            remote_ip = env['REMOTE_ADDR']
             trace.set_tag(Datadog::AIGuard::Ext::TRACE_NETWORK_CLIENT_IP_TAG, remote_ip) if remote_ip
 
             headers = Datadog::Tracing::Contrib::Rack::Header::RequestHeaderCollection.new(env)
             resolved_client_ip = Datadog::Tracing::ClientIp.extract_client_ip(headers, remote_ip)
             trace.set_tag(Datadog::AIGuard::Ext::TRACE_HTTP_CLIENT_IP_TAG, resolved_client_ip) if resolved_client_ip
 
-            user_agent = env["HTTP_USER_AGENT"]
+            user_agent = env['HTTP_USER_AGENT']
             trace.set_tag(Datadog::AIGuard::Ext::TRACE_HTTP_USERAGENT_TAG, user_agent) if user_agent
           rescue => e
-            Datadog::AIGuard.telemetry&.report(e, description: "AI Guard: failed to get request attributes")
+            Datadog::AIGuard.telemetry&.report(e, description: 'AI Guard: failed to get request attributes')
           end
           # steep:ignore:end
 
@@ -70,7 +70,7 @@ module Datadog
           # trace whenever an AI Guard span is created during the request.
           # steep:ignore:start
           def ai_guard_executed?(trace)
-            trace.get_tag(Datadog::AIGuard::Ext::TRACE_EXECUTED_TAG) == "1"
+            trace.get_tag(Datadog::AIGuard::Ext::TRACE_EXECUTED_TAG) == '1'
           end
           # steep:ignore:end
 
@@ -85,9 +85,9 @@ module Datadog
             end
 
             network_client_ip = trace.get_tag(Datadog::AIGuard::Ext::TRACE_NETWORK_CLIENT_IP_TAG)
-            span["network.client.ip"] = network_client_ip if network_client_ip
+            span['network.client.ip'] = network_client_ip if network_client_ip
           rescue => e
-            Datadog::AIGuard.telemetry&.report(e, description: "AI Guard: failed to tag client IP on root span")
+            Datadog::AIGuard.telemetry&.report(e, description: 'AI Guard: failed to tag client IP on root span')
           end
           # steep:ignore:end
         end

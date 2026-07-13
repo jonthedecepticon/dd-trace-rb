@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 require 'datadog/di'
 require 'spec_helper'
 require 'logger'
@@ -95,7 +95,7 @@ RSpec.describe Datadog::DI::Remote do
         # would have gotten at boot.
         it 'does not activate tracking and warns naming the unsupported reason' do
           allow(described_class).to receive(:explicitly_disabled?).and_return(false)
-          allow(Datadog::DI).to receive(:unsupported_reason).and_return("MRI is required, but running on jruby")
+          allow(Datadog::DI).to receive(:unsupported_reason).and_return('MRI is required, but running on jruby')
           expect(Datadog::DI).not_to receive(:activate_tracking)
           expect(Datadog.logger).to receive(:warn).with(
             a_string_matching(/cannot enable dynamic instrumentation via remote configuration.*MRI is required.*jruby/)
@@ -415,7 +415,7 @@ RSpec.describe Datadog::DI::Remote do
             expect(component).to receive(:logger).and_return(logger)
             expect(telemetry).to receive(:report)
 
-            expect(probe_manager).to receive(:add_probe).and_raise("Runtime error from test")
+            expect(probe_manager).to receive(:add_probe).and_raise('Runtime error from test')
             expect(component).to receive(:parse_probe_spec_and_notify).and_return(probe)
             expect(component).to receive(:probe_notification_builder).and_return(probe_notification_builder)
             expect(probe_notification_builder).to receive(:build_errored)

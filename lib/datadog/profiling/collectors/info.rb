@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "set"
-require "time"
-require "libdatadog"
+require 'set'
+require 'time'
+require 'libdatadog'
 
 module Datadog
   module Profiling
@@ -39,33 +39,33 @@ module Datadog
 
         # Ruby GC tuning environment variables
         RUBY_GC_TUNING_ENV_VARS = [
-          "RUBY_GC_HEAP_FREE_SLOTS",
-          "RUBY_GC_HEAP_GROWTH_FACTOR",
-          "RUBY_GC_HEAP_GROWTH_MAX_SLOTS",
-          "RUBY_GC_HEAP_FREE_SLOTS_MIN_RATIO",
-          "RUBY_GC_HEAP_FREE_SLOTS_MAX_RATIO",
-          "RUBY_GC_HEAP_FREE_SLOTS_GOAL_RATIO",
-          "RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR",
-          "RUBY_GC_HEAP_REMEMBERED_WB_UNPROTECTED_OBJECTS_LIMIT_RATIO",
-          "RUBY_GC_MALLOC_LIMIT",
-          "RUBY_GC_MALLOC_LIMIT_MAX",
-          "RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR",
-          "RUBY_GC_OLDMALLOC_LIMIT",
-          "RUBY_GC_OLDMALLOC_LIMIT_MAX",
-          "RUBY_GC_OLDMALLOC_LIMIT_GROWTH_FACTOR",
+          'RUBY_GC_HEAP_FREE_SLOTS',
+          'RUBY_GC_HEAP_GROWTH_FACTOR',
+          'RUBY_GC_HEAP_GROWTH_MAX_SLOTS',
+          'RUBY_GC_HEAP_FREE_SLOTS_MIN_RATIO',
+          'RUBY_GC_HEAP_FREE_SLOTS_MAX_RATIO',
+          'RUBY_GC_HEAP_FREE_SLOTS_GOAL_RATIO',
+          'RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR',
+          'RUBY_GC_HEAP_REMEMBERED_WB_UNPROTECTED_OBJECTS_LIMIT_RATIO',
+          'RUBY_GC_MALLOC_LIMIT',
+          'RUBY_GC_MALLOC_LIMIT_MAX',
+          'RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR',
+          'RUBY_GC_OLDMALLOC_LIMIT',
+          'RUBY_GC_OLDMALLOC_LIMIT_MAX',
+          'RUBY_GC_OLDMALLOC_LIMIT_GROWTH_FACTOR',
           # INIT_SLOTS changed for Ruby 3.3+:
           # * https://bugs.ruby-lang.org/issues/19785
           # * https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/#:~:text=Removed%20environment%20variables
-          "RUBY_GC_HEAP_0_INIT_SLOTS",
-          "RUBY_GC_HEAP_1_INIT_SLOTS",
-          "RUBY_GC_HEAP_2_INIT_SLOTS",
-          "RUBY_GC_HEAP_3_INIT_SLOTS",
-          "RUBY_GC_HEAP_4_INIT_SLOTS",
+          'RUBY_GC_HEAP_0_INIT_SLOTS',
+          'RUBY_GC_HEAP_1_INIT_SLOTS',
+          'RUBY_GC_HEAP_2_INIT_SLOTS',
+          'RUBY_GC_HEAP_3_INIT_SLOTS',
+          'RUBY_GC_HEAP_4_INIT_SLOTS',
           # There was only one setting for older Rubies:
-          "RUBY_GC_HEAP_INIT_SLOTS",
+          'RUBY_GC_HEAP_INIT_SLOTS',
           # Ruby 2.x only, alias for others:
-          "RUBY_FREE_MIN",
-          "RUBY_HEAP_MIN_SLOTS",
+          'RUBY_FREE_MIN',
+          'RUBY_HEAP_MIN_SLOTS',
         ].freeze
 
         # Instead of trying to figure out real process start time by checking
@@ -110,7 +110,7 @@ module Datadog
         #: (untyped) -> ::Hash[::Symbol, untyped]
         def collect_profiler_info(settings)
           @profiler_info ||= begin
-            lib_datadog_gem = ::Gem.loaded_specs["libdatadog"]
+            lib_datadog_gem = ::Gem.loaded_specs['libdatadog']
 
             libdatadog_version =
               if lib_datadog_gem

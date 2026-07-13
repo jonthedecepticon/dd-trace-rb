@@ -1,4 +1,4 @@
-require "datadog/di/spec_helper"
+require 'datadog/di/spec_helper'
 
 RSpec.describe 'EXCEPTION_BACKTRACE_LOCATIONS' do
   subject(:backtrace) do

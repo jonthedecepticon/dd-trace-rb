@@ -8,7 +8,7 @@ require_relative 'benchmarks_helper'
 if RUBY_VERSION < '3.2'
   if VALIDATE_BENCHMARK_MODE
     # To simplify things, we allow this benchmark to be run in VALIDATE_BENCHMARK_MODE even though it's a no-op
-    warn "Skipping benchmark because it requires Ruby 3.2 or newer"
+    warn 'Skipping benchmark because it requires Ruby 3.2 or newer'
     return
   else
     raise 'This benchmark requires Ruby 3.2 or newer'
@@ -53,7 +53,7 @@ class ProfilerSampleGvlBenchmark
         **benchmark_time,
       )
 
-      x.report("gvl benchmark samples") do
+      x.report('gvl benchmark samples') do
         Datadog::Profiling::Collectors::ThreadContext::Testing._native_on_gvl_waiting(@target_thread)
         Datadog::Profiling::Collectors::ThreadContext::Testing._native_on_gvl_running(@collector, @target_thread)
         Datadog::Profiling::Collectors::ThreadContext::Testing._native_sample_after_gvl_running(@collector, @target_thread, false)
