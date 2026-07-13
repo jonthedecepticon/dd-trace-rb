@@ -45,7 +45,7 @@ class OpenFeatureFlagevaluationBenchmark
   end
 
   def benchmark_results_file(suffix)
-    "#{File.basename(__FILE__, ".rb")}-#{suffix}-results.json"
+    "#{File.basename(__FILE__, '.rb')}-#{suffix}-results.json"
   end
 
   def initialize

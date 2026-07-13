@@ -72,12 +72,12 @@ namespace :github do
     File.open(summary, 'a') do |f|
       data['include'].each do |batch|
         rows = batch['tasks'].map do |t|
-          "* #{t["task"]} (#{t["group"]})"
+          "* #{t['task']} (#{t['group']})"
         end
 
         f.puts <<~SUMMARY
           <details>
-          <summary>Batch #{batch["batch"]} (#{batch["tasks"].length} tasks)</summary>
+          <summary>Batch #{batch['batch']} (#{batch['tasks'].length} tasks)</summary>
 
           #{rows.join("\n")}
           </details>
@@ -107,7 +107,7 @@ namespace :github do
 
     tasks.each do |task|
       env = {'BUNDLE_GEMFILE' => task['gemfile']}
-      cmd = "bundle exec rake spec:#{task["task"]}'[--seed #{rng.rand(0xFFFF)}]'"
+      cmd = "bundle exec rake spec:#{task['task']}'[--seed #{rng.rand(0xFFFF)}]'"
 
       Bundler.with_unbundled_env { sh(env, cmd) }
     end

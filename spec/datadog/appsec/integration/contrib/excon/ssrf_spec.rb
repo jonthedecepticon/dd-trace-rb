@@ -70,7 +70,7 @@ RSpec.describe 'Excon SSRF Injection' do
         run(
           lambda do |env|
             request = Rack::Request.new(env)
-            client = ::Excon.new("http://#{request.params["url"]}", mock: true).tap do
+            client = ::Excon.new("http://#{request.params['url']}", mock: true).tap do
               ::Excon.stub({method: :get, path: '/success'}, body: 'OK', status: 200)
             end
             response = client.get(path: '/success')

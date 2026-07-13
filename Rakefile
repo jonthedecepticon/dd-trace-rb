@@ -561,11 +561,11 @@ namespace :coverage do
   task :report do
     require 'simplecov'
 
-    resultset_files = Dir["#{ENV.fetch("COVERAGE_DIR", "coverage")}/.resultset.json"] +
-      Dir["#{ENV.fetch("COVERAGE_DIR", "coverage")}/versions/**/.resultset.json"]
+    resultset_files = Dir["#{ENV.fetch('COVERAGE_DIR', 'coverage')}/.resultset.json"] +
+      Dir["#{ENV.fetch('COVERAGE_DIR', 'coverage')}/versions/**/.resultset.json"]
 
     SimpleCov.collate resultset_files do
-      coverage_dir "#{ENV.fetch("COVERAGE_DIR", "coverage")}/report"
+      coverage_dir "#{ENV.fetch('COVERAGE_DIR', 'coverage')}/report"
       formatter SimpleCov::Formatter::HTMLFormatter
     end
   end
@@ -575,11 +575,11 @@ namespace :coverage do
     require 'simplecov'
     require_relative 'spec/support/simplecov_fix'
 
-    versions = Dir["#{ENV.fetch("COVERAGE_DIR", "coverage")}/versions/*"].map { |f| File.basename(f) }
+    versions = Dir["#{ENV.fetch('COVERAGE_DIR', 'coverage')}/versions/*"].map { |f| File.basename(f) }
     versions.map do |version|
       puts "Generating report for: #{version}"
-      SimpleCov.collate Dir["#{ENV.fetch("COVERAGE_DIR", "coverage")}/versions/#{version}/**/.resultset.json"] do
-        coverage_dir "#{ENV.fetch("COVERAGE_DIR", "coverage")}/report/versions/#{version}"
+      SimpleCov.collate Dir["#{ENV.fetch('COVERAGE_DIR', 'coverage')}/versions/#{version}/**/.resultset.json"] do
+        coverage_dir "#{ENV.fetch('COVERAGE_DIR', 'coverage')}/report/versions/#{version}"
         formatter SimpleCov::Formatter::HTMLFormatter
       end
     end

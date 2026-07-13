@@ -76,7 +76,7 @@ module Datadog
 
           def execute_multiplex(*args, multiplex:, **kwargs)
             trace(proc { super }, 'execute_multiplex', multiplex_resource(multiplex), multiplex: multiplex) do |span|
-              span.set_tag('graphql.source', "Multiplex[#{multiplex.queries.map(&:query_string).join(", ")}]")
+              span.set_tag('graphql.source', "Multiplex[#{multiplex.queries.map(&:query_string).join(', ')}]")
             end
           end
 
@@ -192,7 +192,7 @@ module Datadog
             return [] if locations.nil?
 
             locations.map do |location|
-              "#{location["line"]}:#{location["column"]}"
+              "#{location['line']}:#{location['column']}"
             end
           end
 

@@ -103,7 +103,7 @@ module Datadog
         # @param parent_id [Integer] 64-bit
         # @param trace_flags [Integer] 8-bit
         def build_traceparent_string(trace_id, parent_id, trace_flags)
-          "00-#{format("%032x", trace_id)}-#{format("%016x", parent_id)}-#{format("%02x", trace_flags)}"
+          "00-#{format('%032x', trace_id)}-#{format('%016x', parent_id)}-#{format('%02x', trace_flags)}"
         end
 
         # Sets the trace flag to an existing `trace_flags`.
@@ -181,7 +181,7 @@ module Datadog
         def last_dd_parent_id(digest)
           if !digest.span_remote
             span_id = digest.span_id || 0 # Fall back to zero (invalid) if not present
-            "p:#{format("%016x", span_id)};"
+            "p:#{format('%016x', span_id)};"
           elsif digest.trace_distributed_tags&.key?(Tracing::Metadata::Ext::Distributed::TAG_DD_PARENT_ID)
             "p:#{digest.trace_distributed_tags[Tracing::Metadata::Ext::Distributed::TAG_DD_PARENT_ID]};"
           else

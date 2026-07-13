@@ -25,7 +25,7 @@ module Datadog
             # Modify the remote configuration value that it matches the
             # environment variable it configures.
             tracing_header_tags&.map! do |hash|
-              "#{hash["header"]}:#{hash["tag_name"]}"
+              "#{hash['header']}:#{hash['tag_name']}"
             end
 
             super

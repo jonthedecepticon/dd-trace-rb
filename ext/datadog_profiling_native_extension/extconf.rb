@@ -72,7 +72,7 @@ require 'mkmf'
 Datadog::LibdatadogExtconfHelpers.dump_mkmf_log_on_failure!
 
 Logging.message("[datadog] Using compiler:\n")
-xsystem("#{CONFIG["CC"]} -v")
+xsystem("#{CONFIG['CC']} -v")
 Logging.message("[datadog] End of compiler information\n")
 
 # We must *never* `append_cflags "-Wall"` or `append_cflags "-Wextra"`, because those add the flag at the end,

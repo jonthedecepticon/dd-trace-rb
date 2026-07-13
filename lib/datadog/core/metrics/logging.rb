@@ -17,7 +17,7 @@ module Datadog
               l.progname = nil
               l.formatter = proc do |_severity, datetime, _progname, msg|
                 stat = JSON.parse(msg[3..-1]) # Trim off leading progname...
-                "#{JSON.dump(timestamp: datetime.to_i, message: "Metric sent.", metric: stat)}\n"
+                "#{JSON.dump(timestamp: datetime.to_i, message: 'Metric sent.', metric: stat)}\n"
               end
             end
           end

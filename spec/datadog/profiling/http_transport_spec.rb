@@ -345,7 +345,7 @@ RSpec.describe Datadog::Profiling::HttpTransport do
       let(:expected_data_in_payload) {
         {
           'attachments' => contain_exactly(pprof_file_name, 'metrics.json', 'code-provenance.json'),
-          'tags_profiler' => start_with("tag_a:value_a,tag_b:value_b,runtime_platform:#{RUBY_PLATFORM.split("-").first.sub("arm", "aarch")}"),
+          'tags_profiler' => start_with("tag_a:value_a,tag_b:value_b,runtime_platform:#{RUBY_PLATFORM.split('-').first.sub('arm', 'aarch')}"),
           'start' => start_timestamp,
           'end' => end_timestamp,
           'family' => 'ruby',

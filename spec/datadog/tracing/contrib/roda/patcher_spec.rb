@@ -44,7 +44,7 @@ RSpec.describe 'Roda instrumentation' do
               'UPDATE'
             end
             r.get do
-              "Hello, world #{r.params["world"]}"
+              "Hello, world #{r.params['world']}"
             end
           end
         end

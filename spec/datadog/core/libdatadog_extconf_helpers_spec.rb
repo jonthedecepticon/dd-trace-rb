@@ -13,7 +13,7 @@ RSpec.describe Datadog::LibdatadogExtconfHelpers do
 
         libdatadog_extension = RbConfig::CONFIG['SOEXT'] || raise('Missing SOEXT for current platform')
 
-        gem_lib_folder = "#{Gem.loaded_specs["datadog"].gem_dir}/lib"
+        gem_lib_folder = "#{Gem.loaded_specs['datadog'].gem_dir}/lib"
         full_libdatadog_path = "#{gem_lib_folder}/#{relative_path}/libdatadog_profiling.#{libdatadog_extension}"
 
         expect(relative_path).to start_with('../')

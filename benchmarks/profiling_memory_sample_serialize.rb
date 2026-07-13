@@ -76,7 +76,7 @@ class ProfilerMemorySampleSerializeBenchmark
         **benchmark_time,
       )
 
-      x.report("sample+serialize #{ENV["CONFIG"]} retain_every=#{@retain_every} heap_samples=#{@heap_samples_enabled} heap_size=#{@heap_size_enabled} heap_sample_every=#{@heap_sample_every} skip_end_gc=#{@skip_end_gc}") do
+      x.report("sample+serialize #{ENV['CONFIG']} retain_every=#{@retain_every} heap_samples=#{@heap_samples_enabled} heap_size=#{@heap_size_enabled} heap_sample_every=#{@heap_sample_every} skip_end_gc=#{@skip_end_gc}") do
         recorder = @recorder_factory.call
         retained_objs = create_objects(recorder)
 

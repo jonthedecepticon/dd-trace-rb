@@ -9,7 +9,7 @@ namespace :spec do
   # DEV: A formal description would be nice.
   desc 'List custom RSpec matchers available in this codebase'
   task :custom_matchers do
-    preload = "RUBYOPT='-r #{File.join(__dir__, "support", "custom_matchers_preload.rb")}'"
+    preload = "RUBYOPT='-r #{File.join(__dir__, 'support', 'custom_matchers_preload.rb')}'"
 
     # Load all spec files, print matchers, and exit.
     # Default `rspec/expectations` matcher are excluded.
@@ -35,7 +35,7 @@ namespace :spec do
 
     # Print it nicely
     align_size = matchers.map { |_, matcher| matcher.size }.max
-    puts "#{"Matcher".ljust(align_size)} Source"
+    puts "#{'Matcher'.ljust(align_size)} Source"
     puts matchers.sort_by(&:last).map { |path, matcher| "#{matcher.ljust(align_size)} #{path}" }
   end
 end

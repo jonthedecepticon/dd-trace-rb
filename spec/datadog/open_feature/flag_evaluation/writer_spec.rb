@@ -306,7 +306,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
       allow_any_instance_of(described_class).to receive(:start_background_thread).and_return(nil)
       writer = described_class.new(transport: transport, logger: logger)
       raw = {'profile' => {'plan' => 'pro'}, 'oversized' => 'x' * 257}
-      300.times { |i| raw["z#{format("%03d", i)}"] = 'v' }
+      300.times { |i| raw["z#{format('%03d', i)}"] = 'v' }
 
       expect(Datadog::OpenFeature::FlagEvaluation::Aggregator).not_to receive(:prune_context)
       writer.enqueue(
@@ -445,7 +445,7 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Writer do
     # not the raw attrs. Proven by inspecting the emitted payload, not the aggregator internals.
     it 'emits PRUNED context attrs in the payload (oversized strings removed, capped at 256 fields)' do
       raw = {'keep' => 'ok', 'toobig' => 'x' * 257}
-      300.times { |i| raw["k#{format("%03d", i)}"] = 'v' }
+      300.times { |i| raw["k#{format('%03d', i)}"] = 'v' }
 
       payload = captured_payload do |writer|
         writer.enqueue(

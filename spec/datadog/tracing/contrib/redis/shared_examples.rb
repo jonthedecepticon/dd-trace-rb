@@ -257,11 +257,11 @@ RSpec.shared_examples_for 'redis instrumentation' do |options = {}|
         expect(span.service).to eq(options[:service_name] || 'redis')
 
         if options[:command_args]
-          expect(span.resource).to eq("SET K #{"x" * 47}...")
+          expect(span.resource).to eq("SET K #{'x' * 47}...")
         else
           expect(span.resource).to eq('SET')
         end
-        expect(span.get_tag('redis.raw_command')).to eq("SET K #{"x" * 47}...")
+        expect(span.get_tag('redis.raw_command')).to eq("SET K #{'x' * 47}...")
       end
 
       it_behaves_like 'a redis span with common tags'

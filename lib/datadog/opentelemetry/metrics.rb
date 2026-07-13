@@ -52,7 +52,7 @@ module Datadog
       end
 
       def default_metrics_endpoint
-        "#{@agent_ssl ? "https" : "http"}://#{@agent_host}:4318/v1/metrics"
+        "#{@agent_ssl ? 'https' : 'http'}://#{@agent_host}:4318/v1/metrics"
       end
 
       def configure_otlp_exporter(provider)

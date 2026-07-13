@@ -407,7 +407,7 @@ module Datadog
             serialized[serialized.length] = serialized[serialized.length - 1]
             serialized[serialized.length - 2] = '...'
           end
-          "{#{serialized.join(", ")}}"
+          "{#{serialized.join(', ')}}"
         else
           return '...' if depth <= 0
 

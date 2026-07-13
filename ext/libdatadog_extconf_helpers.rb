@@ -216,7 +216,7 @@ module Datadog
       unless Libdatadog.pkgconfig_folder
         'The `libdatadog` gem installed on your system is missing binaries for your platform variant. ' \
           'Your platform: ' \
-          "`#{Libdatadog.current_platform}`; available binaries: `#{Libdatadog.available_binaries.join("`, `")}`"
+          "`#{Libdatadog.current_platform}`; available binaries: `#{Libdatadog.available_binaries.join('`, `')}`"
       end
     end
   end

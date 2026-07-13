@@ -84,7 +84,7 @@ module Datadog
           def to_s
             return "#{@type}/#{@subtype}" if @parameters.empty?
 
-            "#{@type}/#{@subtype};#{@parameters.map { |k, v| "#{k}=#{v}" }.join(";")}"
+            "#{@type}/#{@subtype};#{@parameters.map { |k, v| "#{k}=#{v}" }.join(';')}"
           end
         end
       end

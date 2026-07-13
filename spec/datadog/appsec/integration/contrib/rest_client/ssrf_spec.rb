@@ -73,7 +73,7 @@ RSpec.describe 'RestClient SSRF Injection' do
         run(
           lambda do |env|
             request = Rack::Request.new(env)
-            response = RestClient.get("http://#{request.params["url"]}")
+            response = RestClient.get("http://#{request.params['url']}")
 
             [200, {'Content-Type' => 'application/json'}, [response.code.to_s]]
           end

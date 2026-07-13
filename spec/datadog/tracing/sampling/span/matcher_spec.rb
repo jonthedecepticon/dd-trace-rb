@@ -63,7 +63,7 @@ RSpec.describe Datadog::Tracing::Sampling::Span::Matcher do
               let(:matcher) { described_class.new(name_pattern: pattern) }
               let(:span_name) { input }
 
-              it "does #{"not " unless expected}match" do
+              it "does #{'not ' unless expected}match" do
                 is_expected.to eq(expected)
               end
             end
@@ -72,7 +72,7 @@ RSpec.describe Datadog::Tracing::Sampling::Span::Matcher do
               let(:matcher) { described_class.new(service_pattern: pattern) }
               let(:span_service) { input }
 
-              it "does #{"not " unless expected}match" do
+              it "does #{'not ' unless expected}match" do
                 is_expected.to eq(expected)
               end
             end
@@ -83,7 +83,7 @@ RSpec.describe Datadog::Tracing::Sampling::Span::Matcher do
                 let(:span_name) { input }
                 let(:span_service) { input }
 
-                it "does #{"not " unless expected}match" do
+                it "does #{'not ' unless expected}match" do
                   is_expected.to eq(expected)
                 end
               end

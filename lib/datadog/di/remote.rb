@@ -77,7 +77,7 @@ module Datadog
                 reason = DI.unsupported_reason
                 Datadog.logger.warn(
                   'di: cannot enable dynamic instrumentation via remote configuration: ' \
-                  "#{reason || "dynamic instrumentation was not initialized at startup"}",
+                  "#{reason || 'dynamic instrumentation was not initialized at startup'}",
                 )
               end
             end

@@ -29,7 +29,7 @@ module Datadog
           when Datadog::Core::Configuration::Ext::Agent::HTTP::ADAPTER
             hostname = self.hostname
             hostname = "[#{hostname}]" if IPV6_REGEXP.match?(hostname)
-            "#{ssl ? "https" : "http"}://#{hostname}:#{port}/"
+            "#{ssl ? 'https' : 'http'}://#{hostname}:#{port}/"
           when Datadog::Core::Configuration::Ext::Agent::UnixSocket::ADAPTER
             "unix://#{uds_path}"
           else

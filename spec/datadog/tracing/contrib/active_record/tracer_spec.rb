@@ -120,11 +120,11 @@ RSpec.describe 'ActiveRecord instrumentation' do
             YAML.safe_load(<<-YAML)['test']
           test:
             adapter: 'mysql2_makara'
-            database: '#{ENV.fetch("TEST_MYSQL_DB", "mysql")}'
+            database: '#{ENV.fetch('TEST_MYSQL_DB', 'mysql')}'
             username: 'root'
-            host: '#{ENV.fetch("TEST_MYSQL_HOST", "127.0.0.1")}'
-            password: '#{ENV.fetch("TEST_MYSQL_ROOT_PASSWORD", "root")}'
-            port: '#{ENV.fetch("TEST_MYSQL_PORT", "3306")}'
+            host: '#{ENV.fetch('TEST_MYSQL_HOST', '127.0.0.1')}'
+            password: '#{ENV.fetch('TEST_MYSQL_ROOT_PASSWORD', 'root')}'
+            port: '#{ENV.fetch('TEST_MYSQL_PORT', '3306')}'
 
             makara:
               connections:

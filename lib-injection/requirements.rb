@@ -153,7 +153,7 @@ def requirements
     knife
   ].each do |exe|
     reqs['deny'] << {
-      'id' => "chef_#{exe.tr("-", "_")}",
+      'id' => "chef_#{exe.tr('-', '_')}",
       'description' => "Ignore chef's #{exe}",
       'os' => nil,
       'cmds' => [

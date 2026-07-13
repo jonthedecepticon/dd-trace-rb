@@ -138,10 +138,10 @@ module Datadog
             "ruby.runtime.engine.name:#{RUBY_ENGINE}",
             "ruby.runtime.engine.version:#{ruby_engine_version}",
             "ruby.rubygems.platform.local:#{Gem::Platform.local}",
-            "ruby.gem.libddwaf.version:#{gem_spec("libddwaf").version}",
-            "ruby.gem.libddwaf.platform:#{gem_spec("libddwaf").platform}",
-            "ruby.gem.libdatadog.version:#{gem_spec("libdatadog").version}",
-            "ruby.gem.libdatadog.platform:#{gem_spec("libdatadog").platform}",
+            "ruby.gem.libddwaf.version:#{gem_spec('libddwaf').version}",
+            "ruby.gem.libddwaf.platform:#{gem_spec('libddwaf').platform}",
+            "ruby.gem.libdatadog.version:#{gem_spec('libdatadog').version}",
+            "ruby.gem.libdatadog.platform:#{gem_spec('libdatadog').platform}",
           ]
 
           if (git_repository_url = Core::Environment::Git.git_repository_url)

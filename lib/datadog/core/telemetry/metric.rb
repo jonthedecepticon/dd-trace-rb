@@ -20,7 +20,7 @@ module Datadog
           end
 
           def id
-            @id ||= "#{type}::#{name}::#{tags.join(",")}"
+            @id ||= "#{type}::#{name}::#{tags.join(',')}"
           end
 
           def track(value)

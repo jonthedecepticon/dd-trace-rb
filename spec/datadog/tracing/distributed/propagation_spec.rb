@@ -33,8 +33,8 @@ RSpec.shared_examples 'Distributed tracing propagator' do
   let(:prepare_key) { defined?(super) ? super() : proc { |key| key } }
 
   let(:traceparent) do
-    "00-#{format("%032x", tracecontext_trace_id)}-#{format("%016x", tracecontext_span_id)}-" \
-      "#{format("%02x", tracecontext_trace_flags)}"
+    "00-#{format('%032x', tracecontext_trace_id)}-#{format('%016x', tracecontext_span_id)}-" \
+      "#{format('%02x', tracecontext_trace_flags)}"
   end
 
   describe '::inject!' do

@@ -65,7 +65,7 @@ RSpec.describe Datadog::DI::EL do
 
           if evals = spec['eval']
             evals.each_with_index do |eval_spec, index|
-              context(eval_spec.key?('name') ? "eval: #{eval_spec["name"]}" : "eval #{index + 1}") do
+              context(eval_spec.key?('name') ? "eval: #{eval_spec['name']}" : "eval #{index + 1}") do
                 let(:locals) { eval_spec['locals']&.transform_keys(&:to_sym) }
                 let(:target) do
                   Object.new.tap do |object|

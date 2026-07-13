@@ -11,7 +11,7 @@ class ExportToFile
   PPROF_PREFIX = ENV.fetch('DD_PROFILING_PPROF_PREFIX', 'profiler-allocation')
 
   def export(flush)
-    File.write("#{PPROF_PREFIX}#{flush.start.strftime("%Y%m%dT%H%M%SZ")}.pprof", flush.encoded_profile._native_bytes)
+    File.write("#{PPROF_PREFIX}#{flush.start.strftime('%Y%m%dT%H%M%SZ')}.pprof", flush.encoded_profile._native_bytes)
     true
   end
 end
@@ -46,7 +46,7 @@ class ProfilerAllocationBenchmark
         **benchmark_time,
       )
 
-      x.report("Allocations (#{ENV["CONFIG"]})", 'BasicObject.new')
+      x.report("Allocations (#{ENV['CONFIG']})", 'BasicObject.new')
 
       x.save! "#{File.basename(__FILE__, '.rb')}-results.json" unless VALIDATE_BENCHMARK_MODE
       x.compare!

@@ -99,10 +99,10 @@ class ProfilerSampleLoopBenchmark
         **benchmark_time,
       )
 
-      x.report("stack collector (#{mode} frames - native filenames enabled) #{ENV["CONFIG"]}") { sample(collector) }
+      x.report("stack collector (#{mode} frames - native filenames enabled) #{ENV['CONFIG']}") { sample(collector) }
 
       if mode == :native
-        x.report("stack collector (#{mode} frames - native filenames disabled) #{ENV["CONFIG"]}") do
+        x.report("stack collector (#{mode} frames - native filenames disabled) #{ENV['CONFIG']}") do
           sample(collector_without_native_filenames)
         end
       end
@@ -125,7 +125,7 @@ class ProfilerSampleLoopBenchmark
       )
 
       # This benchmark checks the performance of samples when the stack keeps changing
-      x.report("stack collector (varying depth) #{ENV["CONFIG"]}") do
+      x.report("stack collector (varying depth) #{ENV['CONFIG']}") do
         sample(collector)
         add_extra_frame_and_sample(collector) # This makes the stack change
       end

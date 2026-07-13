@@ -114,9 +114,9 @@ RSpec.describe Datadog::OpenFeature::FlagEvaluation::Aggregator do
     end
 
     it 'drops keys after the sorted 256-field cap' do
-      attrs = 257.times.each_with_object({}) { |i, h| h["k#{format("%03d", i)}"] = 'v' }
+      attrs = 257.times.each_with_object({}) { |i, h| h["k#{format('%03d', i)}"] = 'v' }
       pruned = aggregator.prune_context(attrs)
-      expected_keys = 256.times.map { |i| "k#{format("%03d", i)}" }
+      expected_keys = 256.times.map { |i| "k#{format('%03d', i)}" }
 
       expect(pruned.keys).to eq(expected_keys)
       expect(pruned).not_to have_key('k256')

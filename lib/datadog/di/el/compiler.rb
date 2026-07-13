@@ -115,7 +115,7 @@ module Datadog
               unless Array === target && target.length == 3
                 raise DI::Error::InvalidExpression, "Improper #{op} syntax"
               end
-              "#{op}(#{target.map { |arg| "(#{compile_partial(arg)})" }.join(", ")})"
+              "#{op}(#{target.map { |arg| "(#{compile_partial(arg)})" }.join(', ')})"
             when 'not'
               "!(#{compile_partial(target)})"
             when *OPERATORS.keys

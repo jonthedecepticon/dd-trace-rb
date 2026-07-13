@@ -99,7 +99,7 @@ class ProfilerHttpTransportBenchmark
         **benchmark_time,
       )
 
-      x.report("http_transport #{ENV["CONFIG"]}") do
+      x.report("http_transport #{ENV['CONFIG']}") do
         run_once
       end
 

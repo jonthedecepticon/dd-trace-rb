@@ -76,7 +76,7 @@ RSpec.describe 'Faraday SSRF Injection' do
         run(
           lambda do |env|
             request = Rack::Request.new(env)
-            client = Faraday.new("http://#{request.params["url"]}") do |faraday|
+            client = Faraday.new("http://#{request.params['url']}") do |faraday|
               faraday.adapter(:test) do |stub|
                 stub.get('/') { |_| [200, {}, 'OK'] }
               end
