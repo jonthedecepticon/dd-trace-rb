@@ -105,7 +105,7 @@ RSpec.describe Datadog::ErrorTracking::Component do
       let(:expected_exceptions) do
         [[
           {type: 'RuntimeError', message: 'this is an exception'},
-          {type: 'StandardError', message: 'this is another exception'}
+          {type: 'StandardError', message: 'this is another exception'},
         ]]
       end
 
@@ -151,7 +151,7 @@ RSpec.describe Datadog::ErrorTracking::Component do
       let(:expected_exceptions) do
         [[
           {type: 'RuntimeError', message: 'this is an exception'},
-          {type: 'KeyError', message: 'this is an exception'}
+          {type: 'KeyError', message: 'this is an exception'},
         ]]
       end
 
@@ -343,7 +343,7 @@ RSpec.describe Datadog::ErrorTracking::Component do
         'all',
         [],
         ['mock_gem client error', 'mock_gem utils error', 'user code error', 'lib1 error', 'lib2 error', 'sublib1 error',
-          'sublib2 error']
+          'sublib2 error',]
     end
   end
 

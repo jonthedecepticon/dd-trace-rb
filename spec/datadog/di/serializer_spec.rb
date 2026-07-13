@@ -220,19 +220,19 @@ RSpec.describe Datadog::DI::Serializer do
        expected: {v: {type: 'Hash', entries: [
          [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
            [{type: 'Symbol', value: 'b'}, {type: 'Array', notCapturedReason: 'depth'}],
-         ]}],
+         ]},],
        ]}}},
       {name: 'depth exceeded: hash', input: {v: {a: {b: {}}}},
        expected: {v: {type: 'Hash', entries: [
          [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
            [{type: 'Symbol', value: 'b'}, {type: 'Hash', notCapturedReason: 'depth'}],
-         ]}],
+         ]},],
        ]}}},
       {name: 'depth exceeded: object', input: {v: {a: {b: Object.new}}},
        expected: {v: {type: 'Hash', entries: [
          [{type: 'Symbol', value: 'a'}, {type: 'Hash', entries: [
            [{type: 'Symbol', value: 'b'}, {type: 'Object', notCapturedReason: 'depth'}],
-         ]}],
+         ]},],
        ]}}},
       {name: 'object with no attributes', input: {v: DISerializerSpecTestClass.new},
        expected: {v: {type: 'DISerializerSpecTestClass', fields: {}}},},

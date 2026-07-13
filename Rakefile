@@ -42,7 +42,7 @@ DI_WITH_EXT = %w[
 # Add new instrumentation libraries here as they gain DSM support
 DSM_ENABLED_LIBRARIES = [
   :kafka,
-  :karafka
+  :karafka,
 ].freeze
 
 # rubocop:disable Metrics/BlockLength
@@ -84,7 +84,7 @@ namespace :spec do
     :graphql, :graphql_unified_trace_patcher, :graphql_trace_patcher, :graphql_tracing_patcher,
     :rails, :railsredis, :railsredis_activesupport, :railsactivejob,
     :elasticsearch, :http, :redis, :sidekiq, :sinatra, :hanami, :hanami_autoinstrument,
-    :profiling, :core_with_libdatadog_api, :'di:di_with_ext', :'di:ractors', :error_tracking, :open_feature, :core_with_rails, :environment, :ai_guard]
+    :profiling, :core_with_libdatadog_api, :'di:di_with_ext', :'di:ractors', :error_tracking, :open_feature, :core_with_rails, :environment, :ai_guard,]
 
   desc '' # "Explicitly hiding from `rake -T`"
   RSpec::Core::RakeTask.new(:main) do |t, args|
@@ -344,7 +344,7 @@ namespace :spec do
     :sucker_punch,
     :suite,
     :trilogy,
-    :waterdrop
+    :waterdrop,
   ].each do |contrib|
     desc '' # "Explicitly hiding from `rake -T`"
     RSpec::Core::RakeTask.new(contrib) do |t, args|
@@ -381,7 +381,7 @@ namespace :spec do
       :faraday,
       :excon,
       :rest_client,
-      :integration
+      :integration,
     ]
 
     # Datadog AppSec main specs
@@ -410,7 +410,7 @@ namespace :spec do
       :graphql,
       :faraday,
       :excon,
-      :rest_client
+      :rest_client,
     ].each do |contrib|
       desc '' # "Explicitly hiding from `rake -T`"
       RSpec::Core::RakeTask.new(contrib) do |t, args|

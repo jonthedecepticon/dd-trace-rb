@@ -148,7 +148,7 @@ RSpec.describe Datadog::DI::ProbeBuilder do
                {
                  'ref' => 'value'
                },
-               'StringLiteral'
+               'StringLiteral',
              ]
            }
          },

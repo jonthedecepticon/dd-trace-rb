@@ -81,7 +81,7 @@ RSpec.describe Datadog::DI::Serializer do
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ]]}},
+       ],]}},
       {name: 'AR model with empty attributes',
        input: -> { SerializerRailsSpecTestBasicModel.new },
        expected: {type: 'SerializerRailsSpecTestBasicModel', entries: [[
@@ -95,7 +95,7 @@ RSpec.describe Datadog::DI::Serializer do
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ]]}},
+       ],]}},
       {name: 'AR model with filled out attributes',
        input: -> {
                 SerializerRailsSpecTestBasicModel.new(
@@ -113,7 +113,7 @@ RSpec.describe Datadog::DI::Serializer do
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'TrueClass', value: 'true'},
-       ]]}},
+       ],]}},
       {name: 'AR model with filled out attributes and persisted',
        input: -> {
                 SerializerRailsSpecTestBasicModel.create!(
@@ -131,7 +131,7 @@ RSpec.describe Datadog::DI::Serializer do
        ], [
          {type: 'Symbol', value: 'new_record'},
          {type: 'FalseClass', value: 'false'},
-       ]]}},
+       ],]}},
     ]
 
     define_serialize_value_cases(cases)
