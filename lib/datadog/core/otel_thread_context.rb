@@ -25,7 +25,12 @@ module Datadog
       # attached to the calling thread (`trace_id`, `span_id`, `valid`, `attrs`), or
       # `nil` if no context is attached.
       def self.debug_peek
-        _native_debug_peek
+        record = _native_debug_peek
+        return unless record
+
+        record[:trace_id] = record[:trace_id].unpack1("H*").to_i(16)
+        record[:span_id] = record[:span_id].unpack1("H*").to_i(16)
+        record
       end
     end
   end
